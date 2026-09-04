@@ -1432,6 +1432,7 @@ footer nav a:hover {
 .hero-live-stage {
   position: relative;
   min-height: 500px;
+  overflow-x: clip;
 }
 .hero-live-stage::before {
   position: absolute;
@@ -2675,21 +2676,25 @@ html:not(.dark) .footer-appearance .light-appearance,
   }
 }
 
-@media (max-width: 720px) {
+@media (max-width: 840px) {
+  .landing-page-scroll > [data-slot='scroll-area-scrollbar'] {
+    display: none;
+  }
+
   .home-header nav {
     display: none;
   }
   .home-hero {
     grid-template-columns: 1fr;
-    min-height: clamp(480px, 68svh, 580px);
-    gap: 28px;
-    padding: 52px 0 64px;
+    min-height: 0;
+    gap: 54px;
+    padding: 44px 0 58px;
   }
   .home-hero-copy {
     text-align: left;
   }
   .home-hero h1 {
-    font-size: clamp(3.7rem, 17vw, 5.4rem);
+    font-size: clamp(3.45rem, 16vw, 5rem);
   }
   .home-hero-copy > p {
     margin-inline: 0;
@@ -2705,23 +2710,39 @@ html:not(.dark) .footer-appearance .light-appearance,
     justify-content: center;
   }
   .hero-live-stage {
-    min-height: 390px;
+    display: grid;
+    min-height: 0;
+    align-content: start;
+    gap: 24px;
+    padding: 8px 0 18px;
   }
   .hero-stage-heading {
-    top: 8px;
-    left: 0;
+    position: relative;
+    top: auto;
+    left: auto;
+    margin-bottom: 3px;
+  }
+  .hero-float {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    transform: none;
   }
   .hero-float-metal {
-    top: 98px;
-    right: 0;
+    justify-items: end;
   }
   .hero-float-smoke {
-    bottom: 32px;
-    left: 0;
+    justify-items: start;
   }
   .hero-float-loader {
-    right: 0;
-    bottom: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 16px;
+  }
+  .hero-float-loader > small {
+    max-width: none;
+    text-align: right;
   }
   .product-window {
     margin-top: 60px;
@@ -2732,7 +2753,7 @@ html:not(.dark) .footer-appearance .light-appearance,
     border-radius: 18px;
   }
   .collection-showcase {
-    margin-top: 78px;
+    margin-top: 62px;
   }
   .collection-intro {
     grid-template-columns: 1fr;
@@ -2757,7 +2778,7 @@ html:not(.dark) .footer-appearance .light-appearance,
     gap: 5px;
   }
   .collection-folio-stage > [data-slot='folio-arc-carousel'] {
-    min-height: 400px;
+    min-height: 340px;
   }
   .collection-shelf {
     grid-template-columns: 1fr;
@@ -2867,6 +2888,38 @@ html:not(.dark) .footer-appearance .light-appearance,
     width: 100%;
     align-items: flex-start;
     flex-direction: column;
+  }
+}
+
+@media (min-width: 721px) and (max-width: 840px) {
+  .home-hero-actions {
+    flex-direction: row;
+  }
+
+  .home-hero-actions a,
+  .home-hero-actions button {
+    flex: 1;
+  }
+
+  .hero-live-stage {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .hero-stage-heading,
+  .hero-float-loader {
+    grid-column: 1 / -1;
+  }
+
+  .hero-float-metal {
+    justify-items: start;
+  }
+
+  .hero-float-smoke {
+    justify-items: end;
+  }
+
+  .hero-float-loader {
+    justify-content: center;
   }
 }
 
@@ -5571,6 +5624,10 @@ body:has(.docs-search-dialog[open]) {
 }
 
 @media (max-width: 760px) {
+  .components-page-scroll > [data-slot='scroll-area-scrollbar'] {
+    display: none;
+  }
+
   .reference-layout .header-search {
     display: grid;
     width: 34px;
@@ -5585,7 +5642,8 @@ body:has(.docs-search-dialog[open]) {
     display: block;
   }
   .docs-sidebar {
-    position: static;
+    position: relative;
+    top: auto;
     display: block;
     width: 100%;
     height: auto;
@@ -5595,10 +5653,9 @@ body:has(.docs-search-dialog[open]) {
     height: auto;
   }
   .docs-sidebar-content {
-    display: flex;
-    gap: 8px;
-    overflow-x: auto;
-    padding: 24px 0 8px;
+    display: block;
+    overflow: visible;
+    padding: 14px 0 12px;
   }
   .docs-sidebar [data-slot='scroll-area-scrollbar'] {
     display: none;
@@ -5608,39 +5665,52 @@ body:has(.docs-search-dialog[open]) {
     display: none;
   }
   .getting-started-menu {
-    display: flex;
-    min-width: max-content;
-    align-items: center;
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 6px;
   }
   .sidebar-parent {
-    width: auto;
-    min-width: max-content;
+    width: 100%;
+    min-width: 0;
+    grid-column: 1 / -1;
+    background: var(--surface);
+    box-shadow: inset 0 0 0 1px var(--line);
   }
   .sidebar-children {
-    display: flex;
-    min-width: max-content;
-    margin: 0 0 0 6px;
+    display: grid;
+    width: 100%;
+    min-width: 0;
+    grid-column: 1 / -1;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 6px;
+    margin: 0;
     padding: 0;
     box-shadow: none;
   }
   .sidebar-children button {
-    min-width: max-content;
+    min-width: 0;
+    min-height: 36px;
+    padding-inline: 8px;
+    background: color-mix(in srgb, var(--surface) 72%, transparent);
+    box-shadow: inset 0 0 0 1px var(--line);
+    text-align: center;
   }
   .docs-content {
     padding-left: 0;
     box-shadow: none;
   }
   .components-hero {
-    padding-top: 62px;
+    padding-top: 50px;
   }
   .components-hero h1 {
-    font-size: clamp(3.2rem, 14vw, 5rem);
+    font-size: clamp(2.75rem, 13vw, 4.2rem);
   }
   .components-summary {
     grid-template-columns: repeat(3, 1fr);
   }
   .component-group {
-    padding-top: 68px;
+    padding-top: 58px;
   }
   .reference-preview {
     min-height: 190px;
@@ -5685,7 +5755,7 @@ body:has(.docs-search-dialog[open]) {
   }
   .component-doc-preview,
   .component-doc-code-preview {
-    min-height: 340px;
+    min-height: clamp(270px, 88vw, 340px);
   }
   .full-code-block {
     height: 340px;
@@ -5698,6 +5768,27 @@ body:has(.docs-search-dialog[open]) {
   }
   .component-api-table table {
     min-width: 760px;
+  }
+
+  .component-doc-preview
+    .folio-arc-carousel-demo-surface[data-slot='folio-arc-carousel'] {
+    height: 360px;
+  }
+
+  .component-doc-preview .helix-reel-demo-surface[data-slot='helix-reel'] {
+    height: 380px;
+  }
+
+  .component-doc-preview .editorial-mosaic-demo-surface {
+    height: 320px;
+  }
+
+  .component-doc-preview .shutter-trail-demo-surface {
+    height: 340px;
+  }
+
+  .reference-component-card {
+    scroll-margin-top: 88px;
   }
 }
 

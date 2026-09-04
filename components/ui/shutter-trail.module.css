@@ -1,10 +1,11 @@
 .root {
   position: relative;
   width: min(100%, 900px);
-  min-width: 300px;
+  min-width: 0;
   min-height: 390px;
   padding: 0;
   overflow: hidden;
+  overflow: clip;
   border: 0;
   border-radius: 14px;
   color: #252520;

@@ -26,5 +26,6 @@ published.
 
 ### Fixed
 
+- Responsive landing, catalogue, documentation, and interactive preview layouts on phone and tablet widths.
 - Editorial Mosaic sizing in catalogue cards.
 - Compact catalogue framing for Folio Arc Carousel and Helix Reel.

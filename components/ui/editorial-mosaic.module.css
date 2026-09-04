@@ -4,9 +4,10 @@
   position: relative;
   display: block;
   width: min(100%, 900px);
-  min-width: 300px;
+  min-width: 0;
   min-height: 360px;
   overflow: hidden;
+  overflow: clip;
   border: 0;
   border-radius: 0;
   color: #f3f1eb;
