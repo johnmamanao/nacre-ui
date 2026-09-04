@@ -6,7 +6,7 @@ changes. Read them before editing, committing, publishing, or deploying.
 ## Project identity
 
 - Repository: `https://github.com/johnmamanao/nacre-ui`
-- Production site: `https://nacre-ui.vercel.app`
+- Production site: `https://nacre-ui.johnmamanao.com`
 - Vercel project: `john-mamanaos-projects/nacre-ui`
 - npm package: `@nacre-ui/cli`
 - Protected production branch: `main`
@@ -29,7 +29,7 @@ account can bypass protection.
 9. Merge the pull request without using an admin bypass unless the user
    explicitly requests it or repository recovery requires it.
 10. Wait for the Vercel Production deployment created from `main`.
-11. Verify `/` and `/components` on `https://nacre-ui.vercel.app` return a
+11. Verify `/` and `/components` on `https://nacre-ui.johnmamanao.com` return a
     successful response before reporting completion.
 
 Vercel maps non-production branches and pull requests to **Preview**. It maps

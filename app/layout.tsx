@@ -2,17 +2,22 @@ import type { Metadata } from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://nacre-ui.johnmamanao.com'),
   title: 'Nacre UI — React components for expressive interfaces',
   description:
     'A source-based React component collection with live previews, configurable interactions, and accessible motion.',
   icons: {
     icon: [{ url: '/nacre-mark.png', type: 'image/png' }],
   },
+  alternates: {
+    canonical: '/',
+  },
   openGraph: {
     title: 'Nacre UI — React components for expressive interfaces',
     description:
       'Source-based React components with live previews, configurable interactions, and accessible motion.',
     type: 'website',
+    url: '/',
     images: [
       {
         url: '/og.png',

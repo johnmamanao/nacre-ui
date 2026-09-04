@@ -28,7 +28,7 @@
     "url": "git+https://github.com/johnmamanao/nacre-ui.git",
     "directory": "packages/cli"
   },
-  "homepage": "https://github.com/johnmamanao/nacre-ui#readme",
+  "homepage": "https://nacre-ui.johnmamanao.com/components",
   "bugs": {
     "url": "https://github.com/johnmamanao/nacre-ui/issues"
   },
