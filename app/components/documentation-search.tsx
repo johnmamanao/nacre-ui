@@ -50,6 +50,7 @@ export type SearchComponentName =
   | 'Folio Arc Carousel'
   | 'Helix Reel'
   | 'Toolchain Marquee'
+  | 'Orbit Ledger'
   | 'Nacre Field Shader'
   | 'Iridescent Weave Shader'
   | 'Mesh Background'

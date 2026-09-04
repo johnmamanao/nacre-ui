@@ -112,6 +112,9 @@ import helixReelSource from '@/components/ui/helix-reel.tsx?raw';
 import { ToolchainMarquee } from '@/components/ui/toolchain-marquee';
 // oxlint-disable-next-line import/default -- Vite's raw loader supplies this default export.
 import toolchainMarqueeSource from '@/components/ui/toolchain-marquee.tsx?raw';
+import { OrbitLedger } from '@/components/ui/orbit-ledger';
+// oxlint-disable-next-line import/default -- Vite's raw loader supplies this default export.
+import orbitLedgerSource from '@/components/ui/orbit-ledger.tsx?raw';
 import {
   NacreFieldShader,
   type NacreFieldMode,
@@ -363,6 +366,13 @@ const catalog = [
     category: 'Interactions',
     description:
       'Three distinct technology stacks travel in alternating directions with a shared, position-preserving motion control.',
+    status: 'New',
+  },
+  {
+    name: 'Orbit Ledger',
+    category: 'Interactions',
+    description:
+      'A scroll-driven project index that moves cards through a curved three-dimensional path.',
     status: 'New',
   },
   {
@@ -1174,6 +1184,61 @@ const componentPlaygrounds: Partial<Record<ComponentName, PlaygroundConfig>> = {
         step: 1,
       },
       { key: 'showControl', label: 'Motion control', type: 'toggle' },
+    ],
+  },
+  'Orbit Ledger': {
+    defaults: {
+      accent: '#d8a7ff',
+      cardWidth: 246,
+      curve: 22,
+      depth: 92,
+      scrollLength: 1400,
+      showProgress: true,
+      tilt: 22,
+    },
+    controls: [
+      { key: 'accent', label: 'Orbit accent', type: 'color' },
+      {
+        key: 'cardWidth',
+        label: 'Card width',
+        type: 'range',
+        min: 170,
+        max: 310,
+        step: 2,
+      },
+      {
+        key: 'curve',
+        label: 'Orbit curve',
+        type: 'range',
+        min: 8,
+        max: 54,
+        step: 1,
+      },
+      {
+        key: 'depth',
+        label: 'Depth falloff',
+        type: 'range',
+        min: 40,
+        max: 180,
+        step: 2,
+      },
+      {
+        key: 'tilt',
+        label: 'Edge turn',
+        type: 'range',
+        min: 8,
+        max: 36,
+        step: 1,
+      },
+      {
+        key: 'scrollLength',
+        label: 'Scroll distance',
+        type: 'range',
+        min: 700,
+        max: 2800,
+        step: 100,
+      },
+      { key: 'showProgress', label: 'Progress rail', type: 'toggle' },
     ],
   },
   'Nacre Field Shader': {
@@ -2963,6 +3028,95 @@ export default function Loading() {
       'Maintains visible keyboard focus and readable forced-color output.',
     ],
   },
+  'Orbit Ledger': {
+    usage: `import { OrbitLedger } from '@nacre-ui/react';
+
+<OrbitLedger
+  items={projects}
+  accent="#d8a7ff"
+  onActiveIndexChange={(index) => setActiveProject(index)}
+/>`,
+    props: [
+      {
+        name: 'items',
+        type: 'OrbitLedgerItem[]',
+        defaultValue: 'Six example projects',
+        description:
+          'Supplies up to ten projects with image, title, description, metadata, tags, and an optional link.',
+      },
+      {
+        name: 'mode',
+        type: "'page' | 'contained'",
+        defaultValue: "'page'",
+        description:
+          'Uses page scroll for an immersive section or an internal scroll area for previews and compact placements.',
+      },
+      {
+        name: 'defaultActiveIndex',
+        type: 'number',
+        defaultValue: '0',
+        description:
+          'Sets the initial project when the component uses contained scrolling.',
+      },
+      {
+        name: 'cardWidth',
+        type: 'number',
+        defaultValue: '246',
+        description: 'Sets the project card width from 170 through 310 pixels.',
+      },
+      {
+        name: 'curve',
+        type: 'number',
+        defaultValue: '22',
+        description: 'Controls the vertical bend of the project path.',
+      },
+      {
+        name: 'depth',
+        type: 'number',
+        defaultValue: '92',
+        description: 'Controls how far cards recede away from the focus plane.',
+      },
+      {
+        name: 'tilt',
+        type: 'number',
+        defaultValue: '22',
+        description: 'Sets how strongly cards turn toward the center axis.',
+      },
+      {
+        name: 'scrollLength',
+        type: 'number',
+        defaultValue: '1600',
+        description:
+          'Sets the scroll distance used to move through the full ledger.',
+      },
+      {
+        name: 'accent',
+        type: 'string',
+        defaultValue: "'#d8a7ff'",
+        description: 'Sets the focus axis, progress, and ambient accent color.',
+      },
+      {
+        name: 'showProgress',
+        type: 'boolean',
+        defaultValue: 'true',
+        description: 'Shows the current position, progress rail, and controls.',
+      },
+      {
+        name: 'onActiveIndexChange',
+        type: '(index: number) => void',
+        defaultValue: 'undefined',
+        description: 'Reports the project nearest the center focus axis.',
+      },
+    ],
+    accessibility: [
+      'Uses a named region and announces the active project position politely.',
+      'Supports Arrow keys, Home, and End when either navigation button is focused.',
+      'Provides native previous and next buttons when progress controls are visible.',
+      'Keeps only the focused project link in the keyboard tab order.',
+      'Falls back to a static project grid when reduced motion is requested.',
+      'Preserves visible focus and structural contrast in forced-color modes.',
+    ],
+  },
   Input: {
     usage: `import { Input } from '@nacre-ui/react';\n\n<Input\n  label="Work email"\n  name="email"\n  type="email"\n  autoComplete="email"\n/>`,
     props: [
@@ -4260,6 +4414,25 @@ function ToolchainMarqueePreview({ values }: { values?: PlaygroundValues }) {
   );
 }
 
+function OrbitLedgerPreview({ values }: { values?: PlaygroundValues }) {
+  const compact = values === undefined;
+
+  return (
+    <OrbitLedger
+      accent={textValue(values, 'accent', '#d8a7ff')}
+      cardWidth={numberValue(values, 'cardWidth', compact ? 178 : 246)}
+      className="orbit-ledger-demo-surface"
+      curve={numberValue(values, 'curve', compact ? 15 : 22)}
+      defaultActiveIndex={compact ? 2 : 1}
+      depth={numberValue(values, 'depth', compact ? 66 : 92)}
+      mode="contained"
+      scrollLength={numberValue(values, 'scrollLength', compact ? 760 : 1400)}
+      showProgress={booleanValue(values, 'showProgress', !compact)}
+      tilt={numberValue(values, 'tilt', compact ? 17 : 22)}
+    />
+  );
+}
+
 function ComponentPreview({
   name,
   values,
@@ -4318,6 +4491,7 @@ function ComponentPreview({
   if (name === 'Helix Reel') return <HelixReelPreview values={values} />;
   if (name === 'Toolchain Marquee')
     return <ToolchainMarqueePreview values={values} />;
+  if (name === 'Orbit Ledger') return <OrbitLedgerPreview values={values} />;
   if (name === 'Nacre Field Shader')
     return <NacreFieldShaderPreview values={values} />;
   if (name === 'Iridescent Weave Shader')
@@ -5116,7 +5290,8 @@ function ComponentContent({ name }: { name: ComponentName }) {
     name === 'Flux Background' ||
     name === 'Magnetic Warp Background' ||
     name === 'Grain Current Background';
-  const usesFramerMotion = name === 'Toolchain Marquee';
+  const usesFramerMotion =
+    name === 'Toolchain Marquee' || name === 'Orbit Ledger';
   const sourceCode =
     name === 'Magnetic Button'
       ? magneticButtonSource
@@ -5173,25 +5348,27 @@ function ComponentContent({ name }: { name: ComponentName }) {
                                                   ? helixReelSource
                                                   : name === 'Toolchain Marquee'
                                                     ? toolchainMarqueeSource
-                                                    : name ===
-                                                        'Nacre Field Shader'
-                                                      ? nacreFieldShaderSource
+                                                    : name === 'Orbit Ledger'
+                                                      ? orbitLedgerSource
                                                       : name ===
-                                                          'Iridescent Weave Shader'
-                                                        ? iridescentWeaveShaderSource
+                                                          'Nacre Field Shader'
+                                                        ? nacreFieldShaderSource
                                                         : name ===
-                                                            'Mesh Background'
-                                                          ? meshBackgroundSource
+                                                            'Iridescent Weave Shader'
+                                                          ? iridescentWeaveShaderSource
                                                           : name ===
-                                                              'Flux Background'
-                                                            ? fluxBackgroundSource
+                                                              'Mesh Background'
+                                                            ? meshBackgroundSource
                                                             : name ===
-                                                                'Magnetic Warp Background'
-                                                              ? magneticWarpBackgroundSource
+                                                                'Flux Background'
+                                                              ? fluxBackgroundSource
                                                               : name ===
-                                                                  'Grain Current Background'
-                                                                ? grainCurrentBackgroundSource
-                                                                : `'use client';
+                                                                  'Magnetic Warp Background'
+                                                                ? magneticWarpBackgroundSource
+                                                                : name ===
+                                                                    'Grain Current Background'
+                                                                  ? grainCurrentBackgroundSource
+                                                                  : `'use client';
 
 import * as React from 'react';
 

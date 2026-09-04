@@ -3674,6 +3674,14 @@ body:has(.docs-search-dialog[open]) {
 .reference-preview .toolchain-marquee-demo-surface {
   width: calc(100% - 20px);
 }
+.component-doc-preview .orbit-ledger-demo-surface[data-slot='orbit-ledger'] {
+  width: calc(100% - 24px);
+  height: 416px;
+}
+.reference-preview .orbit-ledger-demo-surface[data-slot='orbit-ledger'] {
+  width: 100%;
+  height: 220px;
+}
 .reference-preview [data-slot='horizon-page-loader'][data-mode='contained'] {
   min-height: 220px;
 }

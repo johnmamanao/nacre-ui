@@ -61,8 +61,9 @@ test('lists the complete public registry', () => {
   const result = runCli(['list', '--json']);
   assert.equal(result.status, 0, result.stderr);
   const names = JSON.parse(result.stdout);
-  assert.equal(names.length, 38);
+  assert.equal(names.length, 39);
   assert.ok(names.includes('folio-arc-carousel'));
+  assert.ok(names.includes('orbit-ledger'));
   assert.ok(names.includes('facet-bloom-loader'));
   assert.ok(names.includes('nacre-field-shader'));
 });
@@ -77,11 +78,13 @@ test('copies every component and produces type-safe source', async () => {
     '--skip-install',
   ]);
   assert.equal(addResult.status, 0, addResult.stderr);
-  assert.match(addResult.stdout, /Added 38 Nacre UI components/);
+  assert.match(addResult.stdout, /Added 39 Nacre UI components/);
 
   const expectedFiles = [
     'components/ui/folio-arc-carousel.tsx',
     'components/ui/folio-arc-carousel.module.css',
+    'components/ui/orbit-ledger.tsx',
+    'components/ui/orbit-ledger.module.css',
     'components/ui/sculptural-loaders.tsx',
     'components/ui/text-motion-effects.tsx',
     'lib/utils.ts',
