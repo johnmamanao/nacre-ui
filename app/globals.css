@@ -2946,6 +2946,94 @@ html:not(.dark) .footer-appearance .light-appearance,
   }
 }
 
+@media (max-width: 680px) {
+  .hero-live-stage {
+    display: block;
+    overflow: hidden;
+    padding: 0;
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    background: color-mix(in srgb, var(--surface) 78%, transparent);
+    box-shadow:
+      0 18px 50px rgb(0 0 0 / 8%),
+      inset 0 1px 0 color-mix(in srgb, white 5%, transparent);
+  }
+
+  .hero-live-stage::before {
+    inset: 0;
+    border-radius: inherit;
+    filter: none;
+  }
+
+  .hero-stage-heading {
+    display: flex;
+    min-height: 72px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    margin: 0;
+    padding: 16px 18px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .hero-stage-heading strong {
+    max-width: 160px;
+    text-align: right;
+  }
+
+  .hero-float {
+    display: grid;
+    min-height: 92px;
+    grid-template-columns: 88px minmax(0, 1fr);
+    align-items: center;
+    gap: 12px;
+    padding: 16px 18px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .hero-float:last-child {
+    border-bottom: 0;
+  }
+
+  .hero-float > small,
+  .hero-float-loader > small {
+    max-width: 94px;
+    text-align: left;
+  }
+
+  .hero-float > button,
+  .hero-float > [data-slot='facet-bloom-loader'] {
+    justify-self: end;
+  }
+
+  .hero-float > button {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .hero-float-loader {
+    justify-content: initial;
+    justify-items: stretch;
+  }
+
+  .hero-float-loader [data-slot='facet-bloom-loader'] > span:last-child {
+    display: none;
+  }
+}
+
+@media (max-width: 340px) {
+  .hero-float-smoke
+    [data-slot='gem-smoke-button']
+    > span:last-child
+    > span:last-child {
+    display: none;
+  }
+
+  .hero-float-smoke [data-slot='gem-smoke-button'] > span:last-child {
+    justify-content: center;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .motion-track i {
     animation: none;

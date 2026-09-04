@@ -96,6 +96,7 @@ export default function Home() {
                 <small>Facet Bloom Loader</small>
                 <FacetBloomLoader
                   accent="currentColor"
+                  aria-label="Preparing preview"
                   label="Preparing preview"
                   size={54}
                   speed={1900}
