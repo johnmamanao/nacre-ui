@@ -18,7 +18,7 @@ careful motion, and practical accessibility.
 - Light and dark appearances.
 - Reduced-motion, keyboard, and focus behavior where each interaction needs it.
 - A source-copying CLI with overwrite protection and dependency detection.
-- A Vinext documentation site deployed through OpenAI Sites and Cloudflare.
+- A Vinext documentation site with dedicated OpenAI Sites/Cloudflare and Nitro/Vercel build paths.
 
 ## Add a component
 
