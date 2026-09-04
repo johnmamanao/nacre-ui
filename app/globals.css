@@ -4855,6 +4855,25 @@ body:has(.docs-search-dialog[open]) {
   background: var(--surface);
   box-shadow: inset 0 0 0 1px var(--line);
 }
+.component-doc-preview-shell-plain {
+  padding: 0;
+  background: transparent;
+  box-shadow: none;
+}
+.component-doc-preview-shell-plain .component-doc-preview {
+  min-height: 416px;
+  overflow: visible;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+.component-doc-preview-shell-plain .component-live-preview {
+  place-items: stretch;
+}
+.component-doc-preview-shell-plain
+  .orbit-ledger-demo-surface[data-slot='orbit-ledger'] {
+  width: 100%;
+}
 .component-live-preview {
   display: grid;
   width: 100%;
