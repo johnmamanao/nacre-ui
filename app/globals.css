@@ -3175,7 +3175,12 @@ body:has(.docs-search-dialog[open]) {
   overflow-y: auto;
   max-height: min(58vh, 510px) !important;
   padding: 8px;
+  scrollbar-width: none;
   scroll-padding-block: 38px;
+  overscroll-behavior: contain;
+}
+.docs-search-results::-webkit-scrollbar {
+  display: none;
 }
 .docs-search-dialog [data-search-group-heading] {
   margin: 0;
