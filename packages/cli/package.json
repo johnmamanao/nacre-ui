@@ -1,0 +1,43 @@
+{
+  "name": "@nacre-ui/cli",
+  "version": "0.1.0",
+  "description": "Install Nacre UI components as editable source files.",
+  "type": "module",
+  "bin": {
+    "nacre-ui": "bin/nacre-ui.js"
+  },
+  "files": [
+    "bin",
+    "registry",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build:registry": "node scripts/build-registry.mjs",
+    "test": "npm run build:registry && node --test tests/*.test.mjs",
+    "prepack": "npm run build:registry"
+  },
+  "engines": {
+    "node": ">=20.19.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/johnmamanao/nacre-ui.git",
+    "directory": "packages/cli"
+  },
+  "homepage": "https://github.com/johnmamanao/nacre-ui#readme",
+  "bugs": {
+    "url": "https://github.com/johnmamanao/nacre-ui/issues"
+  },
+  "keywords": [
+    "react",
+    "components",
+    "ui",
+    "animation",
+    "cli"
+  ],
+  "license": "MIT"
+}

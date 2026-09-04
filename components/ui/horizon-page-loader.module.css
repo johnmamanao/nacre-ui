@@ -1,0 +1,296 @@
+.root {
+  --horizon-accent: #eeeae0;
+  --horizon-ambient-duration: 4400ms;
+  --horizon-duration: 2200ms;
+  --horizon-canvas: #eeede8;
+  --horizon-ink: #20211e;
+  --horizon-muted: rgb(38 39 35 / 58%);
+  --horizon-line: rgb(30 31 28 / 17%);
+  --horizon-sheen: rgb(255 255 255 / 34%);
+  --horizon-glint: #fff;
+  --horizon-pearl-border: rgb(28 29 26 / 34%);
+  --horizon-tone: color-mix(in srgb, var(--horizon-accent) 28%, #292a27);
+
+  position: fixed;
+  z-index: 100;
+  inset: 0;
+  display: grid;
+  min-width: 0;
+  min-height: 100dvh;
+  overflow: hidden;
+  place-items: center;
+  isolation: isolate;
+  color: var(--horizon-ink);
+  background: var(--horizon-canvas);
+  transition:
+    color 180ms ease,
+    background-color 180ms ease;
+}
+
+:global(.dark) .root {
+  --horizon-canvas: #090908;
+  --horizon-ink: #f1f0eb;
+  --horizon-muted: rgb(235 234 228 / 68%);
+  --horizon-line: rgb(255 255 255 / 14%);
+  --horizon-sheen: rgb(255 255 255 / 2%);
+  --horizon-glint: #fff;
+  --horizon-pearl-border: rgb(255 255 255 / 60%);
+  --horizon-tone: var(--horizon-accent);
+}
+
+.root[data-mode='contained'] {
+  position: relative;
+  z-index: 0;
+  inset: auto;
+  width: 100%;
+  min-height: 420px;
+  border-radius: 7px;
+  background: transparent;
+}
+
+.atmosphere {
+  position: absolute;
+  z-index: -1;
+  inset: -18%;
+  background:
+    radial-gradient(
+      circle at 50% 48%,
+      color-mix(in srgb, var(--horizon-tone) 8%, transparent),
+      transparent 24%
+    ),
+    linear-gradient(
+      105deg,
+      transparent 32%,
+      var(--horizon-sheen) 50%,
+      transparent 68%
+    );
+  animation: horizon-atmosphere var(--horizon-ambient-duration) ease-in-out
+    infinite;
+}
+
+.content {
+  display: grid;
+  width: min(420px, 72vw);
+  place-items: center;
+}
+
+.eyebrow {
+  margin-bottom: 21px;
+  color: color-mix(in srgb, var(--horizon-tone) 76%, transparent);
+  font-size: 11px;
+  font-weight: 690;
+  letter-spacing: 0.18em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.horizon {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--horizon-line) 24% 76%,
+    transparent
+  );
+}
+
+.horizon::before,
+.horizon::after {
+  position: absolute;
+  inset: 50% auto auto 50%;
+  border-radius: 999px;
+  content: '';
+  transform: translate(-50%, -50%);
+}
+
+.horizon::before {
+  width: 44%;
+  height: 18px;
+  background: radial-gradient(
+    ellipse,
+    color-mix(in srgb, var(--horizon-tone) 12%, transparent),
+    transparent 68%
+  );
+  filter: blur(7px);
+  animation: horizon-bloom var(--horizon-duration) ease-in-out infinite;
+}
+
+.horizon::after {
+  width: 24%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--horizon-tone),
+    transparent
+  );
+  box-shadow: 0 0 12px color-mix(in srgb, var(--horizon-tone) 32%, transparent);
+  animation: horizon-open var(--horizon-duration) cubic-bezier(0.4, 0, 0.2, 1)
+    infinite;
+}
+
+.light {
+  position: absolute;
+  inset: -1px auto auto 0;
+  width: 28%;
+  height: 3px;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--horizon-tone) 88%, var(--horizon-glint)),
+    transparent
+  );
+  filter: blur(0.4px);
+  opacity: 0;
+  transform: translateX(-100%);
+  animation: horizon-travel var(--horizon-duration) ease-in-out infinite;
+}
+
+.pearl {
+  position: absolute;
+  inset: 50% auto auto 50%;
+  width: 7px;
+  height: 7px;
+  border: 1px solid var(--horizon-pearl-border);
+  border-radius: 50%;
+  background:
+    radial-gradient(
+      circle at 34% 28%,
+      var(--horizon-glint) 0 12%,
+      transparent 34%
+    ),
+    var(--horizon-tone);
+  box-shadow:
+    0 0 0 4px color-mix(in srgb, var(--horizon-tone) 7%, transparent),
+    0 0 17px color-mix(in srgb, var(--horizon-tone) 28%, transparent);
+  transform: translate(-50%, -50%);
+  animation: horizon-pearl var(--horizon-duration) ease-in-out infinite;
+}
+
+.label {
+  margin-top: 23px;
+  color: var(--horizon-muted);
+  font-size: 13px;
+  font-weight: 540;
+  letter-spacing: -0.005em;
+  line-height: 1.25;
+}
+
+@keyframes horizon-travel {
+  0%,
+  12% {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+
+  32% {
+    opacity: 0.76;
+  }
+
+  72% {
+    opacity: 0.76;
+  }
+
+  88%,
+  100% {
+    opacity: 0;
+    transform: translateX(357%);
+  }
+}
+
+@keyframes horizon-open {
+  0%,
+  100% {
+    opacity: 0.28;
+    transform: translate(-50%, -50%) scaleX(0.24);
+  }
+
+  48% {
+    opacity: 0.92;
+    transform: translate(-50%, -50%) scaleX(1);
+  }
+}
+
+@keyframes horizon-bloom {
+  0%,
+  100% {
+    opacity: 0.4;
+    transform: translate(-50%, -50%) scaleX(0.65);
+  }
+
+  52% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scaleX(1.08);
+  }
+}
+
+@keyframes horizon-pearl {
+  0%,
+  100% {
+    transform: translate(-50%, -50%) scale(0.92);
+  }
+
+  50% {
+    transform: translate(-50%, -50%) scale(1.08);
+  }
+}
+
+@keyframes horizon-atmosphere {
+  0%,
+  100% {
+    opacity: 0.72;
+    transform: scale(0.99) translateX(-1%);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.01) translateX(1%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .atmosphere,
+  .horizon::before,
+  .horizon::after,
+  .light,
+  .pearl {
+    animation: none;
+  }
+
+  .light {
+    display: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .root {
+    color: CanvasText;
+    background: Canvas;
+  }
+
+  .atmosphere,
+  .horizon::before,
+  .horizon::after,
+  .light {
+    display: none;
+  }
+
+  .horizon {
+    background: CanvasText;
+  }
+
+  .pearl {
+    border-color: CanvasText;
+    background: CanvasText;
+    box-shadow: none;
+  }
+
+  .eyebrow,
+  .label {
+    color: CanvasText;
+  }
+}

@@ -1,0 +1,35 @@
+.root {
+  display: inline-block;
+  padding-block: 0.14em 0.19em;
+  color: #24231f;
+  font-weight: 630;
+  letter-spacing: -0.04em;
+  line-height: 1.04;
+}
+
+:global(.dark) .root {
+  color: #f0efe9;
+}
+
+.copy {
+  display: inline-block;
+  white-space: pre-wrap;
+}
+
+.glyph {
+  display: inline-block;
+  transform-origin: 50% 100%;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glyph {
+    transform: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .root {
+    color: CanvasText;
+  }
+}

@@ -1,0 +1,58 @@
+.root {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.05em;
+  color: #24231f;
+  font-variant-numeric: tabular-nums;
+  font-weight: 650;
+  letter-spacing: -0.065em;
+  line-height: 0.96;
+}
+
+:global(.dark) .root {
+  color: #f0efe9;
+}
+
+.digits {
+  display: inline-flex;
+  align-items: baseline;
+  perspective: 360px;
+}
+.digitSlot {
+  display: inline-block;
+  width: 0.64em;
+  height: 1em;
+  overflow: hidden;
+  vertical-align: top;
+}
+.digitReel {
+  display: block;
+  transform-origin: 50% 50%;
+  will-change: transform;
+}
+.digitFace {
+  display: block;
+  height: 1em;
+  line-height: 1em;
+  text-align: center;
+}
+.separator {
+  display: inline-block;
+  width: 0.26em;
+  color: color-mix(in srgb, currentColor 50%, transparent);
+  text-align: center;
+}
+.affix {
+  color: color-mix(in srgb, currentColor 62%, transparent);
+  font-size: 0.48em;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+}
+
+@media (forced-colors: active) {
+  .root,
+  .separator,
+  .affix {
+    color: CanvasText;
+  }
+}

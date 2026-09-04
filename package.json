@@ -1,7 +1,20 @@
 {
-  "name": "sites-project",
+  "name": "nacre-ui-docs",
   "version": "0.1.0",
   "private": true,
+  "description": "Documentation and interactive component catalogue for Nacre UI.",
+  "license": "MIT",
+  "workspaces": [
+    "packages/*"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/johnmamanao/nacre-ui.git"
+  },
+  "homepage": "https://github.com/johnmamanao/nacre-ui#readme",
+  "bugs": {
+    "url": "https://github.com/johnmamanao/nacre-ui/issues"
+  },
   "engines": {
     "node": ">=22.13.0"
   },
@@ -9,47 +22,61 @@
     "dev": "vinext dev",
     "build": "vinext build",
     "start": "wrangler dev --config dist/server/wrangler.json",
-    "lint": "oxlint",
-    "format": "oxfmt"
+    "lint": "oxlint .",
+    "typecheck": "tsc --noEmit",
+    "format": "oxfmt --write .",
+    "format:check": "oxfmt --check .",
+    "build:registry": "npm run build:registry --workspace @nacre-ui/cli",
+    "test:cli": "npm test --workspace @nacre-ui/cli",
+    "check": "npm run format:check && npm run lint && npm run typecheck && npm run test:cli && npm run build"
   },
   "dependencies": {
-    "react": "19.2.6",
-    "react-dom": "19.2.6",
-    "react-server-dom-webpack": "19.2.6",
-    "vinext": "1.0.0-beta.5",
     "@base-ui/react": "1.7.0",
+    "@paper-design/shaders-react": "0.0.80",
     "@shadcn/react": "0.3.0",
     "class-variance-authority": "0.7.1",
     "clsx": "2.1.1",
     "cmdk": "1.1.1",
     "date-fns": "4.1.0",
     "embla-carousel-react": "8.5.2",
+    "framer-motion": "^13.1.1",
     "input-otp": "1.4.2",
     "lucide-react": "1.31.0",
+    "react": "^19.2.8",
     "react-day-picker": "9.8.1",
+    "react-dom": "^19.2.8",
     "react-resizable-panels": "4.5.8",
+    "react-server-dom-webpack": "^19.2.8",
     "recharts": "3.8.0",
     "shadcn": "4.18.0",
     "tailwind-merge": "3.6.0",
-    "tw-animate-css": "1.4.0"
+    "tw-animate-css": "1.4.0",
+    "vinext": "^1.0.0-beta.9"
   },
   "devDependencies": {
-    "@cloudflare/vite-plugin": "1.37.1",
-    "@cloudflare/workers-types": "4.20260515.1",
+    "@cloudflare/vite-plugin": "^1.54.4",
+    "@cloudflare/workers-types": "^5.20260904.1",
     "@openai/sites-vite-plugin": "0.2.0",
     "@tailwindcss/postcss": "4.2.1",
     "@types/node": "22.19.19",
     "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
     "@vitejs/plugin-react": "6.0.2",
-    "@vitejs/plugin-rsc": "0.5.26",
+    "@vitejs/plugin-rsc": "^0.5.34",
     "oxfmt": "0.61.0",
     "oxlint": "1.76.0",
     "oxlint-tsgolint": "7.0.2001",
     "tailwindcss": "4.2.1",
     "typescript": "5.9.3",
-    "vite": "8.0.13",
-    "wrangler": "4.92.0"
+    "vite": "^8.2.2",
+    "wrangler": "^4.129.0"
   },
-  "type": "module"
+  "type": "module",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs",
+    "lib": "lib"
+  },
+  "keywords": [],
+  "author": ""
 }

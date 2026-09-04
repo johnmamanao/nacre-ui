@@ -1,0 +1,69 @@
+name: Bug report
+description: Report broken behavior, rendering, accessibility, or documentation.
+title: '[Bug]: '
+labels:
+  - bug
+body:
+  - type: dropdown
+    id: area
+    attributes:
+      label: Affected area
+      options:
+        - Component implementation
+        - Component catalogue preview
+        - Component documentation
+        - Landing page
+        - Installation or build
+    validations:
+      required: true
+  - type: input
+    id: component
+    attributes:
+      label: Component
+      description: Name the component when the problem is component-specific.
+      placeholder: Editorial Mosaic
+  - type: textarea
+    id: current
+    attributes:
+      label: Current behavior
+      description: Explain what happens, including any visible or console error.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: Explain what should happen instead.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction steps
+      placeholder: |
+        1. Open…
+        2. Select…
+        3. Observe…
+    validations:
+      required: true
+  - type: input
+    id: browser
+    attributes:
+      label: Browser and operating system
+      placeholder: Chrome 140 on Windows 11
+    validations:
+      required: true
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional context
+      description: Add screenshots, recordings, reduced-motion settings, or a minimal reproduction when useful.
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Before submitting
+      options:
+        - label: I searched existing issues for this problem.
+          required: true
+        - label: I removed secrets and personal information from the report.
+          required: true

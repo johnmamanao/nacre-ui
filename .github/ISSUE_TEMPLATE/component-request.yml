@@ -1,0 +1,67 @@
+name: Component request
+description: Propose a component that would strengthen the Nacre UI collection.
+title: '[Component]: '
+labels:
+  - component request
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for suggesting an addition. Explain the product need first; a visual reference can support the request but should not be the entire specification.
+  - type: input
+    id: component-name
+    attributes:
+      label: Component name
+      description: Use a short functional name. It does not need to be final.
+      placeholder: Perspective gallery
+    validations:
+      required: true
+  - type: dropdown
+    id: family
+    attributes:
+      label: Component family
+      options:
+        - Actions
+        - Loaders
+        - Text and motion
+        - Interactions
+        - Backgrounds
+        - New family
+    validations:
+      required: true
+  - type: textarea
+    id: use-case
+    attributes:
+      label: Product use case
+      description: Describe where this component would be used and what it should help a person accomplish.
+      placeholder: This would help product teams…
+    validations:
+      required: true
+  - type: textarea
+    id: behavior
+    attributes:
+      label: Expected behavior
+      description: Include pointer, touch, keyboard, loading, empty, and reduced-motion behavior when relevant.
+      placeholder: On pointer movement…
+    validations:
+      required: true
+  - type: input
+    id: reference
+    attributes:
+      label: Reference
+      description: Optional link to a visual, product, or interaction reference. Please note what should and should not be carried over.
+      placeholder: https://example.com/reference
+  - type: textarea
+    id: originality
+    attributes:
+      label: Nacre UI direction
+      description: Explain how the result could feel original rather than copying the reference.
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Before submitting
+      options:
+        - label: I searched the existing components and requests for a similar idea.
+          required: true
+        - label: I understand that a request may be declined or reshaped to fit the collection.
+          required: true

@@ -1,0 +1,150 @@
+.root {
+  --aperture-accent: currentColor;
+  --aperture-breathe-duration: 2380ms;
+  --aperture-duration: 1400ms;
+  --aperture-inner-duration: 2520ms;
+  --aperture-middle-duration: 1890ms;
+  --aperture-size: 42px;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 13px;
+  color: #2c2b27;
+}
+
+:global(.dark) .root {
+  color: #e9e8e3;
+}
+
+.aperture {
+  position: relative;
+  display: grid;
+  width: var(--aperture-size);
+  height: var(--aperture-size);
+  flex: 0 0 var(--aperture-size);
+  place-items: center;
+}
+
+.aperture::before {
+  position: absolute;
+  inset: 11%;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--aperture-accent) 8%, transparent);
+  box-shadow: 0 0 18px
+    color-mix(in srgb, var(--aperture-accent) 10%, transparent);
+  content: '';
+  animation: aperture-breathe var(--aperture-breathe-duration) ease-in-out
+    infinite;
+}
+
+.aperture svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.aperture circle {
+  fill: none;
+  stroke: var(--aperture-accent);
+  stroke-linecap: round;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.outer {
+  stroke-dasharray: 28 72;
+  stroke-width: 1.25;
+  opacity: 0.72;
+  animation: aperture-spin var(--aperture-duration) linear infinite;
+}
+
+.middle {
+  stroke-dasharray: 43 57;
+  stroke-width: 1.45;
+  opacity: 0.52;
+  animation: aperture-spin var(--aperture-middle-duration) linear infinite
+    reverse;
+}
+
+.inner {
+  stroke-dasharray: 58 42;
+  stroke-width: 1.7;
+  opacity: 0.34;
+  animation: aperture-spin var(--aperture-inner-duration) linear infinite;
+}
+
+.pearl {
+  position: relative;
+  width: 7px;
+  height: 7px;
+  border: 1px solid color-mix(in srgb, var(--aperture-accent) 58%, white);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 34% 28%, #ffffff 0 12%, transparent 34%),
+    var(--aperture-accent);
+  box-shadow:
+    0 0 0 3px color-mix(in srgb, var(--aperture-accent) 7%, transparent),
+    0 0 12px color-mix(in srgb, var(--aperture-accent) 24%, transparent);
+  animation: pearl-breathe var(--aperture-breathe-duration) ease-in-out infinite;
+}
+
+.label {
+  min-width: 0;
+  font-size: 13px;
+  font-weight: 610;
+  letter-spacing: -0.01em;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+@keyframes aperture-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes aperture-breathe {
+  50% {
+    opacity: 0.58;
+    transform: scale(1.05);
+  }
+}
+
+@keyframes pearl-breathe {
+  50% {
+    box-shadow:
+      0 0 0 5px color-mix(in srgb, var(--aperture-accent) 8%, transparent),
+      0 0 16px color-mix(in srgb, var(--aperture-accent) 32%, transparent);
+    transform: scale(1.08);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aperture::before,
+  .aperture circle,
+  .pearl {
+    animation: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .root {
+    color: CanvasText;
+  }
+
+  .aperture::before {
+    display: none;
+  }
+
+  .aperture circle {
+    stroke: CanvasText;
+  }
+
+  .pearl {
+    border-color: CanvasText;
+    background: CanvasText;
+    box-shadow: none;
+  }
+}

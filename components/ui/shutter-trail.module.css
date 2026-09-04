@@ -1,0 +1,222 @@
+.root {
+  position: relative;
+  width: min(100%, 900px);
+  min-width: 300px;
+  min-height: 390px;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  border-radius: 14px;
+  color: #252520;
+  background:
+    radial-gradient(circle at 50% 42%, rgb(255 255 255 / 74%), transparent 42%),
+    #deddd7;
+  box-shadow: inset 0 0 0 1px rgb(26 27 24 / 10%);
+  cursor: crosshair;
+  isolation: isolate;
+  text-align: initial;
+  touch-action: none;
+}
+
+:global(.dark) .root {
+  color: #f1efe8;
+  background:
+    radial-gradient(circle at 50% 42%, rgb(255 255 255 / 4%), transparent 42%),
+    #121311;
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 9%);
+}
+
+.root:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}
+
+.idleCueStage {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+}
+
+.idleCue {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 7px 11px 7px 7px;
+  border-radius: 9px;
+  color: color-mix(in srgb, currentColor 64%, transparent);
+  background: color-mix(in srgb, currentColor 5%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, currentColor 8%, transparent);
+}
+
+.cueTrack {
+  position: relative;
+  display: grid;
+  width: 32px;
+  height: 32px;
+  place-items: center;
+  overflow: hidden;
+  border-radius: 7px;
+  background: color-mix(in srgb, currentColor 7%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, currentColor 10%, transparent);
+}
+
+.cueTrack::after {
+  position: absolute;
+  width: 18px;
+  height: 1px;
+  border-radius: 999px;
+  background: currentColor;
+  opacity: 0.1;
+  content: '';
+  transform: rotate(-31deg);
+}
+
+.cuePointer {
+  z-index: 1;
+  width: 17px;
+  height: 17px;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.35;
+}
+
+.cueLabel {
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 10px;
+  font-weight: 650;
+  letter-spacing: 0.025em;
+  white-space: nowrap;
+}
+
+.trailFrame {
+  position: absolute;
+  overflow: hidden;
+  border-radius: 9px;
+  background-color: #aaa9a3;
+  background-position: center;
+  background-size: cover;
+  box-shadow:
+    0 18px 42px rgb(38 36 31 / 18%),
+    inset 0 0 0 1px rgb(255 255 255 / 42%);
+}
+
+:global(.dark) .trailFrame {
+  box-shadow:
+    0 22px 52px rgb(0 0 0 / 44%),
+    inset 0 0 0 1px rgb(255 255 255 / 16%);
+}
+
+.trailFrame {
+  margin: 0;
+  pointer-events: none;
+  transform-origin: center;
+  will-change: clip-path, filter, opacity, transform;
+}
+
+.shutterGlint {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 38%,
+    rgb(255 255 255 / 34%) 49%,
+    transparent 60%
+  );
+  opacity: 0;
+  transform: translateX(-70%);
+  animation: shutter-glint 520ms 80ms cubic-bezier(0.2, 0, 0, 1) both;
+}
+
+.frameIndex {
+  position: absolute;
+  right: 8px;
+  bottom: 7px;
+  display: grid;
+  min-width: 22px;
+  height: 18px;
+  place-items: center;
+  border-radius: 4px;
+  color: #f5f3ec;
+  background: rgb(14 15 13 / 58%);
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  backdrop-filter: blur(5px);
+}
+
+.holdMark {
+  position: absolute;
+  z-index: 20;
+  right: 14px;
+  bottom: 12px;
+  padding: 6px 8px;
+  border-radius: 6px;
+  color: currentColor;
+  background: color-mix(in srgb, currentColor 7%, transparent);
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 9px;
+  font-weight: 650;
+  letter-spacing: 0.035em;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(4px);
+  transition:
+    opacity 160ms ease,
+    transform 220ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+.root:hover .holdMark,
+.root:focus-visible .holdMark,
+.root[data-frozen='true'] .holdMark {
+  opacity: 0.62;
+  transform: translateY(0);
+}
+
+@keyframes shutter-glint {
+  0% {
+    opacity: 0;
+    transform: translateX(-70%);
+  }
+  36% {
+    opacity: 0.72;
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(70%);
+  }
+}
+
+@media (max-width: 620px) {
+  .root {
+    min-height: 340px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .holdMark {
+    transition: none;
+  }
+
+  .shutterGlint {
+    display: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .root {
+    color: CanvasText;
+    background: Canvas;
+    box-shadow: inset 0 0 0 1px CanvasText;
+  }
+
+  .holdMark {
+    color: CanvasText;
+    background: Canvas;
+    outline: 1px solid CanvasText;
+  }
+}

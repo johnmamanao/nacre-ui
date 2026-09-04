@@ -1,0 +1,111 @@
+.root {
+  --ribbon-accent: currentColor;
+  --ribbon-duration: 1760ms;
+  --ribbon-size: 54px;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  color: #2c2b27;
+}
+
+:global(.dark) .root {
+  color: #e9e8e3;
+}
+
+.ribbon {
+  position: relative;
+  display: flex;
+  width: var(--ribbon-size);
+  height: calc(var(--ribbon-size) * 0.58);
+  align-items: center;
+  justify-content: center;
+  perspective: 180px;
+  transform: rotate(-8deg);
+  transform-style: preserve-3d;
+}
+
+.ribbon::after {
+  position: absolute;
+  inset: 48% 5% auto;
+  height: 7px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--ribbon-accent) 12%, transparent);
+  content: '';
+  filter: blur(5px);
+  transform: translateY(10px) rotate(8deg);
+}
+
+.segment {
+  position: relative;
+  z-index: 1;
+  width: 23%;
+  height: 62%;
+  margin-inline: -0.5px;
+  border: 1px solid color-mix(in srgb, var(--ribbon-accent) 28%, transparent);
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--ribbon-accent) 86%, white),
+    color-mix(in srgb, var(--ribbon-accent) 34%, transparent)
+  );
+  box-shadow: inset 1px 0 rgb(255 255 255 / 24%);
+  clip-path: polygon(13% 0, 100% 8%, 87% 100%, 0 92%);
+  opacity: 0.34;
+  transform-origin: left center;
+  transform-style: preserve-3d;
+  animation: ribbon-fold var(--ribbon-duration) cubic-bezier(0.4, 0, 0.2, 1)
+    infinite;
+}
+
+.segment:nth-child(even) {
+  background: linear-gradient(
+    225deg,
+    color-mix(in srgb, var(--ribbon-accent) 72%, white),
+    color-mix(in srgb, var(--ribbon-accent) 24%, transparent)
+  );
+  transform-origin: right center;
+}
+
+.label {
+  font-size: 13px;
+  font-weight: 560;
+  letter-spacing: -0.005em;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+@keyframes ribbon-fold {
+  0%,
+  24%,
+  100% {
+    opacity: 0.3;
+    transform: rotateY(58deg) translateY(1px) scaleY(0.9);
+  }
+
+  46%,
+  66% {
+    opacity: 0.96;
+    transform: rotateY(-12deg) translateY(-2px) scaleY(1.04);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .segment {
+    animation: none;
+    opacity: 0.76;
+    transform: rotateY(18deg);
+  }
+}
+
+@media (forced-colors: active) {
+  .ribbon::after {
+    display: none;
+  }
+
+  .segment,
+  .segment:nth-child(even) {
+    border-color: CanvasText;
+    background: Canvas;
+    box-shadow: none;
+  }
+}

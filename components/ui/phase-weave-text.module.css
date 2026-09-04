@@ -1,0 +1,62 @@
+.root {
+  position: relative;
+  display: inline-grid;
+  min-width: 0;
+  color: #24231f;
+  font-weight: 630;
+  letter-spacing: -0.04em;
+  line-height: 1.04;
+  isolation: isolate;
+}
+
+:global(.dark) .root {
+  color: #f0efe9;
+}
+
+.measure,
+.word {
+  grid-area: 1 / 1;
+}
+
+.measure {
+  display: grid;
+  visibility: hidden;
+}
+
+.measure > span {
+  grid-area: 1 / 1;
+  white-space: pre;
+}
+
+.word {
+  display: inline-flex;
+  align-items: baseline;
+  white-space: pre;
+}
+
+.character {
+  display: inline-block;
+  transform-origin: 50% 100%;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .character {
+    transform: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .root {
+    color: CanvasText;
+  }
+}

@@ -1,0 +1,40 @@
+.root {
+  --signal-accent: currentColor;
+
+  position: relative;
+  display: inline-block;
+  color: #24231f;
+  font-weight: 630;
+  letter-spacing: -0.04em;
+  line-height: 1.04;
+}
+
+:global(.dark) .root {
+  color: #f0efe9;
+}
+
+.copy {
+  position: relative;
+  z-index: 1;
+}
+
+.word {
+  display: inline-block;
+  color: var(--signal-accent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .word {
+    color: var(--signal-accent);
+  }
+}
+
+@media (forced-colors: active) {
+  .root {
+    color: CanvasText;
+  }
+
+  .word {
+    color: CanvasText;
+  }
+}

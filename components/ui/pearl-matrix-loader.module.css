@@ -1,0 +1,98 @@
+.root {
+  --matrix-accent: currentColor;
+  --matrix-duration: 1840ms;
+  --matrix-size: 46px;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  color: #2c2b27;
+}
+
+:global(.dark) .root {
+  color: #e9e8e3;
+}
+
+.matrix {
+  position: relative;
+  display: grid;
+  width: var(--matrix-size);
+  height: var(--matrix-size);
+  flex: 0 0 var(--matrix-size);
+  grid-template-columns: repeat(3, 1fr);
+  place-items: center;
+  transform: rotate(-5deg);
+}
+
+.matrix::before {
+  position: absolute;
+  inset: 11%;
+  border-radius: 35%;
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--matrix-accent) 8%, transparent),
+    transparent 70%
+  );
+  content: '';
+  filter: blur(4px);
+}
+
+.pearl {
+  position: relative;
+  width: 7px;
+  height: 7px;
+  border: 1px solid color-mix(in srgb, var(--matrix-accent) 44%, white);
+  border-radius: 44% 56% 52% 48%;
+  background:
+    radial-gradient(circle at 32% 26%, white 0 9%, transparent 28%),
+    var(--matrix-accent);
+  box-shadow: 0 2px 6px
+    color-mix(in srgb, var(--matrix-accent) 14%, transparent);
+  opacity: 0.24;
+  transform: translateY(2px) scale(0.72);
+  animation: matrix-lift var(--matrix-duration) cubic-bezier(0.4, 0, 0.2, 1)
+    infinite;
+}
+
+.label {
+  font-size: 13px;
+  font-weight: 560;
+  letter-spacing: -0.005em;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+@keyframes matrix-lift {
+  0%,
+  32%,
+  100% {
+    opacity: 0.22;
+    transform: translateY(2px) scale(0.72);
+  }
+
+  50%,
+  62% {
+    opacity: 1;
+    transform: translateY(-3px) scale(1.08);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pearl {
+    animation: none;
+    opacity: 0.72;
+    transform: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .matrix::before {
+    display: none;
+  }
+
+  .pearl {
+    border-color: CanvasText;
+    background: CanvasText;
+    box-shadow: none;
+  }
+}

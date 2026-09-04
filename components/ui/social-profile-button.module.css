@@ -1,0 +1,222 @@
+.root {
+  position: relative;
+  display: grid;
+  min-width: 218px;
+  height: 52px;
+  grid-template-columns: 36px 1fr 30px;
+  align-items: center;
+  gap: 12px;
+  padding: 0 10px 0 8px;
+  overflow: hidden;
+  border: 1px solid rgb(255 255 255 / 10%);
+  border-radius: 13px;
+  color: #f3f2ed;
+  background: linear-gradient(180deg, #1a1b18, #131411);
+  box-shadow:
+    inset 0 1px rgb(255 255 255 / 6%),
+    0 13px 30px rgb(0 0 0 / 22%);
+  cursor: pointer;
+  text-align: left;
+  text-decoration: none;
+  transition:
+    border-color 90ms ease-out,
+    background 90ms ease-out,
+    box-shadow 180ms ease-out,
+    transform 90ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+.root::before {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    100px circle at 28px 50%,
+    rgb(255 255 255 / 9%),
+    transparent 72%
+  );
+  content: '';
+  opacity: 0.42;
+  pointer-events: none;
+  transition: opacity 180ms ease-out;
+}
+
+.root:hover,
+.root:focus-visible {
+  border-color: rgb(255 255 255 / 18%);
+  background: linear-gradient(180deg, #20211d, #171814);
+  box-shadow:
+    inset 0 1px rgb(255 255 255 / 8%),
+    0 17px 36px rgb(0 0 0 / 28%);
+}
+
+.root:hover::before,
+.root:focus-visible::before {
+  opacity: 1;
+}
+
+.root:active {
+  box-shadow:
+    inset 0 2px 5px rgb(0 0 0 / 28%),
+    0 6px 14px rgb(0 0 0 / 18%);
+  transform: scale(0.98);
+}
+
+.root:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}
+
+.mark {
+  position: relative;
+  display: grid;
+  width: 36px;
+  height: 36px;
+  place-items: center;
+  border: 1px solid rgb(255 255 255 / 72%);
+  border-radius: 11px;
+  color: #171815;
+  background: #efeee9;
+  box-shadow:
+    inset 0 1px rgb(255 255 255 / 82%),
+    0 4px 12px rgb(0 0 0 / 18%);
+  transition:
+    border-color 180ms ease-out,
+    box-shadow 180ms ease-out,
+    transform 220ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+.mark svg {
+  width: 18px;
+  height: 18px;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.25;
+}
+
+.identity {
+  position: relative;
+  display: block;
+  height: 18px;
+  overflow: hidden;
+  font-size: 13px;
+  font-weight: 660;
+  letter-spacing: -0.012em;
+  line-height: 18px;
+  white-space: nowrap;
+}
+
+.label,
+.handle {
+  position: absolute;
+  inset: 0;
+  transition:
+    opacity 150ms ease-out,
+    transform 200ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+.label {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.handle {
+  color: #d5d5cf;
+  opacity: 0;
+  transform: translateX(12px);
+}
+
+.action {
+  position: relative;
+  display: grid;
+  width: 30px;
+  height: 30px;
+  place-items: center;
+  border: 1px solid rgb(255 255 255 / 8%);
+  border-radius: 10px;
+  color: #e5e4df;
+  background: rgb(255 255 255 / 6%);
+  transition:
+    color 180ms ease-out,
+    background 180ms ease-out,
+    transform 220ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+.action svg {
+  width: 16px;
+  height: 16px;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.45;
+}
+
+.root:hover .label,
+.root:focus-visible .label {
+  opacity: 0;
+  transform: translateX(-10px);
+}
+
+.root:hover .handle,
+.root:focus-visible .handle {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.root:hover .mark,
+.root:focus-visible .mark {
+  border-color: #ffffff;
+  box-shadow:
+    inset 0 1px #ffffff,
+    0 6px 16px rgb(0 0 0 / 24%);
+  transform: translateX(1px) scale(1.03);
+}
+
+.root:hover .action,
+.root:focus-visible .action {
+  color: #171815;
+  background: #efeee9;
+  transform: translate(1px, -1px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .root,
+  .root::before,
+  .mark,
+  .label,
+  .handle,
+  .action {
+    transition: none;
+  }
+
+  .root:active,
+  .root:hover .mark,
+  .root:focus-visible .mark,
+  .root:hover .label,
+  .root:focus-visible .label,
+  .root:hover .handle,
+  .root:focus-visible .handle,
+  .root:hover .action,
+  .root:focus-visible .action {
+    transform: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .root {
+    color: LinkText;
+    border-color: LinkText;
+    background: Canvas;
+    box-shadow: none;
+  }
+
+  .mark,
+  .action {
+    color: LinkText;
+    border-color: LinkText;
+    background: Canvas;
+  }
+
+  .handle {
+    color: LinkText;
+  }
+}

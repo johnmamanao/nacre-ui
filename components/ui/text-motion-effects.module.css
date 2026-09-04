@@ -1,0 +1,94 @@
+.root {
+  display: inline-grid;
+  min-width: 0;
+  padding-block: 0.15em 0.23em;
+  color: #24231f;
+  font-weight: 630;
+  letter-spacing: -0.04em;
+  line-height: 1.04;
+  perspective: 720px;
+}
+:global(.dark) .root {
+  color: #f0efe9;
+}
+.copy,
+.measure {
+  grid-area: 1 / 1;
+}
+.copy {
+  display: inline-block;
+  white-space: pre-wrap;
+}
+.glyph {
+  display: inline-block;
+  transform-origin: 50% 100%;
+  will-change: opacity, transform;
+}
+.aurora {
+  background: linear-gradient(
+    108deg,
+    #f1ebd9 0%,
+    #a47dca 31%,
+    #f5ca83 50%,
+    #77b7a1 69%,
+    #f1ebd9 100%
+  );
+  background-clip: text;
+  background-size: 220% 100%;
+  color: transparent;
+  text-shadow: 0 0 0.75em color-mix(in srgb, #c5a9dd 18%, transparent);
+}
+:global(.dark) .aurora {
+  background: linear-gradient(
+    108deg,
+    #f4f0e5 0%,
+    #caa9e8 31%,
+    #f7d59e 50%,
+    #9dd6c2 69%,
+    #f4f0e5 100%
+  );
+  background-clip: text;
+  background-size: 220% 100%;
+}
+.filter {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+.liquid {
+  transform-origin: 50% 80%;
+}
+.measure {
+  display: grid;
+  visibility: hidden;
+}
+.measure > span {
+  grid-area: 1 / 1;
+  white-space: pre;
+}
+.slot {
+  transform-origin: 50% 50%;
+  transform-style: preserve-3d;
+}
+.tilt {
+  transform-origin: 50% 50%;
+  transform-style: preserve-3d;
+  text-shadow: 0 0.06em 0.2em color-mix(in srgb, currentColor 13%, transparent);
+}
+@media (prefers-reduced-motion: reduce) {
+  .glyph,
+  .copy {
+    transform: none;
+  }
+}
+@media (forced-colors: active) {
+  .root {
+    color: CanvasText;
+  }
+  .aurora {
+    background: none;
+    color: CanvasText;
+    text-shadow: none;
+  }
+}

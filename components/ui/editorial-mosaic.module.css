@@ -1,0 +1,281 @@
+.root {
+  --mosaic-gap: 8px;
+  --mosaic-radius: 12px;
+  position: relative;
+  display: block;
+  width: min(100%, 900px);
+  min-width: 300px;
+  min-height: 360px;
+  overflow: hidden;
+  border: 0;
+  border-radius: 0;
+  color: #f3f1eb;
+  background: transparent;
+  box-shadow: none;
+}
+
+.stage {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  gap: var(--mosaic-gap);
+}
+
+.stage[data-mode='overview'] {
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+}
+
+.stage[data-mode='overview'] .frame:nth-child(1) {
+  grid-column: span 5;
+  grid-row: span 2;
+}
+
+.stage[data-mode='overview'] .frame:nth-child(2),
+.stage[data-mode='overview'] .frame:nth-child(5) {
+  grid-column: span 4;
+}
+
+.stage[data-mode='overview'] .frame:nth-child(3),
+.stage[data-mode='overview'] .frame:nth-child(4) {
+  grid-column: span 3;
+}
+
+.stage[data-mode='focus'] {
+  grid-template-columns: minmax(0, 3fr) minmax(108px, 0.82fr);
+  grid-template-rows: repeat(4, minmax(0, 1fr));
+}
+
+.stage[data-mode='focus'] .frame:first-child {
+  grid-column: 1;
+  grid-row: 1 / -1;
+}
+
+.stage[data-mode='focus'] .frame:not(:first-child) {
+  grid-column: 2;
+}
+
+.frame {
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid rgb(255 255 255 / 8%);
+  border-radius: var(--mosaic-radius);
+  color: #fff;
+  background: #171815;
+  box-shadow: inset 0 1px rgb(255 255 255 / 8%);
+  cursor: pointer;
+  text-align: left;
+}
+
+.frame[data-active='true'] {
+  cursor: zoom-out;
+}
+
+.frame:focus-visible {
+  outline: 2px solid #f3f1eb;
+  outline-offset: -4px;
+}
+
+.image,
+.shade {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.image {
+  object-fit: cover;
+  filter: saturate(0.72) contrast(1.04);
+  transform: scale(1.015);
+  transition:
+    filter 420ms cubic-bezier(0.4, 0, 0.2, 1),
+    transform 520ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.shade {
+  background: linear-gradient(to top, rgb(0 0 0 / 70%), transparent 58%);
+  opacity: 0.66;
+  pointer-events: none;
+  transition: opacity 240ms ease;
+}
+
+.frame:hover .image,
+.frame:focus-visible .image,
+.frame[data-active='true'] .image {
+  filter: saturate(0.98) contrast(1.02);
+  transform: scale(1.045);
+}
+
+.frame:hover .shade,
+.frame:focus-visible .shade {
+  opacity: 0.86;
+}
+
+.caption {
+  position: absolute;
+  right: 12px;
+  bottom: 11px;
+  left: 12px;
+  z-index: 1;
+  display: grid;
+  gap: 3px;
+  pointer-events: none;
+}
+
+.caption small {
+  color: rgb(255 255 255 / 62%);
+  font-family: var(--mono, ui-monospace, monospace);
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.caption strong {
+  overflow: hidden;
+  font-size: 12px;
+  font-weight: 670;
+  letter-spacing: -0.016em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.openCue {
+  position: absolute;
+  z-index: 1;
+  top: 9px;
+  right: 9px;
+  display: grid;
+  width: 26px;
+  height: 26px;
+  place-items: center;
+  border: 1px solid rgb(255 255 255 / 17%);
+  border-radius: 8px;
+  background: rgb(0 0 0 / 34%);
+  backdrop-filter: blur(8px);
+  opacity: 0;
+  transform: translate(-4px, 4px);
+  transition:
+    opacity 160ms ease,
+    transform 240ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+.openCue svg {
+  width: 13px;
+}
+
+.frame:hover .openCue,
+.frame:focus-visible .openCue {
+  opacity: 1;
+  transform: translate(0, 0);
+}
+
+.stage[data-mode='focus'] .frame:not(:first-child) .caption {
+  right: 7px;
+  bottom: 6px;
+  left: 7px;
+}
+
+.stage[data-mode='focus'] .frame:not(:first-child) .caption small,
+.stage[data-mode='focus'] .frame:not(:first-child) .caption strong,
+.stage[data-mode='focus'] .frame:first-child .caption {
+  display: none;
+}
+
+.railIndex {
+  position: absolute;
+  z-index: 1;
+  top: 7px;
+  left: 8px;
+  color: rgb(255 255 255 / 72%);
+  font-family: var(--mono, ui-monospace, monospace);
+  font-size: 8px;
+}
+
+.storyMeta {
+  position: absolute;
+  z-index: 2;
+  right: calc(12px + 24%);
+  bottom: 25px;
+  left: 28px;
+  display: grid;
+  gap: 4px;
+  pointer-events: none;
+}
+
+.storyMeta span {
+  color: rgb(255 255 255 / 64%);
+  font-family: var(--mono, ui-monospace, monospace);
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.storyMeta strong {
+  font-size: clamp(20px, 3vw, 35px);
+  font-weight: 620;
+  letter-spacing: -0.035em;
+}
+
+@media (max-width: 620px) {
+  .root {
+    min-height: 340px;
+  }
+
+  .stage[data-mode='overview'] {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+
+  .stage[data-mode='overview'] .frame:nth-child(1) {
+    grid-column: span 3;
+  }
+
+  .stage[data-mode='overview'] .frame:nth-child(n + 2) {
+    grid-column: span 3;
+  }
+
+  .stage[data-mode='overview'] .frame:nth-child(n + 4) {
+    display: none;
+  }
+
+  .stage[data-mode='focus'] {
+    grid-template-columns: minmax(0, 1fr) 84px;
+  }
+
+  .storyMeta {
+    right: 108px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .image,
+  .shade,
+  .openCue {
+    transition: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .root,
+  .frame {
+    color: CanvasText;
+    border-color: CanvasText;
+    background: Canvas;
+    box-shadow: none;
+  }
+
+  .image {
+    forced-color-adjust: none;
+  }
+
+  .caption,
+  .storyMeta {
+    color: CanvasText;
+  }
+}
