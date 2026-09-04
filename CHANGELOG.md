@@ -26,6 +26,8 @@ published.
 
 ### Fixed
 
+- Facet Bloom Loader no longer renders a solid center dot.
+- Mobile landing previews now use consistent alignment, spacing, and unclipped section labels.
 - Responsive landing, catalogue, documentation, and interactive preview layouts on phone and tablet widths.
 - Editorial Mosaic sizing in catalogue cards.
 - Compact catalogue framing for Folio Arc Carousel and Helix Reel.

@@ -56,20 +56,6 @@
     infinite;
 }
 
-.center {
-  position: absolute;
-  inset: 50% auto auto 50%;
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--facet-accent);
-  box-shadow:
-    0 0 0 3px color-mix(in srgb, var(--facet-accent) 7%, transparent),
-    0 0 10px color-mix(in srgb, var(--facet-accent) 20%, transparent);
-  transform: translate(-50%, -50%);
-  animation: facet-center var(--facet-duration) ease-in-out infinite;
-}
-
 .label {
   font-size: 13px;
   font-weight: 560;
@@ -93,26 +79,9 @@
   }
 }
 
-@keyframes facet-center {
-  0%,
-  100% {
-    opacity: 0.72;
-    transform: translate(-50%, -50%) scale(0.94);
-  }
-
-  50% {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1.06);
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .facet,
-  .center {
-    animation: none;
-  }
-
   .facet {
+    animation: none;
     opacity: 0.72;
     transform: translateX(-50%) scale(0.88);
   }
@@ -126,11 +95,6 @@
   .facet {
     border-color: CanvasText;
     background: Canvas;
-    box-shadow: none;
-  }
-
-  .center {
-    background: CanvasText;
     box-shadow: none;
   }
 }

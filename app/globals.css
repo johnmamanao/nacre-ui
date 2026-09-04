@@ -1815,7 +1815,10 @@ footer nav a:hover {
 }
 
 .collection-showcase {
+  position: relative;
+  z-index: 1;
   margin-top: clamp(96px, 11vw, 148px);
+  scroll-margin-top: 28px;
 }
 .collection-intro {
   display: grid;
@@ -2688,7 +2691,7 @@ html:not(.dark) .footer-appearance .light-appearance,
     grid-template-columns: 1fr;
     min-height: 0;
     gap: 54px;
-    padding: 44px 0 58px;
+    padding: 44px 0 38px;
   }
   .home-hero-copy {
     text-align: left;
@@ -2729,20 +2732,21 @@ html:not(.dark) .footer-appearance .light-appearance,
     transform: none;
   }
   .hero-float-metal {
-    justify-items: end;
+    justify-items: start;
   }
   .hero-float-smoke {
     justify-items: start;
   }
   .hero-float-loader {
-    display: flex;
+    display: grid;
     align-items: center;
-    justify-content: flex-end;
-    gap: 16px;
+    justify-content: initial;
+    justify-items: start;
+    gap: 11px;
   }
   .hero-float-loader > small {
     max-width: none;
-    text-align: right;
+    text-align: left;
   }
   .product-window {
     margin-top: 60px;
@@ -2753,7 +2757,8 @@ html:not(.dark) .footer-appearance .light-appearance,
     border-radius: 18px;
   }
   .collection-showcase {
-    margin-top: 62px;
+    margin-top: 14px;
+    padding-top: 16px;
   }
   .collection-intro {
     grid-template-columns: 1fr;
@@ -2781,24 +2786,36 @@ html:not(.dark) .footer-appearance .light-appearance,
     min-height: 340px;
   }
   .collection-shelf {
+    overflow: hidden;
     grid-template-columns: 1fr;
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    background: var(--surface);
   }
   .collection-shelf-copy {
     grid-column: auto;
+    padding: 28px 22px;
   }
   .collection-shelf-actions {
     align-items: stretch;
     flex-direction: column;
-    padding: 38px 4px;
+    gap: 22px;
+    padding: 24px 22px;
     border-inline: 0;
     border-bottom: 1px solid var(--line);
   }
   .collection-shelf-actions > div {
+    width: 100%;
+    flex: 1;
     justify-items: start;
+  }
+  .collection-shelf-actions button {
+    width: 100%;
+    max-width: none;
   }
   .collection-shelf-loader {
     justify-content: flex-start;
-    padding-inline: 4px;
+    padding: 24px 22px;
   }
   .showcase-heading {
     min-height: 0;
@@ -2862,6 +2879,7 @@ html:not(.dark) .footer-appearance .light-appearance,
   }
   .home-footer {
     min-height: 0;
+    margin-top: 48px;
     padding-top: 0;
   }
   .footer-spotlight {
@@ -2919,7 +2937,12 @@ html:not(.dark) .footer-appearance .light-appearance,
   }
 
   .hero-float-loader {
+    display: flex;
     justify-content: center;
+  }
+
+  .collection-shelf-actions {
+    flex-direction: row;
   }
 }
 

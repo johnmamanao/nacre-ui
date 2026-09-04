@@ -61,7 +61,6 @@ function FacetBloomLoader({
             />
           </span>
         ))}
-        <span className={styles.center} />
       </span>
       {showLabel ? <span className={styles.label}>{label}</span> : null}
     </output>
