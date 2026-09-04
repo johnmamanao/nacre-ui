@@ -48,6 +48,12 @@ export default function RootLayout({
             __html: `(function(){try{var saved=localStorage.getItem('nacre-theme');var dark=saved===null||saved==='dark';document.documentElement.classList.toggle('dark',dark);document.documentElement.style.colorScheme=dark?'dark':'light';}catch(error){document.documentElement.classList.add('dark');document.documentElement.style.colorScheme='dark';}})();`,
           }}
         />
+        <script
+          id="nacre-entry-initializer"
+          dangerouslySetInnerHTML={{
+            __html: `(function(){document.documentElement.dataset.nacreEntry=location.pathname==='/'?'pending':'seen';})();`,
+          }}
+        />
       </head>
       <body>{children}</body>
     </html>

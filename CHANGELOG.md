@@ -10,6 +10,7 @@ published.
 
 ### Added
 
+- A Nacre-specific landing-page entry sequence that plays on each full page load.
 - Public repository documentation and contribution guidance.
 - Structured forms for component requests and bug reports.
 - Pull-request checks for formatting, linting, TypeScript, and production builds.
@@ -25,5 +26,9 @@ published.
 
 ### Fixed
 
+- Facet Bloom Loader no longer renders a solid center dot or circular ambient haze.
+- Mobile landing previews now use a compact live tray with consistent alignment and unclipped labels.
+- The desktop live preview no longer sits beneath an opaque radial veil.
+- Responsive landing, catalogue, documentation, and interactive preview layouts on phone and tablet widths.
 - Editorial Mosaic sizing in catalogue cards.
 - Compact catalogue framing for Folio Arc Carousel and Helix Reel.
