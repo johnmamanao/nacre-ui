@@ -1,8 +1,8 @@
 # Release readiness
 
-This document separates opening the source repository from publishing a stable
-npm package. The repository can be public while package work continues, as long
-as the website and README describe that status accurately.
+This document separates publishing the source repository, deploying the site,
+and releasing the npm package. Nacre UI is public on GitHub and Vercel, and the
+first CLI version is available on npm.
 
 ## Public repository
 
@@ -32,16 +32,23 @@ The documentation app is private and is not the npm package. The dedicated
 `@nacre-ui/cli` workspace builds a source registry from the reviewed component
 files and copies selected entries into consumer projects.
 
-Before each CLI release:
+Before each later CLI release:
 
 - run the complete repository checks;
 - compile every generated registry component in the clean test fixture;
 - inspect the npm tarball and confirm it contains only the CLI, registry,
   package documentation, and license;
 - test the packed CLI against a clean React project;
-- publish from a `cli-v*` tag through the provenance-enabled release workflow;
+- publish from a `v*` tag through the trusted release workflow;
 - verify the public package by installing the published version in a fresh
   project.
+
+## Site delivery
+
+Pull requests and non-`main` branches receive Vercel Preview deployments.
+Merges to `main` receive Production deployments. Follow
+[DELIVERY_WORKFLOW.md](DELIVERY_WORKFLOW.md) so visible changes are reviewed at
+their Preview URL before reaching production.
 
 ## Release rule
 
