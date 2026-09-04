@@ -43,6 +43,7 @@ const entries = {
   'folio-arc-carousel': 'components/ui/folio-arc-carousel.tsx',
   'helix-reel': 'components/ui/helix-reel.tsx',
   'toolchain-marquee': 'components/ui/toolchain-marquee.tsx',
+  'orbit-ledger': 'components/ui/orbit-ledger.tsx',
   'nacre-field-shader': 'components/ui/nacre-field-shader.tsx',
   'iridescent-weave-shader': 'components/ui/iridescent-weave-shader.tsx',
   'mesh-background': 'components/ui/mesh-background.tsx',

@@ -10,6 +10,7 @@ published.
 
 ### Added
 
+- Orbit Ledger, a configurable scroll-driven project showcase with contained autoplay, a curved card path, keyboard controls, and a reduced-motion grid.
 - A Nacre-specific landing-page entry sequence that plays on each full page load.
 - Public repository documentation and contribution guidance.
 - Structured forms for component requests and bug reports.
