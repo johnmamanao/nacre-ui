@@ -29,6 +29,7 @@ published.
 
 ### Fixed
 
+- Search results retain scrolling without exposing clipped native scrollbar chrome.
 - Facet Bloom Loader no longer renders a solid center dot or circular ambient haze.
 - Mobile landing previews now use a compact live tray with consistent alignment and unclipped labels.
 - The desktop live preview no longer sits beneath an opaque radial veil.
