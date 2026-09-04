@@ -10,6 +10,7 @@ published.
 
 ### Added
 
+- A Nacre-specific landing-page entry sequence that plays on each full page load.
 - Public repository documentation and contribution guidance.
 - Structured forms for component requests and bug reports.
 - Pull-request checks for formatting, linting, TypeScript, and production builds.

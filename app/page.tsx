@@ -11,12 +11,14 @@ import { LiquidMetalButton } from '@/components/ui/liquid-metal-button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useTheme } from '@/lib/use-theme';
 import { GithubStarButton } from './github-star-button';
+import { SiteEntryLoader } from './site-entry-loader';
 
 export default function Home() {
   const { isDark, setTheme, toggleTheme } = useTheme();
 
   return (
     <ScrollArea className="landing-page-scroll">
+      <SiteEntryLoader />
       <main id="top" className="home-page">
         <div className="home-hero-shell">
           <header className="site-header home-header">
