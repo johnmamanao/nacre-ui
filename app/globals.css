@@ -1357,10 +1357,10 @@ footer nav a:hover {
 .home-hero {
   display: grid;
   grid-template-columns: minmax(0, 1.08fr) minmax(390px, 0.92fr);
-  min-height: clamp(520px, 72svh, 680px);
+  min-height: clamp(500px, 62svh, 620px);
   align-items: center;
   gap: clamp(48px, 7vw, 96px);
-  padding: clamp(48px, 6vw, 76px) 0 clamp(70px, 8vw, 100px);
+  padding: clamp(32px, 3vw, 48px) 0 clamp(42px, 4vw, 64px);
 }
 .home-hero-copy {
   max-width: 720px;
@@ -1805,7 +1805,7 @@ footer nav a:hover {
 .collection-showcase {
   position: relative;
   z-index: 1;
-  margin-top: clamp(96px, 11vw, 148px);
+  margin-top: clamp(48px, 5vw, 80px);
   scroll-margin-top: 28px;
 }
 .collection-intro {

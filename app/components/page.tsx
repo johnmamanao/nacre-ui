@@ -1189,6 +1189,8 @@ const componentPlaygrounds: Partial<Record<ComponentName, PlaygroundConfig>> = {
   'Orbit Ledger': {
     defaults: {
       accent: '#d8a7ff',
+      autoPlay: true,
+      autoPlayInterval: 3200,
       cardWidth: 246,
       curve: 22,
       depth: 92,
@@ -1198,6 +1200,15 @@ const componentPlaygrounds: Partial<Record<ComponentName, PlaygroundConfig>> = {
     },
     controls: [
       { key: 'accent', label: 'Orbit accent', type: 'color' },
+      { key: 'autoPlay', label: 'Autoplay', type: 'toggle' },
+      {
+        key: 'autoPlayInterval',
+        label: 'Autoplay interval',
+        type: 'range',
+        min: 1600,
+        max: 8000,
+        step: 200,
+      },
       {
         key: 'cardWidth',
         label: 'Card width',
@@ -1860,6 +1871,20 @@ export default function Loading() {
         defaultValue: "'fixed'",
         description:
           'Covers the viewport or stays inside a positioned preview surface.',
+      },
+      {
+        name: 'autoPlay',
+        type: 'boolean',
+        defaultValue: 'true',
+        description:
+          'Advances contained showcases automatically without pausing on hover. Page-scroll mode remains manual.',
+      },
+      {
+        name: 'autoPlayInterval',
+        type: 'number',
+        defaultValue: '3200',
+        description:
+          'Sets the time between automatic project changes from 1600 through 12000 milliseconds.',
       },
       {
         name: 'speed',
@@ -4420,6 +4445,8 @@ function OrbitLedgerPreview({ values }: { values?: PlaygroundValues }) {
   return (
     <OrbitLedger
       accent={textValue(values, 'accent', '#d8a7ff')}
+      autoPlay={booleanValue(values, 'autoPlay', true)}
+      autoPlayInterval={numberValue(values, 'autoPlayInterval', 3200)}
       cardWidth={numberValue(values, 'cardWidth', compact ? 178 : 246)}
       className="orbit-ledger-demo-surface"
       curve={numberValue(values, 'curve', compact ? 15 : 22)}

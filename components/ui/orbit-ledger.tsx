@@ -34,6 +34,8 @@ export type OrbitLedgerProps = Omit<
   'onChange'
 > & {
   accent?: string;
+  autoPlay?: boolean;
+  autoPlayInterval?: number;
   cardWidth?: number;
   curve?: number;
   defaultActiveIndex?: number;
@@ -245,6 +247,8 @@ function OrbitCard({
 export function OrbitLedger({
   accent = '#d8a7ff',
   'aria-label': ariaLabel = 'Orbit Ledger project showcase',
+  autoPlay = true,
+  autoPlayInterval = 3200,
   cardWidth = 246,
   className,
   curve = 22,
@@ -274,6 +278,7 @@ export function OrbitLedger({
   );
   const [activeIndex, setActiveIndex] = React.useState(safeDefaultIndex);
   const activeIndexRef = React.useRef(safeDefaultIndex);
+  const autoPlayDirectionRef = React.useRef<1 | -1>(1);
 
   const pageScroll = useScroll({
     target: rootRef,
@@ -327,6 +332,39 @@ export function OrbitLedger({
     );
     return () => window.cancelAnimationFrame(frame);
   }, [goToIndex, mode, safeDefaultIndex]);
+
+  React.useEffect(() => {
+    if (
+      !autoPlay ||
+      reduceMotion ||
+      mode !== 'contained' ||
+      safeItems.length < 2
+    ) {
+      return;
+    }
+
+    const interval = window.setInterval(
+      () => {
+        const currentIndex = activeIndexRef.current;
+        if (currentIndex >= safeItems.length - 1) {
+          autoPlayDirectionRef.current = -1;
+        } else if (currentIndex <= 0) {
+          autoPlayDirectionRef.current = 1;
+        }
+        goToIndex(currentIndex + autoPlayDirectionRef.current);
+      },
+      clamp(autoPlayInterval, 1600, 12000),
+    );
+
+    return () => window.clearInterval(interval);
+  }, [
+    autoPlay,
+    autoPlayInterval,
+    goToIndex,
+    mode,
+    reduceMotion,
+    safeItems.length,
+  ]);
 
   useMotionValueEvent(progress, 'change', (value) => {
     const nextIndex = Math.round(value * Math.max(safeItems.length - 1, 1));
