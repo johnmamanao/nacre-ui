@@ -239,6 +239,74 @@ main {
   align-items: center;
   gap: 7px;
 }
+.github-star-button {
+  display: inline-flex;
+  height: 32px;
+  align-items: stretch;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--text) 13%, transparent);
+  border-radius: 999px;
+  color: var(--muted);
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--surface-2) 88%, transparent),
+      color-mix(in srgb, var(--surface) 96%, transparent)
+    ),
+    var(--surface);
+  box-shadow:
+    inset 0 1px color-mix(in srgb, white 7%, transparent),
+    0 5px 18px color-mix(in srgb, black 11%, transparent);
+  transition:
+    border-color 140ms cubic-bezier(0.22, 1, 0.36, 1),
+    color 140ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 140ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.github-star-button:hover {
+  border-color: color-mix(in srgb, var(--text) 23%, transparent);
+  color: var(--text);
+  transform: translateY(-1px);
+}
+.github-star-button:active {
+  transform: translateY(0) scale(0.98);
+}
+.github-star-button:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+.github-star-button-mark,
+.github-star-button-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.github-star-button-mark {
+  width: 33px;
+}
+.github-star-button-count {
+  min-width: 50px;
+  gap: 5px;
+  padding: 0 10px 0 9px;
+  border-left: 1px solid color-mix(in srgb, var(--text) 10%, transparent);
+  font-family: var(--mono);
+  font-size: 9px;
+  font-variant-numeric: tabular-nums;
+  font-weight: 620;
+}
+.github-star-button svg {
+  width: 13px;
+  height: 13px;
+  stroke-width: 1.8;
+}
+.github-star-button-mark svg {
+  fill: currentColor;
+  stroke: none;
+}
+.github-star-button-count svg {
+  width: 11px;
+  height: 11px;
+  fill: currentColor;
+}
 .search-button,
 .theme-button {
   border: 0;

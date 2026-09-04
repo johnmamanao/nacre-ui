@@ -10,6 +10,7 @@ import { GemSmokeButton } from '@/components/ui/gem-smoke-button';
 import { LiquidMetalButton } from '@/components/ui/liquid-metal-button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useTheme } from '@/lib/use-theme';
+import { GithubStarButton } from './github-star-button';
 
 export default function Home() {
   const { isDark, setTheme, toggleTheme } = useTheme();
@@ -33,6 +34,7 @@ export default function Home() {
               <Link href="/components">Components</Link>
             </nav>
             <div className="header-tools">
+              <GithubStarButton />
               <button
                 className="theme-button"
                 type="button"
