@@ -6,10 +6,10 @@ the production site.
 
 ## Environment mapping
 
-| Git state                         | Vercel environment | Purpose                                      |
-| --------------------------------- | ------------------ | -------------------------------------------- |
-| Pull request or non-`main` branch | Preview            | Review the exact proposed change             |
-| `main`                            | Production         | Public site at `https://nacre-ui.vercel.app` |
+| Git state                         | Vercel environment | Purpose                                           |
+| --------------------------------- | ------------------ | ------------------------------------------------- |
+| Pull request or non-`main` branch | Preview            | Review the exact proposed change                  |
+| `main`                            | Production         | Public site at `https://nacre-ui.johnmamanao.com` |
 
 The GitHub repository and Vercel project are connected. Pushing a branch is
 enough to start its Preview deployment; merging into `main` starts Production.

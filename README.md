@@ -5,7 +5,7 @@ careful motion, and practical accessibility.
 
 ![Nacre UI component collection](public/og.png)
 
-[Live component catalogue](https://nacre-ui.vercel.app) ·
+[Live component catalogue](https://nacre-ui.johnmamanao.com) ·
 [npm package](https://www.npmjs.com/package/@nacre-ui/cli) ·
 [Contributing guide](CONTRIBUTING.md)
 
