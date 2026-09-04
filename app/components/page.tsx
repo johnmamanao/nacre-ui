@@ -27,6 +27,7 @@ import {
   WandSparkles,
 } from 'lucide-react';
 
+import cliPackage from '@/packages/cli/package.json';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useTheme } from '@/lib/use-theme';
 import { MagneticButton } from '@/components/ui/magnetic-button';
@@ -5954,7 +5955,7 @@ export default function ComponentsPage() {
                 })}
 
                 <div className="sidebar-follow">
-                  <span>Release 0.1</span>
+                  <span>Release {cliPackage.version}</span>
                   <strong>{catalog.length} components</strong>
                   <small>React / Next.js ready</small>
                 </div>
