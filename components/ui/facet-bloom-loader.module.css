@@ -21,15 +21,6 @@
   flex: 0 0 var(--facet-size);
 }
 
-.bloom::before {
-  position: absolute;
-  inset: 18%;
-  border-radius: 50%;
-  background: color-mix(in srgb, var(--facet-accent) 7%, transparent);
-  box-shadow: 0 0 15px color-mix(in srgb, var(--facet-accent) 8%, transparent);
-  content: '';
-}
-
 .facetPosition {
   position: absolute;
   inset: 0;
@@ -88,10 +79,6 @@
 }
 
 @media (forced-colors: active) {
-  .bloom::before {
-    display: none;
-  }
-
   .facet {
     border-color: CanvasText;
     background: Canvas;

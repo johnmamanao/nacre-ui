@@ -26,7 +26,7 @@ published.
 
 ### Fixed
 
-- Facet Bloom Loader no longer renders a solid center dot.
+- Facet Bloom Loader no longer renders a solid center dot or circular ambient haze.
 - Mobile landing previews now use a compact live tray with consistent alignment and unclipped labels.
 - The desktop live preview no longer sits beneath an opaque radial veil.
 - Responsive landing, catalogue, documentation, and interactive preview layouts on phone and tablet widths.
