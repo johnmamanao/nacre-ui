@@ -5470,11 +5470,7 @@ ${exportName}.displayName = '${exportName}';`;
         </div>
       </div>
 
-      <div
-        className={`component-doc-preview-shell${
-          name === 'Orbit Ledger' ? ' component-doc-preview-shell-plain' : ''
-        }`}
-      >
+      <div className="component-doc-preview-shell">
         {demoTab === 'preview' ? (
           <>
             <div className="component-doc-preview">

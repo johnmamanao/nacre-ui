@@ -50,15 +50,10 @@
   height: 100svh;
   min-height: 520px;
   overflow: hidden;
-  border: 1px solid rgb(24 25 22 / 11%);
-  border-radius: 22px;
   background:
     linear-gradient(rgb(28 29 26 / 5%) 1px, transparent 1px),
     linear-gradient(90deg, rgb(28 29 26 / 5%) 1px, transparent 1px), #e8e7e1;
   background-size: 48px 48px;
-  box-shadow:
-    0 28px 74px rgb(38 36 30 / 14%),
-    inset 0 1px 0 rgb(255 255 255 / 72%);
   isolation: isolate;
 }
 
@@ -68,15 +63,11 @@
 }
 
 :global(.dark) .viewport {
-  border-color: rgb(255 255 255 / 9%);
   background:
     linear-gradient(rgb(255 255 255 / 3.6%) 1px, transparent 1px),
     linear-gradient(90deg, rgb(255 255 255 / 3.6%) 1px, transparent 1px),
     #10110f;
   background-size: 48px 48px;
-  box-shadow:
-    0 32px 90px rgb(0 0 0 / 32%),
-    inset 0 1px 0 rgb(255 255 255 / 7%);
 }
 
 .heading {
@@ -505,10 +496,6 @@
 }
 
 @container (max-width: 620px) {
-  .viewport {
-    border-radius: 17px;
-  }
-
   .heading {
     top: 20px;
     left: 20px;
