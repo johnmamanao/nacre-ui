@@ -21,6 +21,8 @@ published.
 
 ### Changed
 
+- Source examples now use theme-aware syntax highlighting.
+- The components page now reads its release label from the CLI package version.
 - Component catalogue previews now mount only near the viewport.
 - Toolchain Marquee now uses three distinct, continuous technology stacks.
 - Installation and React documentation now describe the source-copying workflow.
