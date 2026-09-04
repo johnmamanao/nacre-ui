@@ -65,18 +65,23 @@ Before opening a pull request, run:
 npm run check
 ```
 
-This verifies formatting, lint rules, TypeScript, and the production build.
-There is not yet a dedicated unit-test suite, so describe the manual interaction
-and browser checks you performed in the pull request.
+This verifies formatting, lint rules, TypeScript, the CLI installation fixtures,
+and the production build. Describe any additional manual interaction and browser
+checks you performed in the pull request.
 
 ## Pull requests
 
 1. Fork the repository and create a branch from `main`.
 2. Make the smallest coherent change.
 3. Run the required checks.
-4. Complete the pull-request template with what changed, why, and how it was
+4. Push the branch and wait for its Vercel Preview deployment.
+5. Review visible and behavioral changes using the Preview URL.
+6. Complete the pull-request template with what changed, why, and how it was
    verified.
-5. Include screenshots or a short recording for visible interaction changes.
+7. Include screenshots or a short recording for visible interaction changes.
+
+Maintainers and AI-assisted sessions follow the complete
+[Preview and Production delivery workflow](docs/DELIVERY_WORKFLOW.md).
 
 By contributing, you agree that your contribution is licensed under the MIT
 License used by this repository.

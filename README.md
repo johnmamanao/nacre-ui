@@ -5,10 +5,9 @@ careful motion, and practical accessibility.
 
 ![Nacre UI component collection](public/og.png)
 
-> [!IMPORTANT]
-> Nacre UI is currently in pre-release development. The component catalogue,
-> source registry, and CLI package are being prepared together for the first
-> public tag.
+[Live component catalogue](https://nacre-ui.vercel.app) ·
+[npm package](https://www.npmjs.com/package/@nacre-ui/cli) ·
+[Contributing guide](CONTRIBUTING.md)
 
 ## What is included
 
@@ -77,8 +76,8 @@ The documentation app remains private and is never published to npm. The npm
 release contains only `@nacre-ui/cli`, which builds its registry from the
 reviewed component source in this repository.
 
-See [Release readiness](docs/RELEASE_READINESS.md) for the remaining work and
-the checks required before publishing packages.
+See [Release readiness](docs/RELEASE_READINESS.md) for package checks and the
+[delivery workflow](docs/DELIVERY_WORKFLOW.md) for Preview and Production rules.
 
 ## Contributing
 
