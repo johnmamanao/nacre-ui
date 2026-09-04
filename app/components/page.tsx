@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import { Highlight, themes } from 'prism-react-renderer';
 import {
   useCallback,
   useEffect,
@@ -4577,6 +4578,74 @@ function CatalogueComponentPreview({ name }: { name: ComponentName }) {
   );
 }
 
+function codeLanguage(label: string) {
+  const normalizedLabel = label.toLowerCase();
+
+  if (normalizedLabel === 'terminal') return 'bash';
+  if (normalizedLabel === 'css') return 'css';
+  if (normalizedLabel === 'output') return 'text';
+  return 'tsx';
+}
+
+function HighlightedCode({
+  code,
+  label,
+  numbered = false,
+}: {
+  code: string;
+  label: string;
+  numbered?: boolean;
+}) {
+  const { isDark } = useTheme();
+
+  return (
+    <Highlight
+      code={code}
+      language={codeLanguage(label)}
+      theme={isDark ? themes.oneDark : themes.github}
+    >
+      {({ tokens, getLineProps, getTokenProps, style }) => (
+        <pre
+          className="syntax-code"
+          style={{ ...style, background: 'transparent' }}
+        >
+          {numbered ? (
+            tokens.map((line, lineIndex) => {
+              const lineProps = getLineProps({ line });
+
+              return (
+                <span
+                  {...lineProps}
+                  className={`source-line ${lineProps.className}`}
+                  key={lineIndex}
+                >
+                  <span aria-hidden="true">{lineIndex + 1}</span>
+                  <code>
+                    {line.map((token, tokenIndex) => (
+                      <span {...getTokenProps({ token })} key={tokenIndex} />
+                    ))}
+                  </code>
+                </span>
+              );
+            })
+          ) : (
+            <code>
+              {tokens.map((line, lineIndex) => (
+                <span {...getLineProps({ line })} key={lineIndex}>
+                  {line.map((token, tokenIndex) => (
+                    <span {...getTokenProps({ token })} key={tokenIndex} />
+                  ))}
+                  {lineIndex < tokens.length - 1 ? '\n' : null}
+                </span>
+              ))}
+            </code>
+          )}
+        </pre>
+      )}
+    </Highlight>
+  );
+}
+
 function CodeBlock({ label, code }: { label: string; code: string }) {
   const [didCopy, setDidCopy] = useState(false);
 
@@ -4597,9 +4666,7 @@ function CodeBlock({ label, code }: { label: string; code: string }) {
           {didCopy ? <Check /> : <Copy />}
         </button>
       </div>
-      <pre>
-        <code>{code}</code>
-      </pre>
+      <HighlightedCode code={code} label={label} />
     </div>
   );
 }
@@ -4624,14 +4691,7 @@ function FullCodeBlock({ label, code }: { label: string; code: string }) {
           {didCopy ? <Check /> : <Copy />}
         </button>
       </div>
-      <pre>
-        {code.split('\n').map((line, index) => (
-          <span className="source-line" key={`${index}-${line}`}>
-            <span>{index + 1}</span>
-            <code>{line || ' '}</code>
-          </span>
-        ))}
-      </pre>
+      <HighlightedCode code={code} label={label} numbered />
     </div>
   );
 }
