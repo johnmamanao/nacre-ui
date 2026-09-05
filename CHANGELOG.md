@@ -8,6 +8,12 @@ published.
 
 ## [Unreleased]
 
+## [0.2.1] - 2026-09-05
+
+### Changed
+
+- Point the npm package homepage to the Nacre UI production landing page.
+
 ## [0.2.0] - 2026-09-05
 
 ### Added
@@ -46,6 +52,7 @@ published.
 - AI-ready prompts on every component page, including the active preview configuration.
 - Clean-project compilation and overwrite-protection tests for the CLI.
 
-[Unreleased]: https://github.com/johnmamanao/nacre-ui/compare/v0.2.0...HEAD
+[Unreleased]: https://github.com/johnmamanao/nacre-ui/compare/v0.2.1...HEAD
+[0.2.1]: https://github.com/johnmamanao/nacre-ui/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/johnmamanao/nacre-ui/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/johnmamanao/nacre-ui/releases/tag/v0.1.0
