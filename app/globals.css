@@ -1472,6 +1472,14 @@ footer nav a:hover {
   left: 1%;
   transform: rotate(2.5deg);
 }
+.hero-float-smoke [data-slot='gem-smoke-button'],
+.hero-float-smoke [data-slot='gem-smoke-button']:hover,
+.hero-float-smoke [data-slot='gem-smoke-button']:focus-visible {
+  box-shadow: inset 0 1px rgb(255 255 255 / 10%);
+}
+.hero-float-smoke [data-slot='gem-smoke-button']:active {
+  box-shadow: inset 0 2px 7px rgb(0 0 0 / 30%);
+}
 .hero-float-loader {
   right: 3%;
   bottom: 82px;
