@@ -291,7 +291,7 @@ const catalog = [
     name: 'Liquid Text',
     category: 'Text & Motion',
     description:
-      'A living displacement field gives type a controlled fluid surface.',
+      'Crisp type holds its shape while a metallic caustic moves through a restrained fluid surface.',
     status: 'New',
   },
   {
@@ -893,8 +893,26 @@ const componentPlaygrounds: Partial<Record<ComponentName, PlaygroundConfig>> = {
     controls: [{ key: 'text', label: 'Text', type: 'text' }],
   },
   'Liquid Text': {
-    defaults: { text: 'Let it move.' },
-    controls: [{ key: 'text', label: 'Text', type: 'text' }],
+    defaults: { duration: 5200, intensity: 5, text: 'Move like mercury.' },
+    controls: [
+      { key: 'text', label: 'Text', type: 'text' },
+      {
+        key: 'intensity',
+        label: 'Displacement',
+        type: 'range',
+        min: 0,
+        max: 14,
+        step: 1,
+      },
+      {
+        key: 'duration',
+        label: 'Cycle duration',
+        type: 'range',
+        min: 2400,
+        max: 12000,
+        step: 200,
+      },
+    ],
   },
   'Gravity Text': {
     defaults: { text: 'Pull focus here.' },
@@ -2452,13 +2470,30 @@ export default function Loading() {
   'Liquid Text': {
     usage: `import { LiquidText } from '@nacre-ui/react';
 
-<LiquidText as="h2" text="Let it move." />`,
+<LiquidText
+  as="h2"
+  duration={5200}
+  intensity={5}
+  text="Move like mercury."
+/>`,
     props: [
       {
         name: 'text',
         type: 'string',
         defaultValue: 'Required',
-        description: 'Sets the text rendered through the displacement field.',
+        description: 'Sets the text rendered through the liquid material.',
+      },
+      {
+        name: 'intensity',
+        type: 'number',
+        defaultValue: '5',
+        description: 'Controls the strength of the fluid displacement.',
+      },
+      {
+        name: 'duration',
+        type: 'number',
+        defaultValue: '5200',
+        description: 'Sets the material cycle duration in milliseconds.',
       },
       {
         name: 'as',
@@ -4296,7 +4331,9 @@ function LiquidTextPreview({ values }: { values?: PlaygroundValues }) {
     <LiquidText
       as="h2"
       className="catalog-text-motion-preview"
-      text={textValue(values, 'text', 'Let it move.')}
+      duration={numberValue(values, 'duration', 5200)}
+      intensity={numberValue(values, 'intensity', 5)}
+      text={textValue(values, 'text', 'Move like mercury.')}
     />
   );
 }
