@@ -8,6 +8,10 @@ published.
 
 ## [Unreleased]
 
+### Changed
+
+- Refine Liquid Text with a readable base layer, a moving metallic caustic, configurable displacement, and adjustable cycle timing.
+
 ## [0.2.2] - 2026-09-05
 
 ### Changed

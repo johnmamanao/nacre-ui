@@ -56,8 +56,54 @@
   height: 0;
   overflow: hidden;
 }
-.liquid {
-  transform-origin: 50% 80%;
+.liquidStack {
+  display: inline-grid;
+  isolation: isolate;
+}
+.liquidBase,
+.liquidFlow {
+  grid-area: 1 / 1;
+  white-space: pre-wrap;
+}
+.liquidBase {
+  color: currentColor;
+  opacity: 0.42;
+  text-shadow: 0 0.09em 0.32em color-mix(in srgb, currentColor 13%, transparent);
+}
+.liquidFlow {
+  background-image: linear-gradient(
+    104deg,
+    #151511 0%,
+    #24231f 17%,
+    #8f8d86 31%,
+    #f5f2e8 40%,
+    #68665f 48%,
+    #1b1a17 65%,
+    #9d86b1 82%,
+    #24231f 100%
+  );
+  background-position: 115% 50%;
+  background-size: 240% 100%;
+  background-clip: text;
+  color: transparent;
+  transform-origin: 50% 70%;
+  will-change: background-position, filter;
+}
+:global(.dark) .liquidBase {
+  opacity: 0.36;
+}
+:global(.dark) .liquidFlow {
+  background-image: linear-gradient(
+    104deg,
+    #f1ede4 0%,
+    #8a8781 18%,
+    #f8f5ed 31%,
+    #ffffff 40%,
+    #a985c3 51%,
+    #6e6b67 63%,
+    #f4f0e8 80%,
+    #f1ede4 100%
+  );
 }
 .measure {
   display: grid;
@@ -90,5 +136,13 @@
     background: none;
     color: CanvasText;
     text-shadow: none;
+  }
+  .liquidBase {
+    color: CanvasText;
+    opacity: 1;
+    text-shadow: none;
+  }
+  .liquidFlow {
+    display: none;
   }
 }

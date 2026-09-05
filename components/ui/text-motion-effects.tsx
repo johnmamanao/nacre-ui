@@ -62,9 +62,23 @@ function AuroraText({ as, className, text, ...props }: MotionTextProps) {
   );
 }
 
-function LiquidText({ as, className, text, ...props }: MotionTextProps) {
+export type LiquidTextProps = MotionTextProps & {
+  duration?: number;
+  intensity?: number;
+};
+
+function LiquidText({
+  as,
+  className,
+  duration = 5200,
+  intensity = 5,
+  text,
+  ...props
+}: LiquidTextProps) {
   const prefersReducedMotion = useReducedMotion();
   const filterId = `nacre-liquid-${React.useId().replace(/:/g, '')}`;
+  const safeDuration = Math.min(Math.max(duration, 2400), 12000);
+  const safeIntensity = Math.min(Math.max(intensity, 0), 14);
   return (
     <MotionTextFrame
       as={as}
@@ -75,51 +89,70 @@ function LiquidText({ as, className, text, ...props }: MotionTextProps) {
     >
       <svg className={styles.filter} aria-hidden="true">
         <defs>
-          <filter id={filterId} x="-8%" y="-35%" width="116%" height="170%">
+          <filter
+            id={filterId}
+            x="-10%"
+            y="-35%"
+            width="120%"
+            height="170%"
+            colorInterpolationFilters="sRGB"
+          >
             <motion.feTurbulence
-              type="turbulence"
-              baseFrequency="0.008 0.04"
+              type="fractalNoise"
+              baseFrequency="0.009 0.045"
               numOctaves="2"
-              seed="12"
+              seed="18"
+              result="noise"
               animate={
                 prefersReducedMotion
-                  ? { baseFrequency: '0.008 0.04' }
+                  ? { baseFrequency: '0.009 0.045' }
                   : {
                       baseFrequency: [
-                        '0.008 0.04',
-                        '0.018 0.025',
-                        '0.008 0.04',
+                        '0.009 0.045',
+                        '0.014 0.03',
+                        '0.009 0.045',
                       ],
                     }
               }
               transition={{
-                duration: prefersReducedMotion ? 0 : 5.6,
+                duration: prefersReducedMotion ? 0 : safeDuration / 1000,
                 ease: 'easeInOut',
                 repeat: prefersReducedMotion ? 0 : Infinity,
               }}
             />
-            <feDisplacementMap in="SourceGraphic" scale="7" />
+            <feGaussianBlur in="noise" stdDeviation="0.28" result="softNoise" />
+            <feDisplacementMap
+              in="SourceGraphic"
+              in2="softNoise"
+              scale={prefersReducedMotion ? 0 : safeIntensity}
+              xChannelSelector="R"
+              yChannelSelector="B"
+            />
           </filter>
         </defs>
       </svg>
-      <motion.span
-        aria-hidden="true"
-        className={cn(styles.copy, styles.liquid)}
-        style={{ filter: `url(#${filterId})` }}
-        animate={
-          prefersReducedMotion
-            ? { scaleY: 1, y: 0 }
-            : { scaleY: [1, 1.05, 0.97, 1], y: [0, -1.5, 1, 0] }
-        }
-        transition={{
-          duration: prefersReducedMotion ? 0 : 4.6,
-          ease: [0.4, 0, 0.2, 1],
-          repeat: prefersReducedMotion ? 0 : Infinity,
-          times: [0, 0.34, 0.7, 1],
-        }}
-      >
-        {text}
-      </motion.span>
+      <span className={styles.liquidStack} aria-hidden="true">
+        <span className={styles.liquidBase}>{text}</span>
+        <motion.span
+          className={styles.liquidFlow}
+          style={{ filter: `url(#${filterId})` }}
+          animate={
+            prefersReducedMotion
+              ? { backgroundPosition: '50% 50%' }
+              : {
+                  backgroundPosition: ['115% 50%', '-15% 50%', '115% 50%'],
+                }
+          }
+          transition={{
+            duration: prefersReducedMotion ? 0 : safeDuration / 1000,
+            ease: [0.4, 0, 0.2, 1],
+            repeat: prefersReducedMotion ? 0 : Infinity,
+            times: [0, 0.5, 1],
+          }}
+        >
+          {text}
+        </motion.span>
+      </span>
     </MotionTextFrame>
   );
 }
