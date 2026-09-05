@@ -8,6 +8,12 @@ published.
 
 ## [Unreleased]
 
+## [0.2.2] - 2026-09-05
+
+### Changed
+
+- Clarify that Nacre UI is a source-based component collection and `@nacre-ui/cli` is its installer.
+
 ## [0.2.1] - 2026-09-05
 
 ### Changed
@@ -52,7 +58,8 @@ published.
 - AI-ready prompts on every component page, including the active preview configuration.
 - Clean-project compilation and overwrite-protection tests for the CLI.
 
-[Unreleased]: https://github.com/johnmamanao/nacre-ui/compare/v0.2.1...HEAD
+[Unreleased]: https://github.com/johnmamanao/nacre-ui/compare/v0.2.2...HEAD
+[0.2.2]: https://github.com/johnmamanao/nacre-ui/compare/v0.2.1...v0.2.2
 [0.2.1]: https://github.com/johnmamanao/nacre-ui/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/johnmamanao/nacre-ui/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/johnmamanao/nacre-ui/releases/tag/v0.1.0
