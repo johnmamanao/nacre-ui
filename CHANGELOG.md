@@ -8,6 +8,8 @@ published.
 
 ## [Unreleased]
 
+## [0.2.3] - 2026-09-05
+
 ### Changed
 
 - Refine Liquid Text with a readable base layer, a moving metallic caustic, configurable displacement, and adjustable cycle timing.
@@ -62,7 +64,8 @@ published.
 - AI-ready prompts on every component page, including the active preview configuration.
 - Clean-project compilation and overwrite-protection tests for the CLI.
 
-[Unreleased]: https://github.com/johnmamanao/nacre-ui/compare/v0.2.2...HEAD
+[Unreleased]: https://github.com/johnmamanao/nacre-ui/compare/v0.2.3...HEAD
+[0.2.3]: https://github.com/johnmamanao/nacre-ui/compare/v0.2.2...v0.2.3
 [0.2.2]: https://github.com/johnmamanao/nacre-ui/compare/v0.2.1...v0.2.2
 [0.2.1]: https://github.com/johnmamanao/nacre-ui/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/johnmamanao/nacre-ui/compare/v0.1.0...v0.2.0
