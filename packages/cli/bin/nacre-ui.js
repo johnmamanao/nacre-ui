@@ -111,9 +111,13 @@ function installDependencies(manager, dependencies, projectRoot) {
   if (!dependencies.length) return;
   const args =
     manager === 'npm' ? ['install', ...dependencies] : ['add', ...dependencies];
-  const command = process.platform === 'win32' ? `${manager}.cmd` : manager;
+  const isWindows = process.platform === 'win32';
+  const command = isWindows ? process.env.ComSpec || 'cmd.exe' : manager;
+  const commandArguments = isWindows
+    ? ['/d', '/s', '/c', `${manager}.cmd`, ...args]
+    : args;
   console.log(`Installing ${dependencies.join(', ')} with ${manager}…`);
-  const result = spawnSync(command, args, {
+  const result = spawnSync(command, commandArguments, {
     cwd: projectRoot,
     stdio: 'inherit',
   });
