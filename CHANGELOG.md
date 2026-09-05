@@ -8,19 +8,16 @@ published.
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-09-05
+
 ### Added
 
 - Orbit Ledger, a configurable scroll-driven project showcase with contained autoplay, a curved card path, keyboard controls, and a reduced-motion grid.
 - A Nacre-specific landing-page entry sequence that plays on each full page load.
-- Public repository documentation and contribution guidance.
-- Structured forms for component requests and bug reports.
-- Pull-request checks for formatting, linting, TypeScript, and production builds.
-- AI-ready prompts on every component page, including the active preview configuration.
-- A source-copying CLI and generated registry for all catalogue components.
-- Clean-project compilation and overwrite-protection tests for the CLI.
 
 ### Changed
 
+- Repository automation now uses Dependabot, CodeQL, administrator branch protection, and SHA-pinned GitHub Actions.
 - Source examples now use theme-aware syntax highlighting.
 - The components page now reads its release label from the CLI package version.
 - Component catalogue previews now mount only near the viewport.
@@ -29,6 +26,7 @@ published.
 
 ### Fixed
 
+- Component dependencies now install correctly from the CLI on Windows.
 - Search results retain scrolling without exposing clipped native scrollbar chrome.
 - Facet Bloom Loader no longer renders a solid center dot or circular ambient haze.
 - Mobile landing previews now use a compact live tray with consistent alignment and unclipped labels.
@@ -36,3 +34,18 @@ published.
 - Responsive landing, catalogue, documentation, and interactive preview layouts on phone and tablet widths.
 - Editorial Mosaic sizing in catalogue cards.
 - Compact catalogue framing for Folio Arc Carousel and Helix Reel.
+
+## [0.1.0] - 2026-09-04
+
+### Added
+
+- The initial public source-copying CLI and generated component registry.
+- Public repository documentation and contribution guidance.
+- Structured forms for component requests and bug reports.
+- Pull-request checks for formatting, linting, TypeScript, and production builds.
+- AI-ready prompts on every component page, including the active preview configuration.
+- Clean-project compilation and overwrite-protection tests for the CLI.
+
+[Unreleased]: https://github.com/johnmamanao/nacre-ui/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/johnmamanao/nacre-ui/compare/v0.1.0...v0.2.0
+[0.1.0]: https://github.com/johnmamanao/nacre-ui/releases/tag/v0.1.0
