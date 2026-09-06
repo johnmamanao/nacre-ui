@@ -8,6 +8,17 @@ published.
 
 ## [Unreleased]
 
+## [0.2.4] - 2026-09-07
+
+### Added
+
+- Liquid Metal Shader, an original WebGL chrome surface with reflective fold lighting, smooth pointer distortion, viewport pausing, and reduced-motion rendering.
+- Matrix Rain, a dependency-free Canvas 2D glyph field with deterministic columns, adjustable color, density, speed, trails, pointer focus, visibility pausing, and reduced-motion rendering.
+- Ripple Transition, an original WebGL image transition with click-position origins, refractive wave displacement, local color separation, autoplay, and reduced-motion handling.
+- ASCII Image, a responsive canvas glyph renderer with measured character cells, photographic dithering, threshold and posterization controls, local file replacement, and copyable text output.
+- Copy Button, Mute Button, Download Button, Like Button, Theme Button, Refresh Button, Bookmark Button, Lock Button, Play Button, Filter Button, Send Button, and Save Button with distinct state-driven micro-interactions.
+- All twelve micro buttons now preview a distinct icon transformation on hover using Morphicons spring interpolation, with immediate reduced-motion fallbacks.
+
 ## [0.2.3] - 2026-09-05
 
 ### Changed

@@ -1,0 +1,1398 @@
+.button {
+  --micro-ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --micro-orbit-ease: cubic-bezier(0.77, 0, 0.175, 1);
+
+  position: relative;
+  display: inline-flex;
+  height: 42px;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  padding: 0 14px;
+  overflow: hidden;
+  border: 1px solid rgb(255 255 255 / 11%);
+  border-radius: 12px;
+  color: #f4f3ee;
+  background: #171815;
+  box-shadow:
+    inset 0 1px rgb(255 255 255 / 7%),
+    0 8px 24px rgb(0 0 0 / 18%);
+  font: inherit;
+  font-size: 12px;
+  font-weight: 620;
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  transition:
+    border-color 140ms ease,
+    color 140ms ease,
+    background-color 140ms ease,
+    box-shadow 140ms ease,
+    transform 140ms var(--micro-ease-out);
+}
+
+.button:active {
+  transform: scale(0.97);
+}
+
+.button:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}
+
+.button:disabled {
+  cursor: not-allowed;
+  opacity: 0.52;
+  transform: none;
+}
+
+.copyButton {
+  min-width: 100px;
+}
+
+.copyGlyph {
+  position: relative;
+  width: 18px;
+  height: 17px;
+  flex: 0 0 auto;
+}
+
+.copyFront,
+.copyBack {
+  position: absolute;
+  width: 10px;
+  height: 12px;
+  border: 1.5px solid currentColor;
+  border-radius: 2.5px;
+  transition:
+    opacity 180ms var(--micro-ease-out),
+    transform 180ms var(--micro-ease-out);
+}
+
+.copyFront {
+  top: 4px;
+  left: 2px;
+}
+
+.copyBack {
+  top: 1px;
+  left: 6px;
+  opacity: 0.58;
+}
+
+.checkIcon {
+  position: absolute;
+  top: 1px;
+  left: 1px;
+  width: 16px;
+  height: 16px;
+  opacity: 0;
+  stroke-width: 1.8;
+  transform: rotate(-12deg) scale(0.92);
+  transition:
+    opacity 180ms var(--micro-ease-out),
+    transform 180ms var(--micro-ease-out);
+}
+
+.copyLabels,
+.muteLabels,
+.likeLabels,
+.themeLabels {
+  display: grid;
+  min-width: 42px;
+  place-items: center start;
+}
+
+.copyLabels span,
+.muteLabels span,
+.likeLabels span,
+.themeLabels span {
+  grid-area: 1 / 1;
+  white-space: nowrap;
+}
+
+.copyLabels span {
+  transition:
+    opacity 180ms var(--micro-ease-out),
+    transform 180ms var(--micro-ease-out);
+}
+
+.copyLabels .successLabel {
+  opacity: 0;
+  transform: translateX(-38%);
+}
+
+.copyButton[data-state='copied'] {
+  border-color: rgb(77 210 144 / 24%);
+  color: #bcf4d4;
+  background: #142019;
+}
+
+.copyButton[data-state='copied'] .copyFront {
+  opacity: 0;
+  transform: translate(-5px, 5px) rotate(-8deg);
+}
+
+.copyButton[data-state='copied'] .copyBack {
+  opacity: 0;
+  transform: translate(5px, -5px) rotate(8deg);
+}
+
+.copyButton[data-state='copied'] .checkIcon {
+  opacity: 1;
+  transform: rotate(0deg) scale(1);
+}
+
+.copyButton[data-state='copied'] .idleLabel {
+  opacity: 0;
+  transform: translateX(38%);
+}
+
+.copyButton[data-state='copied'] .successLabel {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.muteButton {
+  min-width: 104px;
+}
+
+.muteGlyph {
+  width: 19px;
+  height: 19px;
+  flex: 0 0 auto;
+}
+
+.muteGlyph svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.5;
+}
+
+.speaker,
+.waveOne,
+.waveTwo,
+.muteSlash {
+  transform-origin: 11px 10px;
+  transition:
+    opacity 180ms var(--micro-ease-out),
+    transform 180ms var(--micro-ease-out);
+}
+
+.muteSlash {
+  opacity: 0;
+  transform: rotate(-18deg) scale(0.92);
+}
+
+.muteLabels span {
+  transition: opacity 140ms ease;
+}
+
+.muteLabels .successLabel {
+  opacity: 0;
+}
+
+.muteButton[data-state='muted'] {
+  color: #ff9188;
+  background: #1e1514;
+}
+
+.muteButton[data-state='muted'] .waveOne {
+  opacity: 0;
+  transform: translateX(-3px) scaleX(0.45);
+}
+
+.muteButton[data-state='muted'] .waveTwo {
+  opacity: 0;
+  transform: translateX(-5px) scaleX(0.3);
+}
+
+.muteButton[data-state='muted'] .muteSlash {
+  opacity: 1;
+  transform: rotate(0deg) scale(1);
+}
+
+.muteButton[data-state='muted'] .idleLabel,
+.muteButton:not([data-state='muted']) .successLabel {
+  opacity: 0;
+}
+
+.muteButton[data-state='muted'] .successLabel {
+  opacity: 1;
+}
+
+.downloadButton {
+  min-width: 142px;
+}
+
+.downloadIcon {
+  position: relative;
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
+}
+
+.downloadIcon svg {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  overflow: visible;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.55;
+}
+
+.downloadArrow,
+.downloadTray,
+.completeIcon {
+  transition:
+    opacity 180ms var(--micro-ease-out),
+    transform 180ms var(--micro-ease-out);
+}
+
+.downloadArrow,
+.downloadTray {
+  transform-origin: 10px 12px;
+}
+
+.completeIcon {
+  opacity: 0;
+  transform: translateY(-35%) scale(0.92);
+}
+
+.downloadProgress {
+  position: absolute;
+  right: 10px;
+  bottom: 3px;
+  left: 10px;
+  height: 1px;
+  border-radius: 999px;
+  background: currentColor;
+  opacity: 0;
+  transform: scaleX(0.08);
+  transform-origin: left;
+}
+
+.downloadLabels,
+.refreshLabels {
+  display: grid;
+  min-width: 76px;
+  place-items: center start;
+}
+
+.downloadLabels span,
+.refreshLabels span {
+  grid-area: 1 / 1;
+  white-space: nowrap;
+  transition:
+    clip-path 180ms var(--micro-ease-out),
+    opacity 180ms ease;
+}
+
+.downloadLabels span:nth-child(2),
+.downloadLabels span:nth-child(3) {
+  clip-path: inset(0 100% 0 0);
+  opacity: 0;
+}
+
+.downloadButton[data-state='downloading']:disabled {
+  opacity: 1;
+}
+
+.downloadButton[data-state='downloading'] .downloadArrow,
+.downloadButton[data-state='complete'] .downloadArrow {
+  opacity: 0;
+  transform: translateY(58%);
+}
+
+.downloadButton[data-state='downloading'] .downloadTray {
+  transform: scaleX(0.84);
+}
+
+.downloadButton[data-state='downloading'] .downloadProgress {
+  animation: download-progress 900ms linear infinite;
+  opacity: 0.58;
+}
+
+.downloadButton[data-state='complete'] {
+  border-color: rgb(77 210 144 / 24%);
+  color: #bcf4d4;
+  background: #142019;
+}
+
+.downloadButton[data-state='complete'] .downloadIcon > svg:first-child {
+  opacity: 0;
+}
+
+.downloadButton[data-state='complete'] .completeIcon {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.downloadButton[data-state='downloading'] .downloadLabels span:first-child,
+.downloadButton[data-state='complete'] .downloadLabels span:first-child,
+.downloadButton[data-state='complete'] .downloadLabels span:nth-child(2) {
+  clip-path: inset(0 0 0 100%);
+  opacity: 0;
+}
+
+.downloadButton[data-state='downloading'] .downloadLabels span:nth-child(2),
+.downloadButton[data-state='complete'] .downloadLabels span:nth-child(3) {
+  clip-path: inset(0);
+  opacity: 1;
+}
+
+.likeButton {
+  min-width: 98px;
+}
+
+.likeIcon {
+  position: relative;
+  display: grid;
+  width: 17px;
+  height: 17px;
+  flex: 0 0 auto;
+  place-items: center;
+}
+
+.likeIcon::before {
+  position: absolute;
+  inset: 1px;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  content: '';
+  opacity: 0;
+  transform: scale(0.82);
+  transition:
+    opacity 180ms ease,
+    transform 180ms var(--micro-ease-out);
+}
+
+.likeIcon svg {
+  position: relative;
+  width: 17px;
+  height: 17px;
+  fill: transparent;
+  stroke-width: 1.7;
+  transition: transform 180ms var(--micro-ease-out);
+}
+
+.likeLabels span {
+  transition:
+    opacity 180ms ease,
+    transform 180ms var(--micro-ease-out);
+}
+
+.likeLabels .successLabel {
+  opacity: 0;
+  transform: scale(0.92);
+}
+
+.likeButton[data-state='liked'] {
+  border-color: rgb(255 104 129 / 25%);
+  color: #ff879b;
+  background: #211316;
+}
+
+.likeButton[data-state='liked'] .likeIcon::before {
+  opacity: 0.36;
+  transform: scale(1.38);
+}
+
+.likeButton[data-state='liked'] .likeIcon svg {
+  fill: currentColor;
+  transform: rotate(-8deg) scale(1.08);
+}
+
+.likeButton[data-state='liked'] .idleLabel {
+  opacity: 0;
+  transform: scale(0.92);
+}
+
+.likeButton[data-state='liked'] .successLabel {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.themeButton {
+  min-width: 104px;
+}
+
+.themeGlyph {
+  position: relative;
+  display: grid;
+  width: 17px;
+  height: 17px;
+  flex: 0 0 auto;
+  place-items: center;
+}
+
+.themeGlyph svg {
+  position: absolute;
+  width: 17px;
+  height: 17px;
+  stroke-width: 1.6;
+  transition:
+    opacity 200ms var(--micro-ease-out),
+    transform 200ms var(--micro-orbit-ease);
+}
+
+.moonIcon {
+  opacity: 0;
+  transform: rotate(-70deg) scale(0.92);
+}
+
+.themeLabels span {
+  transition: opacity 160ms ease;
+}
+
+.themeLabels .successLabel {
+  opacity: 0;
+}
+
+.themeButton[data-state='dark'] {
+  color: #dcd9ff;
+  background: #14141c;
+}
+
+.themeButton[data-state='dark'] .sunIcon {
+  opacity: 0;
+  transform: rotate(70deg) scale(0.92);
+}
+
+.themeButton[data-state='dark'] .moonIcon {
+  opacity: 1;
+  transform: rotate(0deg) scale(1);
+}
+
+.themeButton[data-state='dark'] .idleLabel {
+  opacity: 0;
+}
+
+.themeButton[data-state='dark'] .successLabel {
+  opacity: 1;
+}
+
+.refreshButton {
+  min-width: 132px;
+}
+
+.refreshIcon {
+  position: relative;
+  display: grid;
+  width: 17px;
+  height: 17px;
+  flex: 0 0 auto;
+  place-items: center;
+}
+
+.refreshIcon svg {
+  position: absolute;
+  width: 17px;
+  height: 17px;
+  stroke-width: 1.7;
+  transition:
+    opacity 180ms var(--micro-ease-out),
+    transform 180ms var(--micro-ease-out);
+}
+
+.refreshIcon svg:last-child {
+  opacity: 0;
+  transform: scale(0.92);
+}
+
+.refreshLabels span:nth-child(2),
+.refreshLabels span:nth-child(3) {
+  clip-path: inset(100% 0 0);
+  opacity: 0;
+}
+
+.refreshButton[data-state='refreshing']:disabled {
+  opacity: 1;
+}
+
+.refreshButton[data-state='refreshing'] .refreshIcon svg:first-child {
+  animation: refresh-spin 720ms linear infinite;
+}
+
+.refreshButton[data-state='complete'] {
+  border-color: rgb(77 210 144 / 24%);
+  color: #bcf4d4;
+  background: #142019;
+}
+
+.refreshButton[data-state='complete'] .refreshIcon svg:first-child {
+  opacity: 0;
+  transform: rotate(180deg) scale(0.92);
+}
+
+.refreshButton[data-state='complete'] .refreshIcon svg:last-child {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.refreshButton[data-state='refreshing'] .refreshLabels span:first-child,
+.refreshButton[data-state='complete'] .refreshLabels span:first-child,
+.refreshButton[data-state='complete'] .refreshLabels span:nth-child(2) {
+  clip-path: inset(0 0 100%);
+  opacity: 0;
+}
+
+.refreshButton[data-state='refreshing'] .refreshLabels span:nth-child(2),
+.refreshButton[data-state='complete'] .refreshLabels span:nth-child(3) {
+  clip-path: inset(0);
+  opacity: 1;
+}
+
+.bookmarkButton {
+  min-width: 122px;
+}
+
+.bookmarkIcon,
+.lockIcon,
+.playIcon,
+.filterIcon,
+.sendIcon,
+.saveIcon {
+  position: relative;
+  display: grid;
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
+  place-items: center;
+}
+
+.bookmarkIcon svg,
+.lockIcon svg,
+.sendIcon svg,
+.saveIcon svg {
+  width: 18px;
+  height: 18px;
+  overflow: visible;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.55;
+}
+
+.bookmarkShape {
+  transform-origin: 10px 3px;
+  transition:
+    fill 180ms ease,
+    transform 180ms var(--micro-ease-out);
+}
+
+.bookmarkFold {
+  opacity: 0;
+  transform: translateY(-35%);
+  transition:
+    opacity 140ms ease,
+    transform 180ms var(--micro-ease-out);
+}
+
+.bookmarkLabels,
+.lockLabels,
+.playLabels,
+.filterLabels {
+  display: grid;
+  min-width: 52px;
+  place-items: center start;
+}
+
+.bookmarkLabels span,
+.lockLabels span,
+.playLabels span,
+.filterLabels span,
+.sendLabels span,
+.saveLabels span {
+  grid-area: 1 / 1;
+  white-space: nowrap;
+}
+
+.bookmarkLabels span {
+  transition:
+    clip-path 180ms var(--micro-ease-out),
+    opacity 160ms ease;
+}
+
+.bookmarkLabels span:last-child {
+  clip-path: inset(55% 0 45%);
+  opacity: 0;
+}
+
+.bookmarkButton[data-state='bookmarked'] {
+  color: #ffd58b;
+  background: #201a11;
+}
+
+.bookmarkButton[data-state='bookmarked'] .bookmarkShape {
+  fill: currentColor;
+  transform: translateY(1px) scaleY(0.94);
+}
+
+.bookmarkButton[data-state='bookmarked'] .bookmarkFold {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.bookmarkButton[data-state='bookmarked'] .bookmarkLabels span:first-child {
+  clip-path: inset(45% 0 55%);
+  opacity: 0;
+}
+
+.bookmarkButton[data-state='bookmarked'] .bookmarkLabels span:last-child {
+  clip-path: inset(0);
+  opacity: 1;
+}
+
+.lockButton {
+  min-width: 132px;
+  isolation: isolate;
+  touch-action: none;
+  user-select: none;
+  transition:
+    border-color 140ms ease,
+    color 140ms ease,
+    background-color 140ms ease,
+    box-shadow 140ms ease,
+    transform 200ms var(--micro-orbit-ease);
+}
+
+.lockButton > .morphIcon,
+.lockButton > .lockLabels {
+  transition: transform 200ms var(--micro-orbit-ease);
+}
+
+.lockButton::before {
+  position: absolute;
+  z-index: -1;
+  inset: 3px;
+  border: 1px solid rgb(255 255 255 / 5%);
+  border-radius: 9px;
+  content: '';
+  opacity: 0;
+  transform: scale(0.97);
+  transition:
+    opacity 180ms ease,
+    transform 180ms var(--micro-ease-out);
+}
+
+.lockButton[data-holding]::before {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.lockShackle {
+  transform: translate(2px, -1px) rotate(18deg);
+  transform-origin: 6.3px 9px;
+  transition: transform 180ms var(--micro-ease-out);
+}
+
+.lockBody {
+  fill: transparent;
+  transform-origin: 10px 12.6px;
+  transition:
+    fill 160ms ease,
+    transform 180ms var(--micro-ease-out);
+}
+
+.lockKeyhole {
+  opacity: 0;
+  transform: translateY(-30%);
+  transition:
+    opacity 140ms ease,
+    transform 180ms var(--micro-ease-out);
+}
+
+.lockLabels span {
+  transition:
+    opacity 160ms ease,
+    transform 180ms var(--micro-ease-out);
+}
+
+.lockLabels span:last-child {
+  opacity: 0;
+  transform: translateY(45%);
+}
+
+.lockProgress {
+  position: absolute;
+  right: 7px;
+  bottom: 3px;
+  left: 7px;
+  height: 2px;
+  border-radius: 999px;
+  background: #8dbfff;
+  clip-path: inset(0 100% 0 0 round 999px);
+  opacity: 0;
+  transition:
+    clip-path 180ms var(--micro-ease-out),
+    opacity 140ms ease;
+}
+
+.lockButton[data-holding] {
+  border-color: rgb(141 191 255 / 30%);
+  background: #111923;
+  box-shadow:
+    inset 0 1px rgb(255 255 255 / 8%),
+    0 5px 16px rgb(0 0 0 / 22%);
+  transform: scale(0.985);
+}
+
+.lockButton[data-holding] .lockShackle {
+  transform: translate(0) rotate(0deg);
+  transition-timing-function: linear;
+}
+
+.lockButton[data-holding] .lockBody {
+  fill: rgb(141 191 255 / 8%);
+  transform: scale(0.98);
+}
+
+.lockButton[data-holding] .lockProgress {
+  clip-path: inset(0 round 999px);
+  opacity: 0.85;
+  transition-timing-function: linear;
+}
+
+.lockButton[data-state='locked'] {
+  color: #b9d7ff;
+  background: #121a24;
+}
+
+.lockButton[data-state='locked'] .lockShackle {
+  transform: translate(0) rotate(0deg);
+}
+
+.lockButton[data-state='locked'] .lockBody {
+  fill: rgb(185 215 255 / 13%);
+}
+
+.lockButton[data-state='locked'] .lockKeyhole {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.lockButton[data-state='locked'] .lockLabels span:first-child {
+  opacity: 0;
+  transform: translateY(-45%);
+}
+
+.lockButton[data-state='locked'] .lockLabels span:last-child {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.lockButton[data-state='locked'] .lockProgress {
+  clip-path: inset(0 round 999px);
+  opacity: 0.45;
+}
+
+.lockButton[data-instant] *,
+.lockButton[data-instant]::before {
+  transition-duration: 0ms;
+}
+
+.playButton {
+  min-width: 94px;
+}
+
+.playTriangle {
+  width: 0;
+  height: 0;
+  margin-left: 2px;
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-left: 8px solid currentColor;
+  opacity: 1;
+  transform: translateX(0) rotate(0deg);
+  transition:
+    opacity 140ms ease,
+    transform 180ms var(--micro-ease-out);
+}
+
+.pauseBar {
+  position: absolute;
+  width: 3px;
+  height: 11px;
+  border-radius: 1px;
+  background: currentColor;
+  opacity: 0;
+  transform: translateY(55%) scaleY(0.9);
+  transition:
+    opacity 140ms ease,
+    transform 180ms var(--micro-ease-out);
+}
+
+.pauseBar:nth-child(2) {
+  left: 4px;
+}
+
+.pauseBar:nth-child(3) {
+  right: 4px;
+  transform: translateY(-55%) scaleY(0.9);
+}
+
+.playLabels span {
+  transition:
+    opacity 160ms ease,
+    transform 180ms var(--micro-ease-out);
+}
+
+.playLabels span:last-child {
+  opacity: 0;
+  transform: translateY(55%);
+}
+
+.playButton[data-state='playing'] {
+  color: #bff1d4;
+  background: #132019;
+}
+
+.playButton[data-state='playing'] .playTriangle {
+  opacity: 0;
+  transform: translateX(70%) rotate(22deg);
+}
+
+.playButton[data-state='playing'] .pauseBar {
+  opacity: 1;
+  transform: translateY(0) scaleY(1);
+}
+
+.playButton[data-state='playing'] .playLabels span:first-child {
+  opacity: 0;
+  transform: translateY(-55%);
+}
+
+.playButton[data-state='playing'] .playLabels span:last-child {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.filterButton {
+  min-width: 104px;
+}
+
+.filterIcon {
+  align-content: center;
+  gap: 3px;
+}
+
+.filterIcon i {
+  position: relative;
+  display: block;
+  width: 17px;
+  height: 1px;
+  border-radius: 999px;
+  background: currentColor;
+  opacity: 0.52;
+}
+
+.filterIcon b {
+  position: absolute;
+  top: -2px;
+  left: 1px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: currentColor;
+  transform: translateX(0);
+  transition: transform 200ms var(--micro-orbit-ease);
+}
+
+.filterIcon i:nth-child(2) b {
+  transform: translateX(9px);
+}
+
+.filterIcon i:nth-child(3) b {
+  transform: translateX(4px);
+}
+
+.filterLabels span {
+  transition: opacity 160ms ease;
+}
+
+.filterLabels span:last-child {
+  opacity: 0;
+}
+
+.filterButton[data-state='active'] {
+  color: #d9c2ff;
+  background: #1a1422;
+}
+
+.filterButton[data-state='active'] .filterIcon i:first-child b {
+  transform: translateX(10px);
+}
+
+.filterButton[data-state='active'] .filterIcon i:nth-child(2) b {
+  transform: translateX(3px);
+}
+
+.filterButton[data-state='active'] .filterIcon i:nth-child(3) b {
+  transform: translateX(8px);
+}
+
+.filterButton[data-state='active'] .filterLabels span:first-child,
+.filterButton:not([data-state='active']) .filterLabels span:last-child {
+  opacity: 0;
+}
+
+.filterButton[data-state='active'] .filterLabels span:last-child {
+  opacity: 1;
+}
+
+.sendButton,
+.saveButton {
+  min-width: 112px;
+}
+
+.sendIcon > svg,
+.saveIcon > svg {
+  position: absolute;
+  transition:
+    opacity 180ms var(--micro-ease-out),
+    transform 200ms var(--micro-ease-out);
+}
+
+.sendIcon > svg:last-child,
+.saveIcon > svg:last-child {
+  opacity: 0;
+  transform: scale(0.92);
+}
+
+.sendLabels,
+.saveLabels {
+  display: grid;
+  min-width: 52px;
+  place-items: center start;
+}
+
+.sendLabels span {
+  clip-path: inset(0 0 0 100%);
+  opacity: 0;
+  transition:
+    clip-path 180ms var(--micro-ease-out),
+    opacity 160ms ease;
+}
+
+.sendLabels span:first-child {
+  clip-path: inset(0);
+  opacity: 1;
+}
+
+.sendButton[data-state='pending']:disabled,
+.saveButton[data-state='pending']:disabled {
+  opacity: 1;
+}
+
+.sendButton[data-state='pending'] .sendIcon > svg:first-child {
+  opacity: 0;
+  transform: translate(80%, -80%) rotate(-8deg);
+}
+
+.sendButton[data-state='complete'] {
+  color: #bff1d4;
+  background: #132019;
+}
+
+.sendButton[data-state='complete'] .sendIcon > svg:first-child {
+  opacity: 0;
+  transform: translate(110%, -110%) rotate(-12deg);
+}
+
+.sendButton[data-state='complete'] .sendIcon > svg:last-child {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.sendButton[data-state='pending'] .sendLabels span:first-child,
+.sendButton[data-state='complete'] .sendLabels span:first-child,
+.sendButton[data-state='complete'] .sendLabels span:nth-child(2) {
+  clip-path: inset(0 100% 0 0);
+  opacity: 0;
+}
+
+.sendButton[data-state='pending'] .sendLabels span:nth-child(2),
+.sendButton[data-state='complete'] .sendLabels span:nth-child(3) {
+  clip-path: inset(0);
+  opacity: 1;
+}
+
+.saveSlot,
+.saveDot {
+  transform-origin: 10px 8px;
+  transition:
+    opacity 160ms ease,
+    transform 200ms var(--micro-orbit-ease);
+}
+
+.saveLabels span {
+  opacity: 0;
+  transform: rotateX(-72deg);
+  transform-origin: bottom;
+  transition:
+    opacity 160ms ease,
+    transform 200ms var(--micro-orbit-ease);
+}
+
+.saveLabels span:first-child {
+  opacity: 1;
+  transform: rotateX(0deg);
+}
+
+.saveButton[data-state='pending'] .saveSlot {
+  transform: translateY(42%) scaleX(0.82);
+}
+
+.saveButton[data-state='pending'] .saveDot {
+  opacity: 0.35;
+  transform: scale(0.92);
+}
+
+.saveButton[data-state='complete'] {
+  color: #bff1d4;
+  background: #132019;
+}
+
+.saveButton[data-state='complete'] .saveIcon > svg:first-child {
+  opacity: 0;
+  transform: translateY(24%) scale(0.94);
+}
+
+.saveButton[data-state='complete'] .saveIcon > svg:last-child {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.saveButton[data-state='pending'] .saveLabels span:first-child,
+.saveButton[data-state='complete'] .saveLabels span:first-child,
+.saveButton[data-state='complete'] .saveLabels span:nth-child(2) {
+  opacity: 0;
+  transform: rotateX(72deg);
+}
+
+.saveButton[data-state='pending'] .saveLabels span:nth-child(2),
+.saveButton[data-state='complete'] .saveLabels span:nth-child(3) {
+  opacity: 1;
+  transform: rotateX(0deg);
+}
+
+.morphIcon {
+  position: relative;
+  display: grid;
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
+  place-items: center;
+}
+
+.morphIcon > svg,
+.copyButton[data-state] .morphIcon > svg,
+.downloadButton[data-state] .morphIcon > svg,
+.likeButton[data-state] .morphIcon > svg,
+.muteButton[data-state] .morphIcon > svg,
+.refreshButton[data-state] .morphIcon > svg,
+.sendButton[data-state] .morphIcon > svg,
+.saveButton[data-state] .morphIcon > svg,
+.themeButton[data-state] .morphIcon > svg {
+  position: relative;
+  width: 18px;
+  height: 18px;
+  fill: none;
+  opacity: 1;
+  transform: none;
+}
+
+.copyButton,
+.muteButton,
+.downloadButton,
+.likeButton,
+.themeButton,
+.refreshButton,
+.bookmarkButton,
+.playButton,
+.filterButton,
+.sendButton,
+.saveButton {
+  transition:
+    border-color 140ms ease,
+    color 140ms ease,
+    background-color 140ms ease,
+    box-shadow 140ms ease,
+    transform 200ms var(--micro-orbit-ease);
+}
+
+.copyButton > .morphIcon,
+.copyButton > .copyLabels,
+.likeButton > .morphIcon,
+.likeButton > .likeLabels,
+.playButton > .morphIcon,
+.playButton > .playLabels,
+.sendButton > .morphIcon,
+.sendButton > .sendLabels,
+.saveButton > .morphIcon,
+.saveButton > .saveLabels {
+  transition: transform 200ms var(--micro-orbit-ease);
+}
+
+.downloadButton[data-state='downloading'] .morphIcon > svg,
+.refreshButton[data-state='refreshing'] .morphIcon > svg {
+  animation: refresh-spin 720ms linear infinite;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .button:hover:not(:disabled) {
+    border-color: rgb(255 255 255 / 19%);
+    background-color: #1d1e1a;
+    box-shadow:
+      inset 0 1px rgb(255 255 255 / 9%),
+      0 10px 28px rgb(0 0 0 / 24%);
+  }
+
+  .lockButton:hover:not(:disabled) {
+    transform: scaleX(1.075);
+  }
+
+  .lockButton:hover:not(:disabled) > .morphIcon,
+  .lockButton:hover:not(:disabled) > .lockLabels {
+    transform: scaleX(0.93);
+  }
+
+  .lockButton:hover:active:not(:disabled) {
+    transform: scaleX(1.035) scaleY(0.97);
+    transition-duration: 120ms;
+  }
+
+  .lockButton:hover:active:not(:disabled) > .morphIcon,
+  .lockButton:hover:active:not(:disabled) > .lockLabels {
+    transform: scaleX(0.966) scaleY(1.031);
+    transition-duration: 120ms;
+  }
+
+  .copyButton:hover:not(:disabled) {
+    transform: scaleX(1.055);
+  }
+
+  .copyButton:hover:not(:disabled) > .morphIcon,
+  .copyButton:hover:not(:disabled) > .copyLabels {
+    transform: scaleX(0.948);
+  }
+
+  .muteButton:hover:not(:disabled) {
+    transform: translateY(-1px) rotate(-1.25deg);
+  }
+
+  .downloadButton:hover:not(:disabled) {
+    transform: translateY(2px) scaleY(0.985);
+  }
+
+  .likeButton:hover:not(:disabled) {
+    transform: scale(1.04);
+  }
+
+  .likeButton:hover:not(:disabled) > .morphIcon,
+  .likeButton:hover:not(:disabled) > .likeLabels {
+    transform: scale(0.962);
+  }
+
+  .themeButton:hover:not(:disabled) {
+    transform: translateY(-1px) rotate(1.5deg);
+  }
+
+  .refreshButton:hover:not(:disabled) {
+    transform: rotate(1.5deg) scale(1.015);
+  }
+
+  .bookmarkButton:hover:not(:disabled) {
+    transform: translateY(-2px) scaleY(1.02);
+  }
+
+  .playButton:hover:not(:disabled) {
+    transform: scaleX(1.055);
+  }
+
+  .playButton:hover:not(:disabled) > .morphIcon,
+  .playButton:hover:not(:disabled) > .playLabels {
+    transform: scaleX(0.948);
+  }
+
+  .filterButton:hover:not(:disabled) {
+    transform: translateX(2px) skewX(-1.5deg);
+  }
+
+  .sendButton:hover:not(:disabled) {
+    transform: translateX(3px) scaleX(1.025);
+  }
+
+  .sendButton:hover:not(:disabled) > .morphIcon,
+  .sendButton:hover:not(:disabled) > .sendLabels {
+    transform: scaleX(0.976);
+  }
+
+  .saveButton:hover:not(:disabled) {
+    transform: translateY(-2px) scaleX(1.025);
+  }
+
+  .saveButton:hover:not(:disabled) > .morphIcon,
+  .saveButton:hover:not(:disabled) > .saveLabels {
+    transform: scaleX(0.976);
+  }
+
+  .copyButton:hover:active:not(:disabled),
+  .playButton:hover:active:not(:disabled) {
+    transform: scaleX(1.025) scaleY(0.97);
+    transition-duration: 120ms;
+  }
+
+  .copyButton:hover:active:not(:disabled) > .morphIcon,
+  .copyButton:hover:active:not(:disabled) > .copyLabels,
+  .playButton:hover:active:not(:disabled) > .morphIcon,
+  .playButton:hover:active:not(:disabled) > .playLabels {
+    transform: scaleX(0.976) scaleY(1.031);
+    transition-duration: 120ms;
+  }
+
+  .muteButton:hover:active:not(:disabled),
+  .downloadButton:hover:active:not(:disabled),
+  .likeButton:hover:active:not(:disabled),
+  .themeButton:hover:active:not(:disabled),
+  .refreshButton:hover:active:not(:disabled),
+  .bookmarkButton:hover:active:not(:disabled),
+  .filterButton:hover:active:not(:disabled),
+  .sendButton:hover:active:not(:disabled),
+  .saveButton:hover:active:not(:disabled) {
+    transform: scale(0.97);
+    transition-duration: 120ms;
+  }
+
+  .likeButton:hover:active:not(:disabled) > .morphIcon,
+  .likeButton:hover:active:not(:disabled) > .likeLabels,
+  .sendButton:hover:active:not(:disabled) > .morphIcon,
+  .sendButton:hover:active:not(:disabled) > .sendLabels,
+  .saveButton:hover:active:not(:disabled) > .morphIcon,
+  .saveButton:hover:active:not(:disabled) > .saveLabels {
+    transform: none;
+    transition-duration: 120ms;
+  }
+}
+
+@keyframes download-progress {
+  0% {
+    opacity: 0;
+    transform: scaleX(0.08);
+  }
+
+  18% {
+    opacity: 0.58;
+  }
+
+  82% {
+    opacity: 0.58;
+  }
+
+  100% {
+    opacity: 0;
+    transform: scaleX(1);
+  }
+}
+
+@keyframes refresh-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button,
+  .button svg,
+  .button span,
+  .button path,
+  .button::before,
+  .button::after {
+    transition-duration: 0ms;
+  }
+
+  .button:active {
+    transform: none;
+  }
+
+  .lockButton:hover:not(:disabled),
+  .lockButton:hover:not(:disabled) > .morphIcon,
+  .lockButton:hover:not(:disabled) > .lockLabels {
+    transform: none;
+  }
+
+  .button:hover:not(:disabled),
+  .button:hover:active:not(:disabled),
+  .button:hover:not(:disabled) > .morphIcon,
+  .button:hover:active:not(:disabled) > .morphIcon,
+  .button:hover:not(:disabled) > .copyLabels,
+  .button:hover:active:not(:disabled) > .copyLabels,
+  .button:hover:not(:disabled) > .likeLabels,
+  .button:hover:active:not(:disabled) > .likeLabels,
+  .button:hover:not(:disabled) > .lockLabels,
+  .button:hover:active:not(:disabled) > .lockLabels,
+  .button:hover:not(:disabled) > .playLabels,
+  .button:hover:active:not(:disabled) > .playLabels,
+  .button:hover:not(:disabled) > .sendLabels,
+  .button:hover:active:not(:disabled) > .sendLabels,
+  .button:hover:not(:disabled) > .saveLabels,
+  .button:hover:active:not(:disabled) > .saveLabels {
+    transform: none;
+  }
+
+  .downloadButton[data-state='downloading'] .downloadProgress {
+    animation: none;
+    opacity: 0.45;
+    transform: scaleX(1);
+  }
+
+  .refreshButton[data-state='refreshing'] .refreshIcon svg:first-child {
+    animation: none;
+    opacity: 0.55;
+  }
+
+  .downloadButton[data-state='downloading'] .morphIcon > svg,
+  .refreshButton[data-state='refreshing'] .morphIcon > svg {
+    animation: none;
+  }
+
+  .bookmarkButton[data-state='bookmarked'] .bookmarkShape,
+  .lockButton[data-state='locked'] .lockShackle,
+  .playButton[data-state='playing'] .playTriangle,
+  .playButton[data-state='playing'] .pauseBar,
+  .filterButton[data-state='active'] .filterIcon b,
+  .sendButton[data-state='pending'] .sendIcon > svg:first-child,
+  .sendButton[data-state='complete'] .sendIcon > svg:first-child,
+  .saveButton[data-state='pending'] .saveSlot,
+  .saveButton[data-state='complete'] .saveIcon > svg:first-child {
+    transform: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .button,
+  .copyButton[data-state='copied'],
+  .bookmarkButton[data-state='bookmarked'],
+  .downloadButton[data-state='complete'],
+  .filterButton[data-state='active'],
+  .likeButton[data-state='liked'],
+  .lockButton[data-state='locked'],
+  .muteButton[data-state='muted'],
+  .playButton[data-state='playing'],
+  .refreshButton[data-state='complete'],
+  .saveButton[data-state='complete'],
+  .sendButton[data-state='complete'],
+  .themeButton[data-state='dark'] {
+    border-color: ButtonText;
+    color: ButtonText;
+    background: ButtonFace;
+    box-shadow: none;
+  }
+}

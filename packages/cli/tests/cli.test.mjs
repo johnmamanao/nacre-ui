@@ -61,11 +61,27 @@ test('lists the complete public registry', () => {
   const result = runCli(['list', '--json']);
   assert.equal(result.status, 0, result.stderr);
   const names = JSON.parse(result.stdout);
-  assert.equal(names.length, 39);
+  assert.equal(names.length, 55);
+  assert.ok(names.includes('ascii-image'));
+  assert.ok(names.includes('ripple-transition'));
+  assert.ok(names.includes('matrix-rain'));
+  assert.ok(names.includes('liquid-metal-shader'));
   assert.ok(names.includes('folio-arc-carousel'));
   assert.ok(names.includes('orbit-ledger'));
   assert.ok(names.includes('facet-bloom-loader'));
   assert.ok(names.includes('nacre-field-shader'));
+  assert.ok(names.includes('copy-button'));
+  assert.ok(names.includes('mute-button'));
+  assert.ok(names.includes('download-button'));
+  assert.ok(names.includes('like-button'));
+  assert.ok(names.includes('theme-button'));
+  assert.ok(names.includes('refresh-button'));
+  assert.ok(names.includes('bookmark-button'));
+  assert.ok(names.includes('lock-button'));
+  assert.ok(names.includes('play-button'));
+  assert.ok(names.includes('filter-button'));
+  assert.ok(names.includes('send-button'));
+  assert.ok(names.includes('save-button'));
 });
 
 test('copies every component and produces type-safe source', async () => {
@@ -78,13 +94,23 @@ test('copies every component and produces type-safe source', async () => {
     '--skip-install',
   ]);
   assert.equal(addResult.status, 0, addResult.stderr);
-  assert.match(addResult.stdout, /Added 39 Nacre UI components/);
+  assert.match(addResult.stdout, /Added 55 Nacre UI components/);
 
   const expectedFiles = [
     'components/ui/folio-arc-carousel.tsx',
     'components/ui/folio-arc-carousel.module.css',
     'components/ui/orbit-ledger.tsx',
     'components/ui/orbit-ledger.module.css',
+    'components/ui/micro-buttons.tsx',
+    'components/ui/micro-buttons.module.css',
+    'components/ui/ascii-image.tsx',
+    'components/ui/ascii-image.module.css',
+    'components/ui/ripple-transition.tsx',
+    'components/ui/ripple-transition.module.css',
+    'components/ui/matrix-rain.tsx',
+    'components/ui/matrix-rain.module.css',
+    'components/ui/liquid-metal-shader.tsx',
+    'components/ui/liquid-metal-shader.module.css',
     'components/ui/sculptural-loaders.tsx',
     'components/ui/text-motion-effects.tsx',
     'lib/utils.ts',
