@@ -1,0 +1,234 @@
+.root {
+  --ascii-background: #000;
+  --ascii-tone: #dbe7ff;
+  --ascii-ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+
+  position: relative;
+  width: 100%;
+  color: #f5f7fb;
+}
+
+.header {
+  position: absolute;
+  z-index: 2;
+  right: 14px;
+  left: 14px;
+  display: flex;
+  align-items: center;
+  color: rgb(235 239 247 / 58%);
+  font-size: 11px;
+  letter-spacing: 0.01em;
+}
+
+.header {
+  top: 14px;
+  gap: 12px;
+}
+
+.meta {
+  margin-left: auto;
+  text-shadow: 0 1px 8px rgb(0 0 0 / 80%);
+  font-variant-numeric: tabular-nums;
+}
+
+.upload {
+  position: relative;
+  display: inline-flex;
+  min-height: 30px;
+  align-items: center;
+  justify-content: center;
+  padding: 0 10px;
+  border: 1px solid rgb(255 255 255 / 11%);
+  border-radius: 9px;
+  color: rgb(245 247 251 / 82%);
+  background: rgb(7 9 12 / 72%);
+  backdrop-filter: blur(10px);
+  cursor: pointer;
+  transition:
+    border-color 140ms ease,
+    background-color 140ms ease,
+    transform 140ms var(--ascii-ease-out);
+}
+
+.fullscreenButton {
+  display: inline-grid;
+  width: 30px;
+  height: 30px;
+  flex: 0 0 auto;
+  padding: 0;
+  border: 1px solid rgb(255 255 255 / 11%);
+  border-radius: 9px;
+  place-items: center;
+  color: rgb(245 247 251 / 76%);
+  background: rgb(7 9 12 / 72%);
+  backdrop-filter: blur(10px);
+  cursor: pointer;
+  transition:
+    border-color 140ms ease,
+    color 140ms ease,
+    background-color 140ms ease,
+    transform 140ms var(--ascii-ease-out);
+}
+
+.fullscreenButton svg {
+  width: 15px;
+  height: 15px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.fullscreenButton:active {
+  transform: scale(0.94);
+}
+
+.fullscreenButton:focus-visible {
+  outline: 2px solid var(--ascii-tone);
+  outline-offset: 2px;
+}
+
+.upload:active {
+  transform: scale(0.97);
+}
+
+.upload:focus-within {
+  outline: 2px solid var(--ascii-tone);
+  outline-offset: 2px;
+}
+
+.upload input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.viewport {
+  position: relative;
+  display: grid;
+  min-height: 420px;
+  margin: 0;
+  overflow: hidden;
+  place-items: center;
+  background: var(--ascii-background);
+  container-type: inline-size;
+}
+
+.viewport:fullscreen {
+  width: 100vw;
+  height: 100vh;
+  min-height: 100vh;
+}
+
+.canvas {
+  grid-area: 1 / 1;
+  transition: opacity 180ms var(--ascii-ease-out);
+}
+
+.canvas {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  opacity: 1;
+}
+
+.status {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  max-width: 340px;
+  margin: auto;
+  padding: 24px;
+  place-items: center;
+  color: rgb(235 239 247 / 58%);
+  font-size: 12px;
+  line-height: 1.5;
+  text-align: center;
+  transition: opacity 180ms var(--ascii-ease-out);
+}
+
+.root[data-state='loading'] .canvas {
+  opacity: 0.22;
+}
+
+.root[data-state='ready'] .status {
+  pointer-events: none;
+  opacity: 0;
+}
+
+.root[data-state='error'] .canvas {
+  opacity: 0;
+}
+
+.root[data-state='error'] .status {
+  color: #ffb3b8;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .upload:hover {
+    border-color: rgb(255 255 255 / 19%);
+    background: rgb(255 255 255 / 8%);
+  }
+
+  .fullscreenButton:hover {
+    border-color: rgb(255 255 255 / 19%);
+    color: rgb(245 247 251 / 94%);
+    background: rgb(255 255 255 / 8%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .upload,
+  .fullscreenButton,
+  .canvas,
+  .status {
+    transition-duration: 0ms;
+  }
+
+  .upload:active {
+    transform: none;
+  }
+
+  .fullscreenButton:active {
+    transform: none;
+  }
+}
+
+@media (max-width: 560px) {
+  .header {
+    flex-wrap: wrap;
+  }
+
+  .meta {
+    order: 3;
+    width: 100%;
+    margin-left: 14px;
+  }
+
+  .viewport {
+    min-height: 320px;
+  }
+}
+
+@media (forced-colors: active) {
+  .upload {
+    border-color: CanvasText;
+    color: CanvasText;
+    background: Canvas;
+    box-shadow: none;
+  }
+
+  .fullscreenButton {
+    border-color: CanvasText;
+    color: CanvasText;
+    background: Canvas;
+    box-shadow: none;
+  }
+}

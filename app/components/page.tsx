@@ -43,9 +43,31 @@ import gemSmokeButtonSource from '@/components/ui/gem-smoke-button.tsx?raw';
 import { LustreButton } from '@/components/ui/lustre-button';
 // oxlint-disable-next-line import/default -- Vite's raw loader supplies this default export.
 import lustreButtonSource from '@/components/ui/lustre-button.tsx?raw';
+import {
+  BookmarkButton,
+  CopyButton,
+  DownloadButton,
+  FilterButton,
+  LikeButton,
+  LockButton,
+  MuteButton,
+  PlayButton,
+  RefreshButton,
+  SaveButton,
+  SendButton,
+  ThemeButton,
+} from '@/components/ui/micro-buttons';
+// oxlint-disable-next-line import/default -- Vite's raw loader supplies this default export.
+import microButtonsSource from '@/components/ui/micro-buttons.tsx?raw';
 import { SocialProfileButton } from '@/components/ui/social-profile-button';
 // oxlint-disable-next-line import/default -- Vite's raw loader supplies this default export.
 import socialProfileButtonSource from '@/components/ui/social-profile-button.tsx?raw';
+import { AsciiImage } from '@/components/ui/ascii-image';
+// oxlint-disable-next-line import/default -- Vite's raw loader supplies this default export.
+import asciiImageSource from '@/components/ui/ascii-image.tsx?raw';
+import { RippleTransition } from '@/components/ui/ripple-transition';
+// oxlint-disable-next-line import/default -- Vite's raw loader supplies this default export.
+import rippleTransitionSource from '@/components/ui/ripple-transition.tsx?raw';
 import { PearlApertureLoader } from '@/components/ui/pearl-aperture-loader';
 // oxlint-disable-next-line import/default -- Vite's raw loader supplies this default export.
 import pearlApertureLoaderSource from '@/components/ui/pearl-aperture-loader.tsx?raw';
@@ -129,6 +151,12 @@ import {
 } from '@/components/ui/iridescent-weave-shader';
 // oxlint-disable-next-line import/default -- Vite's raw loader supplies this default export.
 import iridescentWeaveShaderSource from '@/components/ui/iridescent-weave-shader.tsx?raw';
+import { MatrixRain } from '@/components/ui/matrix-rain';
+// oxlint-disable-next-line import/default -- Vite's raw loader supplies this default export.
+import matrixRainSource from '@/components/ui/matrix-rain.tsx?raw';
+import { LiquidMetalShader } from '@/components/ui/liquid-metal-shader';
+// oxlint-disable-next-line import/default -- Vite's raw loader supplies this default export.
+import liquidMetalShaderSource from '@/components/ui/liquid-metal-shader.tsx?raw';
 import { MeshBackground } from '@/components/ui/mesh-background';
 // oxlint-disable-next-line import/default -- Vite's raw loader supplies this default export.
 import meshBackgroundSource from '@/components/ui/mesh-background.tsx?raw';
@@ -145,6 +173,29 @@ import {
 import DocumentationSearch from './documentation-search';
 
 const installCommand = 'npx @nacre-ui/cli@latest list';
+
+const ripplePreviewItems = [
+  {
+    alt: 'Black-sand coast beneath a breaking storm',
+    src: '/ripple-transition/basalt-coast.png',
+  },
+  {
+    alt: 'Alpine lake reflecting a snow-covered mountain range',
+    src: '/ripple-transition/alpine-lake.png',
+  },
+  {
+    alt: 'Wind-shaped desert dunes at blue hour',
+    src: '/ripple-transition/desert-dunes.png',
+  },
+  {
+    alt: 'Blue glacier cave opening toward a snowy valley',
+    src: '/ripple-transition/glacier-cave.png',
+  },
+  {
+    alt: 'Rainforest stream beneath moss-covered trees',
+    src: '/ripple-transition/rainforest-stream.png',
+  },
+] as const;
 
 const catalog = [
   {
@@ -180,6 +231,89 @@ const catalog = [
     category: 'Actions',
     description:
       'A polished ink CTA with a soft diagonal light moving across its surface.',
+    status: 'New',
+  },
+  {
+    name: 'Copy Button',
+    category: 'Actions',
+    description:
+      'A copy action that confirms success inside the same compact footprint.',
+    status: 'New',
+  },
+  {
+    name: 'Mute Button',
+    category: 'Actions',
+    description:
+      'A controlled or uncontrolled audio toggle with a concise icon and label handoff.',
+    status: 'New',
+  },
+  {
+    name: 'Download Button',
+    category: 'Actions',
+    description:
+      'A download action that moves through pending and completed feedback without changing size.',
+    status: 'New',
+  },
+  {
+    name: 'Like Button',
+    category: 'Actions',
+    description:
+      'A controlled or uncontrolled reaction toggle with clear selected-state feedback.',
+    status: 'New',
+  },
+  {
+    name: 'Theme Button',
+    category: 'Actions',
+    description:
+      'A light and dark theme toggle with a compact icon and label handoff.',
+    status: 'New',
+  },
+  {
+    name: 'Refresh Button',
+    category: 'Actions',
+    description:
+      'An async refresh action that communicates pending and updated states in place.',
+    status: 'New',
+  },
+  {
+    name: 'Bookmark Button',
+    category: 'Actions',
+    description: 'A bookmark toggle whose ribbon folds into its saved state.',
+    status: 'New',
+  },
+  {
+    name: 'Lock Button',
+    category: 'Actions',
+    description:
+      'A lock toggle that morphs between open and secured states on hover.',
+    status: 'New',
+  },
+  {
+    name: 'Play Button',
+    category: 'Actions',
+    description:
+      'A media toggle that transforms directional play into parallel pause bars.',
+    status: 'New',
+  },
+  {
+    name: 'Filter Button',
+    category: 'Actions',
+    description:
+      'A filter toggle with independently repositioning slider controls.',
+    status: 'New',
+  },
+  {
+    name: 'Send Button',
+    category: 'Actions',
+    description:
+      'An async send action whose paper plane departs toward its destination.',
+    status: 'New',
+  },
+  {
+    name: 'Save Button',
+    category: 'Actions',
+    description:
+      'An async save action with mechanical storage and completion feedback.',
     status: 'New',
   },
   {
@@ -329,6 +463,20 @@ const catalog = [
     status: 'New',
   },
   {
+    name: 'ASCII Image',
+    category: 'Interactions',
+    description:
+      'A responsive ASCII renderer with tonal normalization and pointer-reactive cells.',
+    status: 'New',
+  },
+  {
+    name: 'Ripple Transition',
+    category: 'Interactions',
+    description:
+      'A refractive image transition with pointer-origin waves, radial rings, and angled sweeps.',
+    status: 'New',
+  },
+  {
     name: 'Editorial Mosaic',
     category: 'Interactions',
     description:
@@ -375,6 +523,20 @@ const catalog = [
     category: 'Interactions',
     description:
       'A scroll-driven project index that moves cards through a curved three-dimensional path.',
+    status: 'New',
+  },
+  {
+    name: 'Matrix Rain',
+    category: 'Backgrounds',
+    description:
+      'A canvas-rendered field of falling glyphs with luminous heads, persistent trails, and pointer focus.',
+    status: 'New',
+  },
+  {
+    name: 'Liquid Metal Shader',
+    category: 'Backgrounds',
+    description:
+      'A reflective WebGL surface with fluid folds, sharp chrome highlights, and softened pointer distortion.',
     status: 'New',
   },
   {
@@ -598,11 +760,326 @@ const componentPlaygrounds: Partial<Record<ComponentName, PlaygroundConfig>> = {
       },
     ],
   },
+  'Copy Button': {
+    defaults: { copiedLabel: 'Copied', label: 'Copy' },
+    controls: [
+      { key: 'label', label: 'Label', type: 'text' },
+      { key: 'copiedLabel', label: 'Copied label', type: 'text' },
+    ],
+  },
+  'Mute Button': {
+    defaults: { showLabel: true },
+    controls: [{ key: 'showLabel', label: 'Show label', type: 'toggle' }],
+  },
+  'Download Button': {
+    defaults: {
+      completeLabel: 'Downloaded',
+      downloadingLabel: 'Downloading',
+      label: 'Download',
+    },
+    controls: [
+      { key: 'label', label: 'Label', type: 'text' },
+      {
+        key: 'downloadingLabel',
+        label: 'Pending label',
+        type: 'text',
+      },
+      {
+        key: 'completeLabel',
+        label: 'Complete label',
+        type: 'text',
+      },
+    ],
+  },
+  'Like Button': {
+    defaults: { label: 'Like', likedLabel: 'Liked' },
+    controls: [
+      { key: 'label', label: 'Label', type: 'text' },
+      { key: 'likedLabel', label: 'Selected label', type: 'text' },
+    ],
+  },
+  'Theme Button': {
+    defaults: { showLabel: true },
+    controls: [{ key: 'showLabel', label: 'Show label', type: 'toggle' }],
+  },
+  'Refresh Button': {
+    defaults: {
+      completeLabel: 'Updated',
+      label: 'Refresh',
+      refreshingLabel: 'Refreshing',
+    },
+    controls: [
+      { key: 'label', label: 'Label', type: 'text' },
+      {
+        key: 'refreshingLabel',
+        label: 'Pending label',
+        type: 'text',
+      },
+      {
+        key: 'completeLabel',
+        label: 'Complete label',
+        type: 'text',
+      },
+    ],
+  },
+  'Bookmark Button': {
+    defaults: { bookmarkedLabel: 'Saved', label: 'Bookmark' },
+    controls: [
+      { key: 'label', label: 'Label', type: 'text' },
+      { key: 'bookmarkedLabel', label: 'Selected label', type: 'text' },
+    ],
+  },
+  'Lock Button': {
+    defaults: { label: 'Lock', lockedLabel: 'Locked' },
+    controls: [
+      { key: 'label', label: 'Label', type: 'text' },
+      { key: 'lockedLabel', label: 'Locked label', type: 'text' },
+    ],
+  },
+  'Play Button': {
+    defaults: { label: 'Play', pauseLabel: 'Pause' },
+    controls: [
+      { key: 'label', label: 'Label', type: 'text' },
+      { key: 'pauseLabel', label: 'Playing label', type: 'text' },
+    ],
+  },
+  'Filter Button': {
+    defaults: { activeLabel: 'Applied', label: 'Filter' },
+    controls: [
+      { key: 'label', label: 'Label', type: 'text' },
+      { key: 'activeLabel', label: 'Active label', type: 'text' },
+    ],
+  },
+  'Send Button': {
+    defaults: { completeLabel: 'Sent', label: 'Send', pendingLabel: 'Sending' },
+    controls: [
+      { key: 'label', label: 'Label', type: 'text' },
+      { key: 'pendingLabel', label: 'Pending label', type: 'text' },
+      { key: 'completeLabel', label: 'Complete label', type: 'text' },
+    ],
+  },
+  'Save Button': {
+    defaults: { completeLabel: 'Saved', label: 'Save', pendingLabel: 'Saving' },
+    controls: [
+      { key: 'label', label: 'Label', type: 'text' },
+      { key: 'pendingLabel', label: 'Pending label', type: 'text' },
+      { key: 'completeLabel', label: 'Complete label', type: 'text' },
+    ],
+  },
   'Social Profile Button': {
     defaults: { handle: '@github', label: 'View profile' },
     controls: [
       { key: 'label', label: 'Label', type: 'text' },
       { key: 'handle', label: 'Handle', type: 'text' },
+    ],
+  },
+  'ASCII Image': {
+    defaults: {
+      brightnessBoost: 1,
+      columns: 240,
+      contrast: 1.16,
+      colorMode: 'gradient',
+      dither: 'floyd-steinberg',
+      ditherStrength: 0.8,
+      interaction: 'none',
+      interactionRadius: 0.27,
+      interactionStrength: 0.5,
+      invert: false,
+      normalize: true,
+      renderMode: 'characters',
+      threshold: 0.3,
+      tone: '#dbe7ff',
+    },
+    controls: [
+      {
+        key: 'renderMode',
+        label: 'Render mode',
+        type: 'select',
+        options: [
+          { label: 'Characters', value: 'characters' },
+          { label: 'Dots', value: 'dots' },
+        ],
+      },
+      {
+        key: 'columns',
+        label: 'Columns',
+        type: 'range',
+        min: 32,
+        max: 240,
+        step: 1,
+      },
+      {
+        key: 'contrast',
+        label: 'Contrast',
+        type: 'range',
+        min: 0.5,
+        max: 2,
+        step: 0.01,
+      },
+      {
+        key: 'brightnessBoost',
+        label: 'Brightness boost',
+        type: 'range',
+        min: 0.5,
+        max: 3,
+        step: 0.05,
+      },
+      {
+        key: 'threshold',
+        label: 'Background threshold',
+        type: 'range',
+        min: 0,
+        max: 0.4,
+        step: 0.01,
+      },
+      {
+        key: 'interaction',
+        label: 'Pointer response',
+        type: 'select',
+        options: [
+          { label: 'Focus', value: 'focus' },
+          { label: 'Push', value: 'push' },
+          { label: 'None', value: 'none' },
+        ],
+      },
+      {
+        key: 'interactionRadius',
+        label: 'Response radius',
+        type: 'range',
+        min: 0.08,
+        max: 0.5,
+        step: 0.01,
+      },
+      {
+        key: 'interactionStrength',
+        label: 'Response strength',
+        type: 'range',
+        min: 0,
+        max: 1,
+        step: 0.01,
+      },
+      { key: 'normalize', label: 'Normalize tones', type: 'toggle' },
+      {
+        key: 'colorMode',
+        label: 'Glyph color',
+        type: 'select',
+        options: [
+          { label: 'Single tone', value: 'gradient' },
+          { label: 'Source image', value: 'source' },
+        ],
+      },
+      {
+        key: 'dither',
+        label: 'Dither pattern',
+        type: 'select',
+        options: [
+          { label: 'Floyd–Steinberg', value: 'floyd-steinberg' },
+          { label: 'Bayer 4 × 4', value: 'bayer' },
+          { label: 'None', value: 'none' },
+        ],
+      },
+      {
+        key: 'ditherStrength',
+        label: 'Dither strength',
+        type: 'range',
+        min: 0,
+        max: 1,
+        step: 0.01,
+      },
+      { key: 'invert', label: 'Invert tones', type: 'toggle' },
+      { key: 'tone', label: 'Text color', type: 'color' },
+    ],
+  },
+  'Ripple Transition': {
+    defaults: {
+      autoplay: false,
+      colorSplit: 0.65,
+      duration: 1200,
+      glow: 0.16,
+      interval: 3600,
+      origin: 'pointer',
+      pattern: 'wave',
+      radius: 20,
+      refraction: 0.055,
+      ringWidth: 0.075,
+    },
+    controls: [
+      {
+        key: 'pattern',
+        label: 'Transition pattern',
+        type: 'select',
+        options: [
+          { label: 'Wave', value: 'wave' },
+          { label: 'Ring', value: 'ring' },
+          { label: 'Sweep', value: 'sweep' },
+        ],
+      },
+      {
+        key: 'origin',
+        label: 'Ripple origin',
+        type: 'select',
+        options: [
+          { label: 'Pointer', value: 'pointer' },
+          { label: 'Center', value: 'center' },
+        ],
+      },
+      {
+        key: 'duration',
+        label: 'Duration',
+        type: 'range',
+        min: 600,
+        max: 2200,
+        step: 50,
+      },
+      {
+        key: 'radius',
+        label: 'Corner radius',
+        type: 'range',
+        min: 0,
+        max: 40,
+        step: 1,
+      },
+      {
+        key: 'refraction',
+        label: 'Refraction',
+        type: 'range',
+        min: 0,
+        max: 0.14,
+        step: 0.005,
+      },
+      {
+        key: 'ringWidth',
+        label: 'Wave width',
+        type: 'range',
+        min: 0.02,
+        max: 0.18,
+        step: 0.005,
+      },
+      {
+        key: 'colorSplit',
+        label: 'Color separation',
+        type: 'range',
+        min: 0,
+        max: 1.5,
+        step: 0.05,
+      },
+      {
+        key: 'glow',
+        label: 'Wave light',
+        type: 'range',
+        min: 0,
+        max: 0.4,
+        step: 0.01,
+      },
+      { key: 'autoplay', label: 'Autoplay', type: 'toggle' },
+      {
+        key: 'interval',
+        label: 'Autoplay interval',
+        type: 'range',
+        min: 2200,
+        max: 8000,
+        step: 100,
+      },
     ],
   },
   'Pearl Aperture Loader': {
@@ -1403,6 +1880,108 @@ const componentPlaygrounds: Partial<Record<ComponentName, PlaygroundConfig>> = {
       },
     ],
   },
+  'Matrix Rain': {
+    defaults: {
+      color: '#39ff68',
+      density: 0.9,
+      fontSize: 16,
+      glow: 8,
+      highlight: '#eaffed',
+      pointerResponse: true,
+      speed: 1,
+      trail: 0.9,
+    },
+    controls: [
+      { key: 'color', label: 'Glyph color', type: 'color' },
+      { key: 'highlight', label: 'Head color', type: 'color' },
+      {
+        key: 'fontSize',
+        label: 'Glyph size',
+        type: 'range',
+        min: 10,
+        max: 28,
+        step: 1,
+      },
+      {
+        key: 'density',
+        label: 'Column density',
+        type: 'range',
+        min: 0.45,
+        max: 1.4,
+        step: 0.05,
+      },
+      {
+        key: 'speed',
+        label: 'Fall speed',
+        type: 'range',
+        min: 0.2,
+        max: 2.5,
+        step: 0.05,
+      },
+      {
+        key: 'trail',
+        label: 'Trail persistence',
+        type: 'range',
+        min: 0.72,
+        max: 0.97,
+        step: 0.01,
+      },
+      {
+        key: 'glow',
+        label: 'Glow',
+        type: 'range',
+        min: 0,
+        max: 18,
+        step: 1,
+      },
+      {
+        key: 'pointerResponse',
+        label: 'Pointer focus',
+        type: 'toggle',
+      },
+    ],
+  },
+  'Liquid Metal Shader': {
+    defaults: {
+      baseColor: '#1a1a1a',
+      distortion: 0.6,
+      highlightColor: '#ffffff',
+      interactive: true,
+      metalColor: '#ccd0e2',
+      scale: 0.92,
+      speed: 0.72,
+    },
+    controls: [
+      { key: 'baseColor', label: 'Shadow color', type: 'color' },
+      { key: 'metalColor', label: 'Metal color', type: 'color' },
+      { key: 'highlightColor', label: 'Highlight color', type: 'color' },
+      {
+        key: 'distortion',
+        label: 'Fluid distortion',
+        type: 'range',
+        min: 0,
+        max: 1.5,
+        step: 0.01,
+      },
+      {
+        key: 'scale',
+        label: 'Fold scale',
+        type: 'range',
+        min: 0.6,
+        max: 2.4,
+        step: 0.01,
+      },
+      {
+        key: 'speed',
+        label: 'Motion speed',
+        type: 'range',
+        min: 0,
+        max: 1.5,
+        step: 0.01,
+      },
+      { key: 'interactive', label: 'Pointer distortion', type: 'toggle' },
+    ],
+  },
   'Mesh Background': {
     defaults: { flow: 0.96, lustre: 0.62, speed: 0.62 },
     controls: [
@@ -1577,6 +2156,280 @@ const componentDocs: Record<
       'Uses native button behavior by default.',
       'Preserves visible focus in light, dark, and forced-color modes.',
       'Supports Space and Enter activation without custom key handlers.',
+    ],
+  },
+  'ASCII Image': {
+    usage: `import { AsciiImage } from '@nacre-ui/react';
+
+<AsciiImage
+  src="/portrait.jpg"
+  alt="Portrait rendered as ASCII"
+  allowUpload
+/>`,
+    props: [
+      {
+        name: 'src',
+        type: 'string',
+        defaultValue: 'Required',
+        description: 'Supplies a local, data, blob, or CORS-enabled image URL.',
+      },
+      {
+        name: 'alt',
+        type: 'string',
+        defaultValue: "'ASCII rendering'",
+        description: 'Names the rendered image for assistive technology.',
+      },
+      {
+        name: 'columns',
+        type: 'number',
+        defaultValue: '240',
+        description:
+          'Sets horizontal character density, clamped from 24 through 240 columns.',
+      },
+      {
+        name: 'renderMode',
+        type: "'characters' | 'dots'",
+        defaultValue: "'characters'",
+        description: 'Draws either text glyphs or luminance-scaled circles.',
+      },
+      {
+        name: 'characters',
+        type: 'string',
+        defaultValue: "' .:-=+*#%@'",
+        description:
+          'Defines the ordered darkest-to-brightest glyph ramp used by the canvas renderer.',
+      },
+      {
+        name: 'customText',
+        type: 'string',
+        defaultValue: 'undefined',
+        description:
+          'Tiles a supplied phrase through visible cells while preserving image luminance.',
+      },
+      {
+        name: 'normalize',
+        type: 'boolean',
+        defaultValue: 'true',
+        description:
+          'Expands the source luminance range to recover detail from low-contrast images.',
+      },
+      {
+        name: 'interaction',
+        type: "'none' | 'focus' | 'push'",
+        defaultValue: "'none'",
+        description:
+          'Adds an optional pointer response without changing the generated text output.',
+      },
+      {
+        name: 'interactionRadius',
+        type: 'number',
+        defaultValue: '0.27',
+        description:
+          'Sets the pointer influence radius relative to the shorter canvas edge.',
+      },
+      {
+        name: 'interactionStrength',
+        type: 'number',
+        defaultValue: '0.5',
+        description: 'Controls the scale or displacement of nearby cells.',
+      },
+      {
+        name: 'dotScale',
+        type: 'number',
+        defaultValue: '0.72',
+        description: 'Sets dot diameter relative to each sampled cell.',
+      },
+      {
+        name: 'contrast',
+        type: 'number',
+        defaultValue: '1.16',
+        description: 'Adjusts luminance separation before character mapping.',
+      },
+      {
+        name: 'brightnessBoost',
+        type: 'number',
+        defaultValue: '1',
+        description:
+          'Compensates for the visual lightness lost when an image becomes a sparse glyph grid.',
+      },
+      {
+        name: 'threshold',
+        type: 'number',
+        defaultValue: '0.3',
+        description:
+          'Removes low-luminance noise before glyph selection to keep backgrounds clean.',
+      },
+      {
+        name: 'dither',
+        type: "'none' | 'floyd-steinberg' | 'bayer'",
+        defaultValue: "'floyd-steinberg'",
+        description: 'Selects the tonal distribution pattern.',
+      },
+      {
+        name: 'ditherStrength',
+        type: 'number',
+        defaultValue: '0.8',
+        description:
+          'Distributes quantization error into neighboring cells to preserve gradients and fine tonal detail.',
+      },
+      {
+        name: 'posterize',
+        type: 'number',
+        defaultValue: '32',
+        description:
+          'Sets the number of luminance steps used before mapping pixels to glyphs.',
+      },
+      {
+        name: 'invert',
+        type: 'boolean',
+        defaultValue: 'false',
+        description: 'Reverses light and dark character mapping.',
+      },
+      {
+        name: 'tone',
+        type: 'string',
+        defaultValue: "'#dbe7ff'",
+        description: 'Sets the ASCII text and ambient highlight color.',
+      },
+      {
+        name: 'colorMode',
+        type: "'gradient' | 'source'",
+        defaultValue: "'gradient'",
+        description:
+          'Uses supplied glyph colors or samples the original color of every image cell.',
+      },
+      {
+        name: 'colors',
+        type: 'string[]',
+        defaultValue: 'undefined',
+        description:
+          'Defines hexadecimal color stops interpolated across the luminance range.',
+      },
+      {
+        name: 'backgroundColor',
+        type: 'string',
+        defaultValue: "'#000000'",
+        description: 'Fills the canvas behind every rendered glyph.',
+      },
+      {
+        name: 'allowUpload',
+        type: 'boolean',
+        defaultValue: 'false',
+        description:
+          'Shows a local file picker that replaces the current source without uploading it.',
+      },
+      {
+        name: 'onAsciiChange',
+        type: '(value: string) => void',
+        defaultValue: 'undefined',
+        description: 'Returns the generated selectable ASCII string.',
+      },
+    ],
+    accessibility: [
+      'Exposes the conversion as an image with a caller-provided accessible name.',
+      'Announces source dimensions and loading state without reading every generated character.',
+      'Uses a keyboard-accessible native file input for local replacements.',
+      'Processes selected files locally and never sends image data to a server.',
+      'Disables pointer-driven motion when reduced motion is requested.',
+      'Preserves readable output and controls in forced-color modes.',
+    ],
+  },
+  'Ripple Transition': {
+    usage: `import { RippleTransition } from '@nacre-ui/react';
+
+<RippleTransition
+  items={galleryImages}
+  origin="pointer"
+  onIndexChange={(index) => setActiveImage(index)}
+/>`,
+    props: [
+      {
+        name: 'items',
+        type: 'readonly RippleTransitionItem[]',
+        defaultValue: 'Three example images',
+        description:
+          'Supplies at least two image URLs and accessible descriptions for the transition sequence.',
+      },
+      {
+        name: 'duration',
+        type: 'number',
+        defaultValue: '1200',
+        description:
+          'Sets transition duration in milliseconds from 500 to 2400; Sweep adds 400 milliseconds for its longer travel.',
+      },
+      {
+        name: 'origin',
+        type: "'pointer' | 'center'",
+        defaultValue: "'pointer'",
+        description:
+          'Uses the click as the wave source or keeps the source centered.',
+      },
+      {
+        name: 'pattern',
+        type: "'wave' | 'ring' | 'sweep'",
+        defaultValue: "'wave'",
+        description:
+          'Selects pointer-origin waves, a radial ring, or an angled sweep.',
+      },
+      {
+        name: 'radius',
+        type: 'number',
+        defaultValue: '20',
+        description:
+          'Sets the image surface corner radius from zero through 48 pixels.',
+      },
+      {
+        name: 'refraction',
+        type: 'number',
+        defaultValue: '0.055',
+        description: 'Controls image displacement along the moving wavefront.',
+      },
+      {
+        name: 'ringWidth',
+        type: 'number',
+        defaultValue: '0.075',
+        description: 'Controls the thickness of the primary refractive band.',
+      },
+      {
+        name: 'colorSplit',
+        type: 'number',
+        defaultValue: '0.65',
+        description: 'Offsets color channels locally along the moving wave.',
+      },
+      {
+        name: 'glow',
+        type: 'number',
+        defaultValue: '0.16',
+        description:
+          'Adds a restrained brightness lift at the transition boundary.',
+      },
+      {
+        name: 'autoplay',
+        type: 'boolean',
+        defaultValue: 'false',
+        description: 'Advances the image sequence automatically when enabled.',
+      },
+      {
+        name: 'interval',
+        type: 'number',
+        defaultValue: '3600',
+        description:
+          'Sets the delay between automatic transitions in milliseconds.',
+      },
+      {
+        name: 'onIndexChange',
+        type: '(index: number) => void',
+        defaultValue: 'undefined',
+        description:
+          'Reports the newly visible image after a transition settles.',
+      },
+    ],
+    accessibility: [
+      'Uses a native button as the interactive image surface.',
+      'Announces the currently visible image through a polite live region.',
+      'Keeps every image description available as the button accessible name.',
+      'Changes images immediately when reduced motion is requested.',
+      'Preserves a visible focus ring and forced-color boundary.',
     ],
   },
   'Magnetic Button': {
@@ -1761,6 +2614,417 @@ const componentDocs: Record<
       'Preserves a readable label and stable button boundary without requiring animation.',
       'Stops and removes the moving light when reduced motion is requested.',
       'Preserves a visible boundary, label, and focus ring in forced-color modes.',
+    ],
+  },
+  'Copy Button': {
+    usage: `import { CopyButton } from '@nacre-ui/react';
+
+<CopyButton text="npm install @nacre-ui/react" />`,
+    props: [
+      {
+        name: 'text',
+        type: 'string',
+        defaultValue: 'undefined',
+        description: 'Copies this value with the Clipboard API when pressed.',
+      },
+      {
+        name: 'onCopy',
+        type: '() => void | Promise<void>',
+        defaultValue: 'undefined',
+        description: 'Overrides the default Clipboard API action.',
+      },
+      {
+        name: 'label / copiedLabel',
+        type: 'string',
+        defaultValue: "'Copy' / 'Copied'",
+        description: 'Sets the idle and successful labels.',
+      },
+      {
+        name: 'resetDelay',
+        type: 'number',
+        defaultValue: '1800',
+        description: 'Sets how long success remains visible in milliseconds.',
+      },
+    ],
+    accessibility: [
+      'Uses a native button and announces the successful label change politely.',
+      'Keeps both icons decorative while preserving a stable text label.',
+      'Retains the state change when reduced motion removes movement.',
+    ],
+  },
+  'Mute Button': {
+    usage: `import { MuteButton } from '@nacre-ui/react';
+
+<MuteButton onMutedChange={setMuted} />`,
+    props: [
+      {
+        name: 'muted',
+        type: 'boolean',
+        defaultValue: 'undefined',
+        description: 'Controls the muted state when supplied.',
+      },
+      {
+        name: 'defaultMuted',
+        type: 'boolean',
+        defaultValue: 'false',
+        description: 'Sets the initial state for uncontrolled usage.',
+      },
+      {
+        name: 'onMutedChange',
+        type: '(muted: boolean) => void',
+        defaultValue: 'undefined',
+        description: 'Reports each requested audio state change.',
+      },
+      {
+        name: 'showLabel',
+        type: 'boolean',
+        defaultValue: 'true',
+        description: 'Shows the text label beside the audio icon.',
+      },
+    ],
+    accessibility: [
+      'Exposes the current toggle state with aria-pressed.',
+      'Provides an equivalent accessible name when the visible label is hidden.',
+      'Uses color only as reinforcement, never as the sole state indicator.',
+    ],
+  },
+  'Download Button': {
+    usage: `import { DownloadButton } from '@nacre-ui/react';
+
+<DownloadButton onDownload={() => downloadFile()} />`,
+    props: [
+      {
+        name: 'onDownload',
+        type: '() => void | Promise<void>',
+        defaultValue: 'undefined',
+        description: 'Runs the download and tracks a returned promise.',
+      },
+      {
+        name: 'status',
+        type: "'idle' | 'downloading' | 'complete'",
+        defaultValue: 'undefined',
+        description: 'Controls the feedback state when supplied.',
+      },
+      {
+        name: 'label / downloadingLabel / completeLabel',
+        type: 'string',
+        defaultValue: 'Download / Downloading / Downloaded',
+        description: 'Sets the text shown for each state.',
+      },
+      {
+        name: 'resetDelay',
+        type: 'number',
+        defaultValue: '1800',
+        description: 'Sets how long completion remains visible.',
+      },
+    ],
+    accessibility: [
+      'Marks the pending state with aria-busy and prevents duplicate activation.',
+      'Announces pending and completed labels through the native button.',
+      'Slows the progress indicator when reduced motion is requested.',
+    ],
+  },
+  'Like Button': {
+    usage: `import { LikeButton } from '@nacre-ui/react';
+
+<LikeButton onLikedChange={setLiked} />`,
+    props: [
+      {
+        name: 'liked',
+        type: 'boolean',
+        defaultValue: 'undefined',
+        description: 'Controls the selected state when supplied.',
+      },
+      {
+        name: 'defaultLiked',
+        type: 'boolean',
+        defaultValue: 'false',
+        description: 'Sets the initial state for uncontrolled usage.',
+      },
+      {
+        name: 'onLikedChange',
+        type: '(liked: boolean) => void',
+        defaultValue: 'undefined',
+        description: 'Reports each requested reaction state change.',
+      },
+      {
+        name: 'label / likedLabel',
+        type: 'string',
+        defaultValue: "'Like' / 'Liked'",
+        description: 'Sets the unselected and selected labels.',
+      },
+    ],
+    accessibility: [
+      'Exposes selection through aria-pressed and a changing accessible name.',
+      'Uses icon fill and text together so color is never the only signal.',
+      'Keeps the state change legible without movement.',
+    ],
+  },
+  'Theme Button': {
+    usage: `import { ThemeButton } from '@nacre-ui/react';
+
+<ThemeButton theme={theme} onThemeChange={setTheme} />`,
+    props: [
+      {
+        name: 'theme',
+        type: "'light' | 'dark'",
+        defaultValue: 'undefined',
+        description: 'Controls the active theme when supplied.',
+      },
+      {
+        name: 'defaultTheme',
+        type: "'light' | 'dark'",
+        defaultValue: "'light'",
+        description: 'Sets the initial theme for uncontrolled usage.',
+      },
+      {
+        name: 'onThemeChange',
+        type: "(theme: 'light' | 'dark') => void",
+        defaultValue: 'undefined',
+        description: 'Reports each requested theme change.',
+      },
+      {
+        name: 'showLabel',
+        type: 'boolean',
+        defaultValue: 'true',
+        description: 'Shows the current theme beside the icon.',
+      },
+    ],
+    accessibility: [
+      'Names the action rather than only announcing the current state.',
+      'Exposes dark mode through aria-pressed.',
+      'Provides the same accessible name when the visible label is hidden.',
+    ],
+  },
+  'Refresh Button': {
+    usage: `import { RefreshButton } from '@nacre-ui/react';
+
+<RefreshButton onRefresh={() => refetch()} />`,
+    props: [
+      {
+        name: 'onRefresh',
+        type: '() => void | Promise<void>',
+        defaultValue: 'undefined',
+        description: 'Runs the refresh and tracks a returned promise.',
+      },
+      {
+        name: 'status',
+        type: "'idle' | 'refreshing' | 'complete'",
+        defaultValue: 'undefined',
+        description: 'Controls the feedback state when supplied.',
+      },
+      {
+        name: 'label / refreshingLabel / completeLabel',
+        type: 'string',
+        defaultValue: 'Refresh / Refreshing / Updated',
+        description: 'Sets the text shown for each state.',
+      },
+      {
+        name: 'resetDelay',
+        type: 'number',
+        defaultValue: '1400',
+        description: 'Sets how long completion remains visible.',
+      },
+    ],
+    accessibility: [
+      'Marks pending work with aria-busy and prevents duplicate activation.',
+      'Announces the current action state through a stable native button.',
+      'Slows the activity indicator when reduced motion is requested.',
+    ],
+  },
+  'Bookmark Button': {
+    usage: `import { BookmarkButton } from '@nacre-ui/react';
+
+<BookmarkButton onBookmarkedChange={setBookmarked} />`,
+    props: [
+      {
+        name: 'bookmarked / defaultBookmarked',
+        type: 'boolean',
+        defaultValue: 'undefined / false',
+        description:
+          'Controls the saved state or sets its uncontrolled default.',
+      },
+      {
+        name: 'onBookmarkedChange',
+        type: '(bookmarked: boolean) => void',
+        defaultValue: 'undefined',
+        description: 'Reports each requested bookmark state change.',
+      },
+      {
+        name: 'label / bookmarkedLabel',
+        type: 'string',
+        defaultValue: "'Bookmark' / 'Saved'",
+        description: 'Sets the idle and selected labels.',
+      },
+    ],
+    accessibility: [
+      'Exposes the saved state with aria-pressed and a changing accessible name.',
+      'Keeps the ribbon fold decorative while retaining text feedback.',
+      'Preserves a clear filled state when reduced motion is requested.',
+    ],
+  },
+  'Lock Button': {
+    usage: `import { LockButton } from '@nacre-ui/react';
+
+<LockButton onLockedChange={setLocked} />`,
+    props: [
+      {
+        name: 'locked / defaultLocked',
+        type: 'boolean',
+        defaultValue: 'undefined / false',
+        description:
+          'Controls the security state or sets its uncontrolled default.',
+      },
+      {
+        name: 'onLockedChange',
+        type: '(locked: boolean) => void',
+        defaultValue: 'undefined',
+        description: 'Reports each requested lock state change.',
+      },
+      {
+        name: 'label / lockedLabel',
+        type: 'string',
+        defaultValue: "'Lock' / 'Locked'",
+        description: 'Sets the open and secured labels.',
+      },
+    ],
+    accessibility: [
+      'Previews the secured shape on hover and exposes state with aria-pressed.',
+      'Uses an action-oriented accessible name and keeps keyboard activation immediate.',
+      'Honors reduced-motion preferences by replacing the spring with an instant morph.',
+    ],
+  },
+  'Play Button': {
+    usage: `import { PlayButton } from '@nacre-ui/react';
+
+<PlayButton onPlayingChange={setPlaying} />`,
+    props: [
+      {
+        name: 'playing / defaultPlaying',
+        type: 'boolean',
+        defaultValue: 'undefined / false',
+        description: 'Controls playback or sets its uncontrolled default.',
+      },
+      {
+        name: 'onPlayingChange',
+        type: '(playing: boolean) => void',
+        defaultValue: 'undefined',
+        description: 'Reports each requested playback state change.',
+      },
+      {
+        name: 'label / pauseLabel',
+        type: 'string',
+        defaultValue: "'Play' / 'Pause'",
+        description: 'Sets the labels for stopped and playing states.',
+      },
+    ],
+    accessibility: [
+      'Uses a native toggle button with an action-oriented accessible name.',
+      'Changes both geometry and text so the playback state does not depend on color.',
+      'Retains the triangle and pause bars when reduced motion removes travel.',
+    ],
+  },
+  'Filter Button': {
+    usage: `import { FilterButton } from '@nacre-ui/react';
+
+<FilterButton onActiveChange={setFiltered} />`,
+    props: [
+      {
+        name: 'active / defaultActive',
+        type: 'boolean',
+        defaultValue: 'undefined / false',
+        description:
+          'Controls filter application or sets its uncontrolled default.',
+      },
+      {
+        name: 'onActiveChange',
+        type: '(active: boolean) => void',
+        defaultValue: 'undefined',
+        description: 'Reports each requested filter state change.',
+      },
+      {
+        name: 'label / activeLabel',
+        type: 'string',
+        defaultValue: "'Filter' / 'Applied'",
+        description: 'Sets the inactive and active labels.',
+      },
+    ],
+    accessibility: [
+      'Exposes filter application through aria-pressed.',
+      'Pairs slider positions with a text change for redundant feedback.',
+      'Keeps opacity and color feedback when reduced motion removes slider travel.',
+    ],
+  },
+  'Send Button': {
+    usage: `import { SendButton } from '@nacre-ui/react';
+
+<SendButton onSend={() => sendMessage()} />`,
+    props: [
+      {
+        name: 'onSend',
+        type: '() => void | Promise<void>',
+        defaultValue: 'undefined',
+        description: 'Runs the send action and tracks a returned promise.',
+      },
+      {
+        name: 'status',
+        type: "'idle' | 'pending' | 'complete'",
+        defaultValue: 'undefined',
+        description: 'Controls the async feedback state when supplied.',
+      },
+      {
+        name: 'label / pendingLabel / completeLabel',
+        type: 'string',
+        defaultValue: 'Send / Sending / Sent',
+        description: 'Sets the text shown for each state.',
+      },
+      {
+        name: 'resetDelay',
+        type: 'number',
+        defaultValue: '1400',
+        description: 'Sets how long successful delivery remains visible.',
+      },
+    ],
+    accessibility: [
+      'Marks pending delivery with aria-busy and prevents duplicate sends.',
+      'Announces sending and sent states through a stable native button.',
+      'Preserves textual completion feedback without directional movement.',
+    ],
+  },
+  'Save Button': {
+    usage: `import { SaveButton } from '@nacre-ui/react';
+
+<SaveButton onSave={() => saveDraft()} />`,
+    props: [
+      {
+        name: 'onSave',
+        type: '() => void | Promise<void>',
+        defaultValue: 'undefined',
+        description: 'Runs the save action and tracks a returned promise.',
+      },
+      {
+        name: 'status',
+        type: "'idle' | 'pending' | 'complete'",
+        defaultValue: 'undefined',
+        description: 'Controls the async feedback state when supplied.',
+      },
+      {
+        name: 'label / pendingLabel / completeLabel',
+        type: 'string',
+        defaultValue: 'Save / Saving / Saved',
+        description: 'Sets the text shown for each state.',
+      },
+      {
+        name: 'resetDelay',
+        type: 'number',
+        defaultValue: '1400',
+        description: 'Sets how long successful storage remains visible.',
+      },
+    ],
+    accessibility: [
+      'Marks pending storage with aria-busy and prevents duplicate saves.',
+      'Announces saving and saved states without changing the button footprint.',
+      'Keeps the completion check and text when reduced motion removes depth.',
     ],
   },
   'Social Profile Button': {
@@ -3620,6 +4884,160 @@ export default function Loading() {
       'Provides CSS and forced-color fallbacks when WebGL is unavailable.',
     ],
   },
+  'Matrix Rain': {
+    usage: `import { MatrixRain } from '@nacre-ui/react';
+
+<MatrixRain
+  color="#39ff68"
+  highlight="#eaffed"
+  fontSize={16}
+  speed={1}
+  pointerResponse
+/>`,
+    props: [
+      {
+        name: 'characters',
+        type: 'string',
+        defaultValue: 'Latin, numeric, and katakana glyphs',
+        description: 'Sets the character pool used by the falling columns.',
+      },
+      {
+        name: 'color',
+        type: 'string',
+        defaultValue: "'#39ff68'",
+        description: 'Colors the body of each glyph trail.',
+      },
+      {
+        name: 'highlight',
+        type: 'string',
+        defaultValue: "'#eaffed'",
+        description: 'Colors leading glyphs and the pointer-focus area.',
+      },
+      {
+        name: 'background',
+        type: 'string',
+        defaultValue: "'#020604'",
+        description: 'Sets the opaque canvas background.',
+      },
+      {
+        name: 'fontSize',
+        type: 'number',
+        defaultValue: '16',
+        description: 'Sets glyph size between 10 and 32 pixels.',
+      },
+      {
+        name: 'density',
+        type: 'number',
+        defaultValue: '0.9',
+        description: 'Controls horizontal column density from 0.45 to 1.4.',
+      },
+      {
+        name: 'speed',
+        type: 'number',
+        defaultValue: '1',
+        description: 'Controls fall speed from 0.2 to 2.5.',
+      },
+      {
+        name: 'trail',
+        type: 'number',
+        defaultValue: '0.9',
+        description: 'Controls trail persistence from 0.72 to 0.97.',
+      },
+      {
+        name: 'glow',
+        type: 'number',
+        defaultValue: '8',
+        description: 'Sets glyph glow radius from zero to 18 pixels.',
+      },
+      {
+        name: 'pointerResponse',
+        type: 'boolean',
+        defaultValue: 'true',
+        description:
+          'Sharpens, brightens, and gently separates glyphs around the pointer.',
+      },
+    ],
+    accessibility: [
+      'Treats the generated canvas as decorative by default.',
+      'Accepts aria-hidden={false} and an aria-label when the visual conveys meaning.',
+      'Renders a stable static field when reduced motion is requested.',
+      'Pauses animation while the component is outside the viewport.',
+      'Provides an opaque background and forced-color fallback.',
+    ],
+  },
+  'Liquid Metal Shader': {
+    usage: `import { LiquidMetalShader } from '@nacre-ui/react';
+
+<LiquidMetalShader
+  baseColor="#1a1a1a"
+  metalColor="#ccd0e2"
+  highlightColor="#ffffff"
+  distortion={0.6}
+  scale={0.92}
+  speed={0.72}
+  interactive
+/>`,
+    props: [
+      {
+        name: 'baseColor',
+        type: 'string',
+        defaultValue: "'#1a1a1a'",
+        description: 'Sets the deepest reflected shadow color.',
+      },
+      {
+        name: 'metalColor',
+        type: 'string',
+        defaultValue: "'#ccd0e2'",
+        description: 'Sets the principal metallic midtone.',
+      },
+      {
+        name: 'highlightColor',
+        type: 'string',
+        defaultValue: "'#ffffff'",
+        description: 'Colors the sharpest reflected light bands.',
+      },
+      {
+        name: 'distortion',
+        type: 'number',
+        defaultValue: '0.6',
+        description:
+          'Controls fluid warping and pointer displacement from zero through 1.5.',
+      },
+      {
+        name: 'scale',
+        type: 'number',
+        defaultValue: '0.92',
+        description:
+          'Controls the size of the metallic folds from 0.6 through 2.4.',
+      },
+      {
+        name: 'speed',
+        type: 'number',
+        defaultValue: '0.72',
+        description:
+          'Controls continuous surface movement from zero through 1.5.',
+      },
+      {
+        name: 'interactive',
+        type: 'boolean',
+        defaultValue: 'true',
+        description: 'Enables smoothly interpolated pointer distortion.',
+      },
+      {
+        name: 'pixelRatio',
+        type: 'number',
+        defaultValue: '1.4',
+        description: 'Caps device pixel density between 0.75 and 2.',
+      },
+    ],
+    accessibility: [
+      'Treats the generated shader as decorative by default.',
+      'Accepts aria-hidden={false} and an aria-label when the surface conveys meaning.',
+      'Renders a stable still frame when reduced motion is requested.',
+      'Pauses rendering while outside the viewport.',
+      'Provides a CSS gradient and forced-color fallback when WebGL is unavailable.',
+    ],
+  },
   'Mesh Background': {
     usage: `import { MeshBackground } from '@nacre-ui/react';
 
@@ -4050,6 +5468,37 @@ function IridescentWeaveShaderPreview({
   );
 }
 
+function MatrixRainPreview({ values }: { values?: PlaygroundValues }) {
+  return (
+    <MatrixRain
+      className="matrix-rain-demo-surface"
+      color={textValue(values, 'color', '#39ff68')}
+      density={numberValue(values, 'density', 0.9)}
+      fontSize={numberValue(values, 'fontSize', 16)}
+      glow={numberValue(values, 'glow', 8)}
+      highlight={textValue(values, 'highlight', '#eaffed')}
+      pointerResponse={booleanValue(values, 'pointerResponse', true)}
+      speed={numberValue(values, 'speed', 1)}
+      trail={numberValue(values, 'trail', 0.9)}
+    />
+  );
+}
+
+function LiquidMetalShaderPreview({ values }: { values?: PlaygroundValues }) {
+  return (
+    <LiquidMetalShader
+      baseColor={textValue(values, 'baseColor', '#1a1a1a')}
+      className="liquid-metal-shader-demo-surface"
+      distortion={numberValue(values, 'distortion', 0.6)}
+      highlightColor={textValue(values, 'highlightColor', '#ffffff')}
+      interactive={booleanValue(values, 'interactive', true)}
+      metalColor={textValue(values, 'metalColor', '#ccd0e2')}
+      scale={numberValue(values, 'scale', 0.92)}
+      speed={numberValue(values, 'speed', 0.72)}
+    />
+  );
+}
+
 function MeshBackgroundPreview({ values }: { values?: PlaygroundValues }) {
   return (
     <MeshBackground
@@ -4148,6 +5597,129 @@ function LustreButtonPreview({ values }: { values?: PlaygroundValues }) {
     >
       {textValue(values, 'label', 'Explore components')}
     </LustreButton>
+  );
+}
+
+function CopyButtonPreview({ values }: { values?: PlaygroundValues }) {
+  return (
+    <CopyButton
+      copiedLabel={textValue(values, 'copiedLabel', 'Copied')}
+      label={textValue(values, 'label', 'Copy')}
+      onCopy={() => Promise.resolve()}
+    />
+  );
+}
+
+function MuteButtonPreview({ values }: { values?: PlaygroundValues }) {
+  return <MuteButton showLabel={booleanValue(values, 'showLabel', true)} />;
+}
+
+function DownloadButtonPreview({ values }: { values?: PlaygroundValues }) {
+  return (
+    <DownloadButton
+      completeLabel={textValue(values, 'completeLabel', 'Downloaded')}
+      downloadingLabel={textValue(values, 'downloadingLabel', 'Downloading')}
+      label={textValue(values, 'label', 'Download')}
+      onDownload={() =>
+        new Promise((resolve) => {
+          setTimeout(resolve, 900);
+        })
+      }
+    />
+  );
+}
+
+function LikeButtonPreview({ values }: { values?: PlaygroundValues }) {
+  return (
+    <LikeButton
+      label={textValue(values, 'label', 'Like')}
+      likedLabel={textValue(values, 'likedLabel', 'Liked')}
+    />
+  );
+}
+
+function ThemeButtonPreview({ values }: { values?: PlaygroundValues }) {
+  return <ThemeButton showLabel={booleanValue(values, 'showLabel', true)} />;
+}
+
+function RefreshButtonPreview({ values }: { values?: PlaygroundValues }) {
+  return (
+    <RefreshButton
+      completeLabel={textValue(values, 'completeLabel', 'Updated')}
+      label={textValue(values, 'label', 'Refresh')}
+      onRefresh={() =>
+        new Promise((resolve) => {
+          setTimeout(resolve, 800);
+        })
+      }
+      refreshingLabel={textValue(values, 'refreshingLabel', 'Refreshing')}
+    />
+  );
+}
+
+function BookmarkButtonPreview({ values }: { values?: PlaygroundValues }) {
+  return (
+    <BookmarkButton
+      bookmarkedLabel={textValue(values, 'bookmarkedLabel', 'Saved')}
+      label={textValue(values, 'label', 'Bookmark')}
+    />
+  );
+}
+
+function LockButtonPreview({ values }: { values?: PlaygroundValues }) {
+  return (
+    <LockButton
+      label={textValue(values, 'label', 'Lock')}
+      lockedLabel={textValue(values, 'lockedLabel', 'Locked')}
+    />
+  );
+}
+
+function PlayButtonPreview({ values }: { values?: PlaygroundValues }) {
+  return (
+    <PlayButton
+      label={textValue(values, 'label', 'Play')}
+      pauseLabel={textValue(values, 'pauseLabel', 'Pause')}
+    />
+  );
+}
+
+function FilterButtonPreview({ values }: { values?: PlaygroundValues }) {
+  return (
+    <FilterButton
+      activeLabel={textValue(values, 'activeLabel', 'Applied')}
+      label={textValue(values, 'label', 'Filter')}
+    />
+  );
+}
+
+function SendButtonPreview({ values }: { values?: PlaygroundValues }) {
+  return (
+    <SendButton
+      completeLabel={textValue(values, 'completeLabel', 'Sent')}
+      label={textValue(values, 'label', 'Send')}
+      onSend={() =>
+        new Promise((resolve) => {
+          setTimeout(resolve, 720);
+        })
+      }
+      pendingLabel={textValue(values, 'pendingLabel', 'Sending')}
+    />
+  );
+}
+
+function SaveButtonPreview({ values }: { values?: PlaygroundValues }) {
+  return (
+    <SaveButton
+      completeLabel={textValue(values, 'completeLabel', 'Saved')}
+      label={textValue(values, 'label', 'Save')}
+      onSave={() =>
+        new Promise((resolve) => {
+          setTimeout(resolve, 760);
+        })
+      }
+      pendingLabel={textValue(values, 'pendingLabel', 'Saving')}
+    />
   );
 }
 
@@ -4393,6 +5965,63 @@ function PhaseWeaveTextPreview({ values }: { values?: PlaygroundValues }) {
   );
 }
 
+function AsciiImagePreview({ values }: { values?: PlaygroundValues }) {
+  const compact = values === undefined;
+
+  return (
+    <AsciiImage
+      allowUpload={!compact}
+      alt="Illustration of Zeus rendered as ASCII"
+      brightnessBoost={numberValue(values, 'brightnessBoost', 1)}
+      colorMode={
+        textValue(values, 'colorMode', 'gradient') as 'gradient' | 'source'
+      }
+      columns={numberValue(values, 'columns', compact ? 56 : 240)}
+      contrast={numberValue(values, 'contrast', 1.16)}
+      dither={
+        textValue(values, 'dither', 'floyd-steinberg') as
+          | 'bayer'
+          | 'floyd-steinberg'
+          | 'none'
+      }
+      ditherStrength={numberValue(values, 'ditherStrength', 0.8)}
+      interaction={
+        textValue(values, 'interaction', 'none') as 'focus' | 'none' | 'push'
+      }
+      interactionRadius={numberValue(values, 'interactionRadius', 0.27)}
+      interactionStrength={numberValue(values, 'interactionStrength', 0.5)}
+      invert={booleanValue(values, 'invert', false)}
+      normalize={booleanValue(values, 'normalize', !compact)}
+      renderMode={
+        textValue(values, 'renderMode', 'characters') as 'characters' | 'dots'
+      }
+      src="/ascii-zeus.png"
+      threshold={numberValue(values, 'threshold', 0.3)}
+      tone={textValue(values, 'tone', '#dbe7ff')}
+    />
+  );
+}
+
+function RippleTransitionPreview({ values }: { values?: PlaygroundValues }) {
+  return (
+    <RippleTransition
+      autoplay={booleanValue(values, 'autoplay', false)}
+      colorSplit={numberValue(values, 'colorSplit', 0.65)}
+      duration={numberValue(values, 'duration', 1200)}
+      glow={numberValue(values, 'glow', 0.16)}
+      interval={numberValue(values, 'interval', 3600)}
+      items={ripplePreviewItems}
+      origin={textValue(values, 'origin', 'pointer') as 'center' | 'pointer'}
+      pattern={
+        textValue(values, 'pattern', 'wave') as 'ring' | 'sweep' | 'wave'
+      }
+      radius={numberValue(values, 'radius', 20)}
+      refraction={numberValue(values, 'refraction', 0.055)}
+      ringWidth={numberValue(values, 'ringWidth', 0.075)}
+    />
+  );
+}
+
 function EditorialMosaicPreview({ values }: { values?: PlaygroundValues }) {
   return (
     <EditorialMosaic
@@ -4513,6 +6142,21 @@ function ComponentPreview({
   if (name === 'Gem Smoke Button')
     return <GemSmokeButtonPreview values={values} />;
   if (name === 'Lustre Button') return <LustreButtonPreview values={values} />;
+  if (name === 'Copy Button') return <CopyButtonPreview values={values} />;
+  if (name === 'Mute Button') return <MuteButtonPreview values={values} />;
+  if (name === 'Download Button')
+    return <DownloadButtonPreview values={values} />;
+  if (name === 'Like Button') return <LikeButtonPreview values={values} />;
+  if (name === 'Theme Button') return <ThemeButtonPreview values={values} />;
+  if (name === 'Refresh Button')
+    return <RefreshButtonPreview values={values} />;
+  if (name === 'Bookmark Button')
+    return <BookmarkButtonPreview values={values} />;
+  if (name === 'Lock Button') return <LockButtonPreview values={values} />;
+  if (name === 'Play Button') return <PlayButtonPreview values={values} />;
+  if (name === 'Filter Button') return <FilterButtonPreview values={values} />;
+  if (name === 'Send Button') return <SendButtonPreview values={values} />;
+  if (name === 'Save Button') return <SaveButtonPreview values={values} />;
   if (name === 'Social Profile Button')
     return <SocialProfileButtonPreview values={values} />;
   if (name === 'Pearl Aperture Loader')
@@ -4548,6 +6192,9 @@ function ComponentPreview({
   if (name === 'Tilt Text') return <TiltTextPreview values={values} />;
   if (name === 'Phase Weave Text')
     return <PhaseWeaveTextPreview values={values} />;
+  if (name === 'ASCII Image') return <AsciiImagePreview values={values} />;
+  if (name === 'Ripple Transition')
+    return <RippleTransitionPreview values={values} />;
   if (name === 'Editorial Mosaic')
     return <EditorialMosaicPreview values={values} />;
   if (name === 'Halo Dock') return <HaloDockPreview values={values} />;
@@ -4562,6 +6209,9 @@ function ComponentPreview({
     return <NacreFieldShaderPreview values={values} />;
   if (name === 'Iridescent Weave Shader')
     return <IridescentWeaveShaderPreview values={values} />;
+  if (name === 'Matrix Rain') return <MatrixRainPreview values={values} />;
+  if (name === 'Liquid Metal Shader')
+    return <LiquidMetalShaderPreview values={values} />;
   if (name === 'Mesh Background')
     return <MeshBackgroundPreview values={values} />;
   if (name === 'Flux Background')
@@ -5426,74 +7076,100 @@ function ComponentContent({ name }: { name: ComponentName }) {
           ? gemSmokeButtonSource
           : name === 'Lustre Button'
             ? lustreButtonSource
-            : name === 'Social Profile Button'
-              ? socialProfileButtonSource
-              : name === 'Pearl Aperture Loader'
-                ? pearlApertureLoaderSource
-                : name === 'Horizon Page Loader'
-                  ? horizonPageLoaderSource
-                  : name === 'Mercury Rail Loader'
-                    ? mercuryRailLoaderSource
-                    : name === 'Facet Bloom Loader'
-                      ? facetBloomLoaderSource
-                      : name === 'Ribbon Fold Loader'
-                        ? ribbonFoldLoaderSource
-                        : name === 'Pearl Matrix Loader'
-                          ? pearlMatrixLoaderSource
-                          : name === 'Fluid Cell Loader' ||
-                              name === 'Prism Stack Loader' ||
-                              name === 'Card Shuffle Loader'
-                            ? sculpturalLoadersSource
-                            : name === 'Signal Reveal Text'
-                              ? signalRevealTextSource
-                              : name === 'Tally Shift Number'
-                                ? tallyShiftNumberSource
-                                : name === 'Tidal Type Text'
-                                  ? tidalTypeTextSource
-                                  : name === 'Swell Text'
-                                    ? swellTextSource
-                                    : name === 'Aurora Text' ||
-                                        name === 'Liquid Text' ||
-                                        name === 'Gravity Text' ||
-                                        name === 'Slot Text' ||
-                                        name === 'Bloom Text' ||
-                                        name === 'Tilt Text'
-                                      ? textMotionEffectsSource
-                                      : name === 'Phase Weave Text'
-                                        ? phaseWeaveTextSource
-                                        : name === 'Editorial Mosaic'
-                                          ? editorialMosaicSource
-                                          : name === 'Halo Dock'
-                                            ? haloDockSource
-                                            : name === 'Shutter Trail'
-                                              ? shutterTrailSource
-                                              : name === 'Folio Arc Carousel'
-                                                ? folioArcCarouselSource
-                                                : name === 'Helix Reel'
-                                                  ? helixReelSource
-                                                  : name === 'Toolchain Marquee'
-                                                    ? toolchainMarqueeSource
-                                                    : name === 'Orbit Ledger'
-                                                      ? orbitLedgerSource
-                                                      : name ===
-                                                          'Nacre Field Shader'
-                                                        ? nacreFieldShaderSource
+            : name === 'Copy Button' ||
+                name === 'Mute Button' ||
+                name === 'Download Button' ||
+                name === 'Like Button' ||
+                name === 'Theme Button' ||
+                name === 'Refresh Button' ||
+                name === 'Bookmark Button' ||
+                name === 'Lock Button' ||
+                name === 'Play Button' ||
+                name === 'Filter Button' ||
+                name === 'Send Button' ||
+                name === 'Save Button'
+              ? microButtonsSource
+              : name === 'Social Profile Button'
+                ? socialProfileButtonSource
+                : name === 'Pearl Aperture Loader'
+                  ? pearlApertureLoaderSource
+                  : name === 'Horizon Page Loader'
+                    ? horizonPageLoaderSource
+                    : name === 'Mercury Rail Loader'
+                      ? mercuryRailLoaderSource
+                      : name === 'Facet Bloom Loader'
+                        ? facetBloomLoaderSource
+                        : name === 'Ribbon Fold Loader'
+                          ? ribbonFoldLoaderSource
+                          : name === 'Pearl Matrix Loader'
+                            ? pearlMatrixLoaderSource
+                            : name === 'Fluid Cell Loader' ||
+                                name === 'Prism Stack Loader' ||
+                                name === 'Card Shuffle Loader'
+                              ? sculpturalLoadersSource
+                              : name === 'Signal Reveal Text'
+                                ? signalRevealTextSource
+                                : name === 'Tally Shift Number'
+                                  ? tallyShiftNumberSource
+                                  : name === 'Tidal Type Text'
+                                    ? tidalTypeTextSource
+                                    : name === 'Swell Text'
+                                      ? swellTextSource
+                                      : name === 'Aurora Text' ||
+                                          name === 'Liquid Text' ||
+                                          name === 'Gravity Text' ||
+                                          name === 'Slot Text' ||
+                                          name === 'Bloom Text' ||
+                                          name === 'Tilt Text'
+                                        ? textMotionEffectsSource
+                                        : name === 'Phase Weave Text'
+                                          ? phaseWeaveTextSource
+                                          : name === 'ASCII Image'
+                                            ? asciiImageSource
+                                            : name === 'Ripple Transition'
+                                              ? rippleTransitionSource
+                                              : name === 'Editorial Mosaic'
+                                                ? editorialMosaicSource
+                                                : name === 'Halo Dock'
+                                                  ? haloDockSource
+                                                  : name === 'Shutter Trail'
+                                                    ? shutterTrailSource
+                                                    : name ===
+                                                        'Folio Arc Carousel'
+                                                      ? folioArcCarouselSource
+                                                      : name === 'Helix Reel'
+                                                        ? helixReelSource
                                                         : name ===
-                                                            'Iridescent Weave Shader'
-                                                          ? iridescentWeaveShaderSource
+                                                            'Toolchain Marquee'
+                                                          ? toolchainMarqueeSource
                                                           : name ===
-                                                              'Mesh Background'
-                                                            ? meshBackgroundSource
+                                                              'Orbit Ledger'
+                                                            ? orbitLedgerSource
                                                             : name ===
-                                                                'Flux Background'
-                                                              ? fluxBackgroundSource
+                                                                'Nacre Field Shader'
+                                                              ? nacreFieldShaderSource
                                                               : name ===
-                                                                  'Magnetic Warp Background'
-                                                                ? magneticWarpBackgroundSource
+                                                                  'Iridescent Weave Shader'
+                                                                ? iridescentWeaveShaderSource
                                                                 : name ===
-                                                                    'Grain Current Background'
-                                                                  ? grainCurrentBackgroundSource
-                                                                  : `'use client';
+                                                                    'Matrix Rain'
+                                                                  ? matrixRainSource
+                                                                  : name ===
+                                                                      'Liquid Metal Shader'
+                                                                    ? liquidMetalShaderSource
+                                                                    : name ===
+                                                                        'Mesh Background'
+                                                                      ? meshBackgroundSource
+                                                                      : name ===
+                                                                          'Flux Background'
+                                                                        ? fluxBackgroundSource
+                                                                        : name ===
+                                                                            'Magnetic Warp Background'
+                                                                          ? magneticWarpBackgroundSource
+                                                                          : name ===
+                                                                              'Grain Current Background'
+                                                                            ? grainCurrentBackgroundSource
+                                                                            : `'use client';
 
 import * as React from 'react';
 

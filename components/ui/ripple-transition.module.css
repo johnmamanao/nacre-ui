@@ -1,0 +1,73 @@
+.root {
+  --ripple-radius: 20px;
+  --ripple-ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+
+  position: relative;
+  display: block;
+  width: 100%;
+  min-height: 440px;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  border-radius: var(--ripple-radius);
+  color: #fff;
+  background: #08090b;
+  cursor: pointer;
+  isolation: isolate;
+}
+
+.fallback,
+.canvas {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.fallback {
+  object-fit: cover;
+}
+
+.canvas {
+  opacity: 0;
+  transition: opacity 180ms var(--ripple-ease-out);
+}
+
+.root[data-ready='true'] .canvas {
+  opacity: 1;
+}
+
+.live {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.root:focus-visible {
+  outline: 2px solid #dbe7ff;
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .canvas {
+    transition-duration: 0ms;
+  }
+}
+
+@media (max-width: 640px) {
+  .root {
+    min-height: 340px;
+  }
+}
+
+@media (forced-colors: active) {
+  .root {
+    border: 1px solid CanvasText;
+  }
+}

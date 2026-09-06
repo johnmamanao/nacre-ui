@@ -3607,6 +3607,8 @@ body:has(.docs-search-dialog[open]) {
 
 .component-doc-preview .nacre-field-shader-demo-surface,
 .component-doc-preview .iridescent-weave-shader-demo-surface,
+.component-doc-preview .matrix-rain-demo-surface,
+.component-doc-preview .liquid-metal-shader-demo-surface,
 .component-doc-preview .mesh-background-demo-surface,
 .component-doc-preview .flux-background-demo-surface,
 .component-doc-preview .magnetic-warp-background-demo-surface,
