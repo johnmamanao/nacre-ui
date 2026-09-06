@@ -1370,8 +1370,8 @@ footer nav a:hover {
   margin: 0;
   font-size: clamp(4rem, 7vw, 7.2rem);
   font-weight: 560;
-  letter-spacing: -0.082em;
-  line-height: 0.88;
+  letter-spacing: -0.052em;
+  line-height: 0.94;
 }
 .home-hero-copy > p {
   max-width: 590px;
@@ -1850,8 +1850,8 @@ footer nav a:hover {
   margin: 0;
   font-size: clamp(3.2rem, 6.8vw, 6.7rem);
   font-weight: 560;
-  letter-spacing: -0.078em;
-  line-height: 0.9;
+  letter-spacing: -0.048em;
+  line-height: 0.96;
 }
 .collection-intro > div:last-child {
   display: grid;
@@ -2704,6 +2704,8 @@ html:not(.dark) .footer-appearance .light-appearance,
   }
   .home-hero h1 {
     font-size: clamp(3.45rem, 16vw, 5rem);
+    letter-spacing: -0.042em;
+    line-height: 0.98;
   }
   .home-hero-copy > p {
     margin-inline: 0;
@@ -2717,6 +2719,10 @@ html:not(.dark) .footer-appearance .light-appearance,
   .home-hero-actions a,
   .home-hero-actions button {
     justify-content: center;
+  }
+  .collection-intro h2 {
+    letter-spacing: -0.038em;
+    line-height: 1;
   }
   .hero-live-stage {
     display: grid;
