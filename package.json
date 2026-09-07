@@ -46,7 +46,7 @@
     "morphicons": "^1.7.1",
     "prism-react-renderer": "2.4.1",
     "react": "^19.2.8",
-    "react-day-picker": "9.8.1",
+    "react-day-picker": "10.0.1",
     "react-dom": "^19.2.8",
     "react-resizable-panels": "4.5.8",
     "react-server-dom-webpack": "^19.2.8",
