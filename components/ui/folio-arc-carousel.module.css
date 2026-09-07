@@ -371,6 +371,16 @@
   }
 }
 
+@container component-preview (max-width: 620px) {
+  .root {
+    min-height: 380px;
+  }
+
+  .caption strong {
+    font-size: 13px;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .caption,
   .controls > button,

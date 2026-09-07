@@ -254,6 +254,33 @@
   }
 }
 
+@container component-preview (max-width: 620px) {
+  .root {
+    min-height: 340px;
+  }
+
+  .stage[data-mode='overview'] {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+
+  .stage[data-mode='overview'] .frame:nth-child(1),
+  .stage[data-mode='overview'] .frame:nth-child(n + 2) {
+    grid-column: span 3;
+  }
+
+  .stage[data-mode='overview'] .frame:nth-child(n + 4) {
+    display: none;
+  }
+
+  .stage[data-mode='focus'] {
+    grid-template-columns: minmax(0, 1fr) 84px;
+  }
+
+  .storyMeta {
+    right: 108px;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .image,
   .shade,

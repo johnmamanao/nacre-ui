@@ -5,6 +5,8 @@
 
   position: relative;
   width: 100%;
+  height: 100%;
+  min-height: 0;
   color: #f5f7fb;
 }
 
@@ -111,6 +113,8 @@
 .viewport {
   position: relative;
   display: grid;
+  width: 100%;
+  height: 100%;
   min-height: 420px;
   margin: 0;
   overflow: hidden;
@@ -202,6 +206,22 @@
 }
 
 @media (max-width: 560px) {
+  .header {
+    flex-wrap: wrap;
+  }
+
+  .meta {
+    order: 3;
+    width: 100%;
+    margin-left: 14px;
+  }
+
+  .viewport {
+    min-height: 320px;
+  }
+}
+
+@container component-preview (max-width: 560px) {
   .header {
     flex-wrap: wrap;
   }
