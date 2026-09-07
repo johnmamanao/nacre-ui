@@ -5625,6 +5625,7 @@ body:has(.docs-search-dialog[open]) {
 }
 .components-summary {
   display: grid;
+  width: min(100%, 810px);
   grid-template-columns: 100px 100px 120px minmax(280px, 1fr);
   gap: 8px;
   padding: 10px;
@@ -7196,11 +7197,16 @@ body:has(.docs-search-dialog[open]) {
 
 /* Keep the workspace shell above the legacy catalogue cascade. */
 body .reference-layout {
-  width: 100%;
-  max-width: none;
-  padding-inline: clamp(12px, 2vw, 28px);
+  width: min(
+    calc(100% - var(--page-gutter) - var(--page-gutter)),
+    var(--page-max)
+  );
+  max-width: var(--page-max);
+  padding-inline: 0;
 }
 body .reference-layout[data-component-view='true'] {
+  width: 100%;
+  max-width: none;
   padding-inline: 0;
 }
 body .reference-layout .components-header {
