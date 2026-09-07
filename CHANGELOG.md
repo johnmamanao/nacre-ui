@@ -8,6 +8,29 @@ published.
 
 ## [Unreleased]
 
+## [0.2.5] - 2026-09-07
+
+### Added
+
+- A first-visit release update with a persistent option to hide the current release on later visits.
+- Landing-page and catalogue navigation in the component preview toolbar.
+- A velocity-aware, drag-to-dismiss source-code panel.
+- Live npm release, weekly download, license, and repository star badges in the README.
+
+### Changed
+
+- Rebuilt component documentation around a full-height preview workspace with nearby usage, source, search, controls, fullscreen, and theme tools.
+- Refined the component drawer with clearer typography, aligned animated guide lines, hidden scrollbar chrome, transparent edge fades, and click-only opening.
+- Made component previews and ASCII Image respond to their available workspace dimensions.
+- Improved Matrix Rain startup distribution, trail rendering, and its default glyph size.
+- Polished the landing-page release presentation and featured-repository star treatment.
+- Refined Ripple Transition timing and pointer-driven wave behavior.
+
+### Fixed
+
+- Removed redundant sidebar guide lines and the component page's unnecessary header and footer chrome.
+- Corrected usage-panel stacking, interaction alignment, and preview sizing across viewport widths.
+
 ## [0.2.4] - 2026-09-07
 
 ### Added
@@ -75,7 +98,9 @@ published.
 - AI-ready prompts on every component page, including the active preview configuration.
 - Clean-project compilation and overwrite-protection tests for the CLI.
 
-[Unreleased]: https://github.com/johnmamanao/nacre-ui/compare/v0.2.3...HEAD
+[Unreleased]: https://github.com/johnmamanao/nacre-ui/compare/v0.2.5...HEAD
+[0.2.5]: https://github.com/johnmamanao/nacre-ui/compare/v0.2.4...v0.2.5
+[0.2.4]: https://github.com/johnmamanao/nacre-ui/compare/v0.2.3...v0.2.4
 [0.2.3]: https://github.com/johnmamanao/nacre-ui/compare/v0.2.2...v0.2.3
 [0.2.2]: https://github.com/johnmamanao/nacre-ui/compare/v0.2.1...v0.2.2
 [0.2.1]: https://github.com/johnmamanao/nacre-ui/compare/v0.2.0...v0.2.1

@@ -197,6 +197,12 @@
   }
 }
 
+@container component-preview (max-width: 620px) {
+  .root {
+    min-height: 340px;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .holdMark {
     transition: none;

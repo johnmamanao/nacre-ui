@@ -158,6 +158,23 @@
   }
 }
 
+@container component-preview (max-width: 600px) {
+  .rows {
+    gap: 2px;
+  }
+
+  .badge {
+    height: 34px;
+    border-radius: 9px;
+    font-size: 10px;
+  }
+
+  .icon {
+    width: 24px;
+    height: 24px;
+  }
+}
+
 @media (forced-colors: active) {
   .badge,
   .control {

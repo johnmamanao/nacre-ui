@@ -3,6 +3,11 @@
 A source-based React component collection focused on expressive interaction,
 careful motion, and practical accessibility.
 
+[![Nacre UI release](https://img.shields.io/npm/v/%40nacre-ui%2Fcli?style=flat-square&label=release&labelColor=171717&color=d4ff00&logo=npm&logoColor=white)](https://www.npmjs.com/package/@nacre-ui/cli)
+[![Weekly installs](https://img.shields.io/npm/dw/%40nacre-ui%2Fcli?style=flat-square&label=weekly%20installs&labelColor=171717&color=e8e8e8&logo=npm&logoColor=white)](https://www.npmjs.com/package/@nacre-ui/cli)
+[![MIT license](https://img.shields.io/github/license/johnmamanao/nacre-ui?style=flat-square&label=license&labelColor=171717&color=e8e8e8)](LICENSE)
+[![GitHub stars](https://img.shields.io/github/stars/johnmamanao/nacre-ui?style=flat-square&label=stars&labelColor=171717&color=ffd84d&logo=github&logoColor=white)](https://github.com/johnmamanao/nacre-ui/stargazers)
+
 ![Nacre UI component collection](public/og.png)
 
 [Live component catalogue](https://nacre-ui.johnmamanao.com) ·

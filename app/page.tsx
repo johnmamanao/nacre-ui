@@ -12,6 +12,7 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { useTheme } from '@/lib/use-theme';
 import { GithubStarButton } from './github-star-button';
 import { SiteEntryLoader } from './site-entry-loader';
+import { ChangelogUpdate } from './changelog-update';
 
 export default function Home() {
   const { isDark, setTheme, toggleTheme } = useTheme();
@@ -19,6 +20,7 @@ export default function Home() {
   return (
     <ScrollArea className="landing-page-scroll">
       <SiteEntryLoader />
+      <ChangelogUpdate />
       <main id="top" className="home-page">
         <div className="home-hero-shell">
           <header className="site-header home-header">

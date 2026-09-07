@@ -40,10 +40,13 @@ function randomFrom(seed: number) {
   return value - Math.floor(value);
 }
 
-function createColumn(index: number, rowCount: number): Column {
+function createColumn(index: number): Column {
   const seed = index * 47.17 + 11.3;
+  const entryPhase = randomFrom(seed + 2.4);
   return {
-    head: randomFrom(seed) * rowCount,
+    // Streams all enter from the top, but across a short staggered window so
+    // the opening reads as rainfall rather than one synchronized curtain.
+    head: 1.5 - entryPhase * 10.5,
     seed,
     velocity: 9 + randomFrom(seed + 5.7) * 11,
   };
@@ -57,7 +60,7 @@ export function MatrixRain({
   className,
   color = '#39ff68',
   density = 0.9,
-  fontSize = 16,
+  fontSize = 28,
   glow = 8,
   highlight = '#eaffed',
   pointerResponse = true,
@@ -111,9 +114,8 @@ export function MatrixRain({
       renderContext.setTransform(ratio, 0, 0, ratio, 0, 0);
       columnWidth = safeFontSize / safeDensity;
       const count = Math.ceil(bounds.width / columnWidth) + 1;
-      const rows = Math.ceil(bounds.height / safeFontSize);
       columns = Array.from({ length: count }, (_, index) =>
-        createColumn(index, rows),
+        createColumn(index),
       );
       renderContext.fillStyle = background;
       renderContext.fillRect(0, 0, bounds.width, bounds.height);
@@ -183,10 +185,7 @@ export function MatrixRain({
 
         column.head += column.velocity * safeSpeed * deltaSeconds;
         if (column.head > rows + 4) {
-          const reset = createColumn(
-            columnIndex + Math.floor(elapsed * 0.01),
-            rows,
-          );
+          const reset = createColumn(columnIndex + Math.floor(elapsed * 0.01));
           column.head = -4 - randomFrom(reset.seed + 9) * rows * 0.5;
           column.seed = reset.seed;
           column.velocity = reset.velocity;
@@ -275,6 +274,7 @@ export function MatrixRain({
     const resizeObserver = new ResizeObserver(() => {
       resize();
       if (reduceMotion) drawStatic();
+      else drawRainTick(0);
     });
     const visibilityObserver = new IntersectionObserver(([entry]) => {
       visible = Boolean(entry?.isIntersecting);
@@ -284,6 +284,7 @@ export function MatrixRain({
 
     resize();
     if (reduceMotion) drawStatic();
+    else drawRainTick(0);
     start();
     resizeObserver.observe(root);
     visibilityObserver.observe(root);

@@ -66,6 +66,12 @@
   }
 }
 
+@container component-preview (max-width: 640px) {
+  .root {
+    min-height: 340px;
+  }
+}
+
 @media (forced-colors: active) {
   .root {
     border: 1px solid CanvasText;

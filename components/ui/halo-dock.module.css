@@ -194,6 +194,14 @@
   }
 }
 
+@container component-preview (max-width: 520px) {
+  .root {
+    min-width: 260px;
+    padding-inline: 10px;
+    transform: scale(0.9);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .icon {
     transition: none;

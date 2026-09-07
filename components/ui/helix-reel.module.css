@@ -384,6 +384,16 @@
   }
 }
 
+@container component-preview (max-width: 620px) {
+  .root {
+    min-height: 410px;
+  }
+
+  .controls {
+    bottom: 12px;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .caption,
   .controls > button,

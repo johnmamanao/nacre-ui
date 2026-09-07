@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import { animate } from 'framer-motion';
 import { Highlight, themes } from 'prism-react-renderer';
 import {
   useCallback,
@@ -17,15 +18,24 @@ import {
   BookOpen,
   Check,
   ChevronDown,
+  ClipboardCopy,
   Code2,
   Hand,
   Copy,
+  House,
+  LayoutGrid,
   LoaderCircle,
+  Maximize2,
+  Minimize2,
   Moon,
   MousePointerClick,
+  PanelLeftOpen,
+  RotateCcw,
   Search,
+  SlidersHorizontal,
   Sun,
   WandSparkles,
+  X,
 } from 'lucide-react';
 
 import cliPackage from '@/packages/cli/package.json';
@@ -1884,7 +1894,7 @@ const componentPlaygrounds: Partial<Record<ComponentName, PlaygroundConfig>> = {
     defaults: {
       color: '#39ff68',
       density: 0.9,
-      fontSize: 16,
+      fontSize: 28,
       glow: 8,
       highlight: '#eaffed',
       pointerResponse: true,
@@ -4890,7 +4900,7 @@ export default function Loading() {
 <MatrixRain
   color="#39ff68"
   highlight="#eaffed"
-  fontSize={16}
+  fontSize={28}
   speed={1}
   pointerResponse
 />`,
@@ -4922,7 +4932,7 @@ export default function Loading() {
       {
         name: 'fontSize',
         type: 'number',
-        defaultValue: '16',
+        defaultValue: '28',
         description: 'Sets glyph size between 10 and 32 pixels.',
       },
       {
@@ -5474,7 +5484,7 @@ function MatrixRainPreview({ values }: { values?: PlaygroundValues }) {
       className="matrix-rain-demo-surface"
       color={textValue(values, 'color', '#39ff68')}
       density={numberValue(values, 'density', 0.9)}
-      fontSize={numberValue(values, 'fontSize', 16)}
+      fontSize={numberValue(values, 'fontSize', 28)}
       glow={numberValue(values, 'glow', 8)}
       highlight={textValue(values, 'highlight', '#eaffed')}
       pointerResponse={booleanValue(values, 'pointerResponse', true)}
@@ -5973,6 +5983,7 @@ function AsciiImagePreview({ values }: { values?: PlaygroundValues }) {
       allowUpload={!compact}
       alt="Illustration of Zeus rendered as ASCII"
       brightnessBoost={numberValue(values, 'brightnessBoost', 1)}
+      className="ascii-image-demo-surface"
       colorMode={
         textValue(values, 'colorMode', 'gradient') as 'gradient' | 'source'
       }
@@ -6006,6 +6017,7 @@ function RippleTransitionPreview({ values }: { values?: PlaygroundValues }) {
   return (
     <RippleTransition
       autoplay={booleanValue(values, 'autoplay', false)}
+      className="ripple-transition-demo-surface"
       colorSplit={numberValue(values, 'colorSplit', 0.65)}
       duration={numberValue(values, 'duration', 1200)}
       glow={numberValue(values, 'glow', 0.16)}
@@ -6530,8 +6542,8 @@ function CopyPromptButton({ prompt }: { prompt: string }) {
       onClick={copyPrompt}
       aria-live="polite"
     >
-      {didCopy ? <Check /> : <WandSparkles />}
-      <span>{didCopy ? 'Prompt copied' : 'Copy AI prompt'}</span>
+      {didCopy ? <Check /> : <ClipboardCopy />}
+      <span>{didCopy ? 'Prompt copied' : 'Copy prompt'}</span>
     </button>
   );
 }
@@ -7044,7 +7056,19 @@ function LivePlaygroundControls({
   );
 }
 
-function ComponentContent({ name }: { name: ComponentName }) {
+function ComponentContent({
+  name,
+  openCatalog,
+  openNavigation,
+  openSearch,
+  toggleTheme,
+}: {
+  name: ComponentName;
+  openCatalog: () => void;
+  openNavigation: () => void;
+  openSearch: () => void;
+  toggleTheme: () => void;
+}) {
   const component = catalog.find((item) => item.name === name)!;
   const docs = componentDocs[name];
   const usage = componentUsage(name, docs.usage);
@@ -7052,6 +7076,18 @@ function ComponentContent({ name }: { name: ComponentName }) {
   const [demoTab, setDemoTab] = useState<'preview' | 'code'>('preview');
   const [installMode, setInstallMode] = useState<'cli' | 'manual'>('cli');
   const [packageManager, setPackageManager] = useState<PackageManager>('npm');
+  const [controlsOpen, setControlsOpen] = useState(false);
+  const [usageOpen, setUsageOpen] = useState(false);
+  const [previewKey, setPreviewKey] = useState(0);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const previewWorkspaceRef = useRef<HTMLDivElement>(null);
+  const sourcePanelRef = useRef<HTMLDivElement>(null);
+  const sourceDragRef = useRef<{
+    pointerId: number;
+    startY: number;
+    currentY: number;
+    startedAt: number;
+  } | null>(null);
   const [playgroundValues, setPlaygroundValues] = useState<PlaygroundValues>(
     () => playgroundConfig.defaults,
   );
@@ -7202,54 +7238,307 @@ ${exportName}.displayName = '${exportName}';`;
     sourceCode,
   });
 
+  useEffect(() => {
+    const syncFullscreen = () =>
+      setIsFullscreen(
+        document.fullscreenElement === previewWorkspaceRef.current,
+      );
+    document.addEventListener('fullscreenchange', syncFullscreen);
+    return () =>
+      document.removeEventListener('fullscreenchange', syncFullscreen);
+  }, []);
+
+  useEffect(() => {
+    if (!usageOpen) return;
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setUsageOpen(false);
+    };
+    window.addEventListener('keydown', closeOnEscape);
+    return () => window.removeEventListener('keydown', closeOnEscape);
+  }, [usageOpen]);
+
+  function resetPreview() {
+    setPlaygroundValues(playgroundConfig.defaults);
+    setPreviewKey((current) => current + 1);
+  }
+
+  async function togglePreviewFullscreen() {
+    if (document.fullscreenElement === previewWorkspaceRef.current) {
+      await document.exitFullscreen();
+      return;
+    }
+    await previewWorkspaceRef.current?.requestFullscreen();
+  }
+
+  function resetSourcePanelDrag(panel: HTMLDivElement) {
+    delete panel.dataset.dragging;
+    panel.style.removeProperty('transform');
+    panel.style.removeProperty('opacity');
+  }
+
+  function onSourceDragStart(event: React.PointerEvent<HTMLDivElement>) {
+    if (
+      event.button !== 0 ||
+      sourceDragRef.current ||
+      (event.target as HTMLElement).closest('button')
+    ) {
+      return;
+    }
+
+    const panel = sourcePanelRef.current;
+    if (!panel) return;
+
+    sourceDragRef.current = {
+      pointerId: event.pointerId,
+      startY: event.clientY,
+      currentY: event.clientY,
+      startedAt: performance.now(),
+    };
+    panel.dataset.dragging = 'true';
+    event.currentTarget.setPointerCapture(event.pointerId);
+  }
+
+  function onSourceDragMove(event: React.PointerEvent<HTMLDivElement>) {
+    const drag = sourceDragRef.current;
+    const panel = sourcePanelRef.current;
+    if (!drag || !panel || drag.pointerId !== event.pointerId) return;
+
+    drag.currentY = event.clientY;
+    const rawDistance = event.clientY - drag.startY;
+    const distance = rawDistance >= 0 ? rawDistance : rawDistance * 0.12;
+    const progress = Math.min(Math.max(distance, 0) / panel.offsetHeight, 1);
+
+    panel.style.transform = `translate3d(0, ${distance}px, 0)`;
+    panel.style.opacity = String(1 - progress * 0.22);
+  }
+
+  function finishSourceDrag(event: React.PointerEvent<HTMLDivElement>) {
+    const drag = sourceDragRef.current;
+    const panel = sourcePanelRef.current;
+    if (!drag || !panel || drag.pointerId !== event.pointerId) return;
+
+    sourceDragRef.current = null;
+    if (event.currentTarget.hasPointerCapture(event.pointerId)) {
+      event.currentTarget.releasePointerCapture(event.pointerId);
+    }
+
+    const distance = Math.max(0, drag.currentY - drag.startY);
+    const elapsed = Math.max(performance.now() - drag.startedAt, 1);
+    const velocity = distance / elapsed;
+    const shouldDismiss =
+      distance >= Math.min(110, panel.offsetHeight * 0.24) || velocity > 0.11;
+    const reduceMotion = window.matchMedia(
+      '(prefers-reduced-motion: reduce)',
+    ).matches;
+
+    if (shouldDismiss) {
+      if (reduceMotion) {
+        setDemoTab('preview');
+        resetSourcePanelDrag(panel);
+        return;
+      }
+
+      void animate(
+        panel,
+        {
+          opacity: 0.72,
+          transform: `translate3d(0, ${panel.offsetHeight}px, 0)`,
+        },
+        { type: 'spring', duration: 0.5, bounce: 0.2 },
+      ).then(() => {
+        setDemoTab('preview');
+        window.requestAnimationFrame(() => resetSourcePanelDrag(panel));
+      });
+      return;
+    }
+
+    if (reduceMotion) {
+      resetSourcePanelDrag(panel);
+      return;
+    }
+
+    void animate(
+      panel,
+      { opacity: 1, transform: 'translate3d(0, 0, 0)' },
+      { type: 'spring', duration: 0.5, bounce: 0.2 },
+    ).then(() => resetSourcePanelDrag(panel));
+  }
+
   return (
-    <article className="component-doc-article">
-      <nav className="component-doc-breadcrumb" aria-label="Breadcrumb">
-        <Link href="/components">Components</Link>
-        <span>/</span>
-        <strong>{component.name}</strong>
-      </nav>
-
-      <header className="component-doc-header">
-        <h1>{component.name}</h1>
-        <p>{component.description}</p>
-      </header>
-
-      <div className="component-doc-toolbar">
-        <div
-          className="component-view-tabs"
-          aria-label={`${name} example view`}
-        >
+    <article className="component-doc-article" data-usage-open={usageOpen}>
+      <div
+        className="component-doc-intro"
+        aria-hidden={!usageOpen}
+        inert={!usageOpen}
+      >
+        <div className="component-usage-drawer-heading">
+          <span>Component documentation</span>
           <button
             type="button"
-            aria-pressed={demoTab === 'preview'}
-            onClick={() => setDemoTab('preview')}
+            onClick={() => setUsageOpen(false)}
+            aria-label="Close component documentation"
           >
-            Preview
-          </button>
-          <button
-            type="button"
-            aria-pressed={demoTab === 'code'}
-            onClick={() => setDemoTab('code')}
-          >
-            Code
+            <X />
           </button>
         </div>
-        <div className="component-toolbar-actions">
+        <nav className="component-doc-breadcrumb" aria-label="Breadcrumb">
+          <Link href="/components">Components</Link>
+          <span>/</span>
+          <strong>{component.name}</strong>
+        </nav>
+
+        <header className="component-doc-header">
+          <h1>{component.name}</h1>
+          <p>{component.description}</p>
+        </header>
+
+        <div className="component-doc-primary-actions">
           <CopyPromptButton prompt={componentPrompt} />
-          <CopyCommand
-            code={addCommands.npm}
-            className="component-add-command"
-          />
         </div>
       </div>
 
-      <div className="component-doc-preview-shell">
-        {demoTab === 'preview' ? (
-          <>
+      <aside
+        className="component-preview-column"
+        aria-label={`${name} preview`}
+      >
+        <div
+          className="component-preview-workspace"
+          ref={previewWorkspaceRef}
+          data-controls-open={controlsOpen}
+        >
+          <div
+            className="component-preview-toolbar"
+            aria-label="Preview controls"
+          >
+            <Link
+              className="preview-home-link"
+              href="/"
+              aria-label="Back to Nacre UI home"
+            >
+              <House />
+              <span role="tooltip">Home</span>
+            </Link>
+            <button
+              className="preview-catalog-button"
+              type="button"
+              onClick={openCatalog}
+              aria-label="Back to component catalogue"
+            >
+              <LayoutGrid />
+              <span role="tooltip">Catalogue</span>
+            </button>
+            <i className="preview-toolbar-divider" aria-hidden="true" />
+            <button
+              type="button"
+              onClick={() => {
+                setUsageOpen(false);
+                setControlsOpen(false);
+                setDemoTab('preview');
+                openNavigation();
+              }}
+              aria-label="Open component navigation"
+            >
+              <PanelLeftOpen />
+              <span role="tooltip">Components</span>
+            </button>
+            <button
+              className="preview-usage-button"
+              type="button"
+              aria-pressed={usageOpen}
+              onClick={() => {
+                setUsageOpen((open) => !open);
+                setControlsOpen(false);
+                setDemoTab('preview');
+              }}
+              aria-label={
+                usageOpen
+                  ? 'Close component documentation'
+                  : 'Open component documentation'
+              }
+            >
+              <BookOpen />
+              <span role="tooltip">Usage</span>
+            </button>
+            <button
+              className="preview-search-button"
+              type="button"
+              onClick={openSearch}
+              aria-label="Search documentation"
+            >
+              <Search />
+              <span role="tooltip">Search</span>
+            </button>
+            <button
+              type="button"
+              aria-pressed={demoTab === 'code'}
+              onClick={() => {
+                setUsageOpen(false);
+                setDemoTab((current) =>
+                  current === 'preview' ? 'code' : 'preview',
+                );
+                setControlsOpen(false);
+              }}
+              aria-label={demoTab === 'code' ? 'Close source' : 'View source'}
+            >
+              <Code2 />
+              <span role="tooltip">
+                {demoTab === 'code' ? 'Close source' : 'Source'}
+              </span>
+            </button>
+            <button
+              type="button"
+              onClick={resetPreview}
+              aria-label="Reset preview"
+            >
+              <RotateCcw />
+              <span role="tooltip">Reset</span>
+            </button>
+            <button
+              type="button"
+              aria-pressed={controlsOpen}
+              onClick={() => {
+                setUsageOpen(false);
+                setControlsOpen((open) => !open);
+                setDemoTab('preview');
+              }}
+              aria-label={
+                controlsOpen
+                  ? 'Close customization controls'
+                  : 'Customize preview'
+              }
+            >
+              <SlidersHorizontal />
+              <span role="tooltip">Controls</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => void togglePreviewFullscreen()}
+              aria-label={
+                isFullscreen ? 'Exit fullscreen' : 'Open fullscreen preview'
+              }
+            >
+              {isFullscreen ? <Minimize2 /> : <Maximize2 />}
+              <span role="tooltip">
+                {isFullscreen ? 'Exit fullscreen' : 'Fullscreen'}
+              </span>
+            </button>
+            <button
+              type="button"
+              onClick={toggleTheme}
+              aria-label="Toggle appearance"
+            >
+              <Sun className="preview-theme-light" />
+              <Moon className="preview-theme-dark" />
+              <span role="tooltip">Appearance</span>
+            </button>
+          </div>
+
+          <div className="component-doc-preview-shell">
             <div className="component-doc-preview">
               <div
                 className="component-live-preview"
+                data-preview-category={slug(component.category)}
+                key={previewKey}
                 style={{
                   transform: `scale(${numberValue(playgroundValues, 'scale', 1)})`,
                 }}
@@ -7257,128 +7546,185 @@ ${exportName}.displayName = '${exportName}';`;
                 <ComponentPreview name={name} values={playgroundValues} />
               </div>
             </div>
+          </div>
+
+          <div
+            className="preview-control-panel"
+            aria-hidden={!controlsOpen}
+            inert={!controlsOpen}
+          >
+            <div className="preview-control-panel-header">
+              <div>
+                <strong>Customize</strong>
+                <span>Changes update the preview instantly.</span>
+              </div>
+              <button
+                type="button"
+                onClick={() => setControlsOpen(false)}
+                aria-label="Close customization controls"
+              >
+                <X />
+              </button>
+            </div>
             <LivePlaygroundControls
               config={playgroundConfig}
               values={playgroundValues}
               onChange={(key, value) =>
                 setPlaygroundValues((current) => ({ ...current, [key]: value }))
               }
-              onReset={() => setPlaygroundValues(playgroundConfig.defaults)}
+              onReset={resetPreview}
             />
-          </>
-        ) : (
-          <div className="component-doc-code-preview">
+          </div>
+
+          <div
+            className="preview-source-panel"
+            ref={sourcePanelRef}
+            aria-hidden={demoTab !== 'code'}
+            inert={demoTab !== 'code'}
+          >
+            <div
+              className="preview-source-panel-heading"
+              onPointerDown={onSourceDragStart}
+              onPointerMove={onSourceDragMove}
+              onPointerUp={finishSourceDrag}
+              onPointerCancel={finishSourceDrag}
+            >
+              <i aria-hidden="true" />
+              <strong>Source code</strong>
+              <button
+                type="button"
+                onClick={() => setDemoTab('preview')}
+                aria-label="Close source"
+              >
+                <X />
+              </button>
+            </div>
             <FullCodeBlock label={`${componentSlug}.tsx`} code={sourceCode} />
           </div>
-        )}
-      </div>
-
-      <section className="component-installation">
-        <h2>Installation</h2>
-        <div className="installation-mode" aria-label="Installation method">
-          <button
-            type="button"
-            aria-pressed={installMode === 'cli'}
-            onClick={() => setInstallMode('cli')}
-          >
-            CLI
-          </button>
-          <button
-            type="button"
-            aria-pressed={installMode === 'manual'}
-            onClick={() => setInstallMode('manual')}
-          >
-            Manual
-          </button>
         </div>
-        <p>
-          {installMode === 'cli'
-            ? 'Run the following command.'
-            : usesPaperShader
-              ? 'Install the exact Paper Shaders version used by this component.'
-              : usesFramerMotion
-                ? 'Install Framer Motion before copying the component source.'
-                : 'Install the core package and React adapter, then import the component.'}
-        </p>
-        {installMode === 'cli' ? (
-          <div className="package-command-panel">
-            <div className="package-tabs" aria-label="Package manager">
-              {(Object.keys(addCommands) as PackageManager[]).map((manager) => (
-                <button
-                  key={manager}
-                  type="button"
-                  aria-pressed={packageManager === manager}
-                  onClick={() => setPackageManager(manager)}
-                >
-                  <PackageManagerIcon manager={manager} />
-                  <span>{manager}</span>
-                </button>
-              ))}
-            </div>
-            <CopyCommand code={addCommands[packageManager]} />
-          </div>
-        ) : (
-          <CodeBlock
-            label="Terminal"
-            code={
-              usesPaperShader
-                ? 'npm install --save-exact @paper-design/shaders-react@0.0.80'
-                : usesFramerMotion
-                  ? 'npm install framer-motion'
-                  : installCommand
-            }
+      </aside>
+
+      <div
+        className="component-doc-details"
+        aria-hidden={!usageOpen}
+        inert={!usageOpen}
+      >
+        <div className="component-toolbar-actions">
+          <CopyCommand
+            code={addCommands.npm}
+            className="component-add-command"
           />
-        )}
-      </section>
-
-      <section>
-        <h2>Usage</h2>
-        <CodeBlock label="Code" code={usage} />
-      </section>
-
-      <section>
-        <h2>Props</h2>
-        <div className="component-api-table">
-          <table aria-label={`${name} properties`}>
-            <thead>
-              <tr>
-                <th>Prop Name</th>
-                <th>Type</th>
-                <th>Default</th>
-                <th>Description</th>
-              </tr>
-            </thead>
-            <tbody>
-              {docs.props.map((prop) => (
-                <tr key={prop.name}>
-                  <td>
-                    <code>{prop.name}</code>
-                  </td>
-                  <td>
-                    <code>{prop.type}</code>
-                  </td>
-                  <td>
-                    <code>{prop.defaultValue}</code>
-                  </td>
-                  <td>{prop.description}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
         </div>
-      </section>
 
-      <section>
-        <h2>Accessibility</h2>
-        <ul className="component-a11y-list">
-          {docs.accessibility.map((item) => (
-            <li key={item}>
-              <Check />
-              {item}
-            </li>
-          ))}
-        </ul>
-      </section>
+        <section className="component-installation">
+          <h2>Installation</h2>
+          <div className="installation-mode" aria-label="Installation method">
+            <button
+              type="button"
+              aria-pressed={installMode === 'cli'}
+              onClick={() => setInstallMode('cli')}
+            >
+              CLI
+            </button>
+            <button
+              type="button"
+              aria-pressed={installMode === 'manual'}
+              onClick={() => setInstallMode('manual')}
+            >
+              Manual
+            </button>
+          </div>
+          <p>
+            {installMode === 'cli'
+              ? 'Run the following command.'
+              : usesPaperShader
+                ? 'Install the exact Paper Shaders version used by this component.'
+                : usesFramerMotion
+                  ? 'Install Framer Motion before copying the component source.'
+                  : 'Install the core package and React adapter, then import the component.'}
+          </p>
+          {installMode === 'cli' ? (
+            <div className="package-command-panel">
+              <div className="package-tabs" aria-label="Package manager">
+                {(Object.keys(addCommands) as PackageManager[]).map(
+                  (manager) => (
+                    <button
+                      key={manager}
+                      type="button"
+                      aria-pressed={packageManager === manager}
+                      onClick={() => setPackageManager(manager)}
+                    >
+                      <PackageManagerIcon manager={manager} />
+                      <span>{manager}</span>
+                    </button>
+                  ),
+                )}
+              </div>
+              <CopyCommand code={addCommands[packageManager]} />
+            </div>
+          ) : (
+            <CodeBlock
+              label="Terminal"
+              code={
+                usesPaperShader
+                  ? 'npm install --save-exact @paper-design/shaders-react@0.0.80'
+                  : usesFramerMotion
+                    ? 'npm install framer-motion'
+                    : installCommand
+              }
+            />
+          )}
+        </section>
+
+        <section>
+          <h2>Usage</h2>
+          <CodeBlock label="Code" code={usage} />
+        </section>
+
+        <section>
+          <h2>Props</h2>
+          <div className="component-api-table">
+            <table aria-label={`${name} properties`}>
+              <thead>
+                <tr>
+                  <th>Prop Name</th>
+                  <th>Type</th>
+                  <th>Default</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                {docs.props.map((prop) => (
+                  <tr key={prop.name}>
+                    <td>
+                      <code>{prop.name}</code>
+                    </td>
+                    <td>
+                      <code>{prop.type}</code>
+                    </td>
+                    <td>
+                      <code>{prop.defaultValue}</code>
+                    </td>
+                    <td>{prop.description}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section>
+          <h2>Accessibility</h2>
+          <ul className="component-a11y-list">
+            {docs.accessibility.map((item) => (
+              <li key={item}>
+                <Check />
+                {item}
+              </li>
+            ))}
+          </ul>
+        </section>
+      </div>
     </article>
   );
 }
@@ -7418,42 +7764,44 @@ export default function ComponentsPage() {
   const [copied, setCopied] = useState(false);
   const { toggleTheme } = useTheme();
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [activeDoc, setActiveDoc] = useState<DocView>('catalog');
   const searchInputRef = useRef<HTMLInputElement>(null);
-  const sidebarContentRef = useRef<HTMLDivElement>(null);
-  const [sidebarIndicator, setSidebarIndicator] = useState({
-    x: 0,
-    y: 0,
-    width: 0,
-    height: 0,
-    visible: false,
-  });
-
-  const moveSidebarIndicator = useCallback((target: HTMLElement | null) => {
-    const container = sidebarContentRef.current;
-    if (!container || !target) {
-      setSidebarIndicator((current) => ({ ...current, visible: false }));
-      return;
-    }
-
-    const containerRect = container.getBoundingClientRect();
-    const targetRect = target.getBoundingClientRect();
-    setSidebarIndicator({
-      x: targetRect.left - containerRect.left,
-      y: targetRect.top - containerRect.top,
-      width: targetRect.width,
-      height: targetRect.height,
-      visible: true,
-    });
-  }, []);
-
-  const hideSidebarIndicator = useCallback(() => {
-    setSidebarIndicator((current) => ({ ...current, visible: false }));
-  }, []);
+  const sidebarCloseTimerRef = useRef<ReturnType<typeof setTimeout> | null>(
+    null,
+  );
 
   const openSearch = useCallback(() => {
     setIsSearchOpen(true);
   }, []);
+
+  const keepSidebarOpen = useCallback(() => {
+    if (sidebarCloseTimerRef.current) {
+      clearTimeout(sidebarCloseTimerRef.current);
+      sidebarCloseTimerRef.current = null;
+    }
+  }, []);
+
+  const openSidebar = useCallback(() => {
+    keepSidebarOpen();
+    setIsSidebarOpen(true);
+  }, [keepSidebarOpen]);
+
+  const scheduleSidebarClose = useCallback(() => {
+    keepSidebarOpen();
+    sidebarCloseTimerRef.current = setTimeout(() => {
+      setIsSidebarOpen(false);
+      sidebarCloseTimerRef.current = null;
+    }, 180);
+  }, [keepSidebarOpen]);
+
+  useEffect(
+    () => () => {
+      if (sidebarCloseTimerRef.current)
+        clearTimeout(sidebarCloseTimerRef.current);
+    },
+    [],
+  );
 
   useClientLayoutEffect(() => {
     const syncFromLocation = () => {
@@ -7493,34 +7841,13 @@ export default function ComponentsPage() {
   }, [openSearch]);
 
   useEffect(() => {
-    const container = sidebarContentRef.current;
-    if (!container) return;
-
-    const items = Array.from(
-      container.querySelectorAll<HTMLElement>('[data-sidebar-item]'),
-    );
-    const showItem = (event: Event) => {
-      const item = event.currentTarget as HTMLElement;
-      if (item.classList.contains('active')) hideSidebarIndicator();
-      else moveSidebarIndicator(item);
+    if (!isSidebarOpen) return;
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setIsSidebarOpen(false);
     };
-
-    items.forEach((item) => {
-      item.addEventListener('pointerenter', showItem);
-      item.addEventListener('focus', showItem);
-      item.addEventListener('blur', hideSidebarIndicator);
-    });
-    container.addEventListener('pointerleave', hideSidebarIndicator);
-
-    return () => {
-      items.forEach((item) => {
-        item.removeEventListener('pointerenter', showItem);
-        item.removeEventListener('focus', showItem);
-        item.removeEventListener('blur', hideSidebarIndicator);
-      });
-      container.removeEventListener('pointerleave', hideSidebarIndicator);
-    };
-  }, [hideSidebarIndicator, moveSidebarIndicator]);
+    window.addEventListener('keydown', closeOnEscape);
+    return () => window.removeEventListener('keydown', closeOnEscape);
+  }, [isSidebarOpen]);
 
   const visibleGroups = useMemo(() => {
     const normalized = query.trim().toLowerCase();
@@ -7547,59 +7874,94 @@ export default function ComponentsPage() {
 
   function openGettingStarted(page: GettingStartedPage) {
     setActiveDoc(page);
+    setIsSidebarOpen(false);
     window.history.replaceState(null, '', `#${page}`);
     window.requestAnimationFrame(() => scrollComponentsToTop());
   }
 
   function openComponent(name: ComponentName) {
     setActiveDoc(name);
+    setIsSidebarOpen(false);
     window.history.replaceState(null, '', `#${slug(name)}`);
     window.requestAnimationFrame(() => scrollComponentsToTop());
   }
 
+  function openCatalog() {
+    setActiveDoc('catalog');
+    setIsSidebarOpen(false);
+    window.history.replaceState(
+      null,
+      '',
+      `${window.location.pathname}${window.location.search}`,
+    );
+    window.requestAnimationFrame(() => scrollComponentsToTop());
+  }
+
+  const navigationTrigger = (
+    <button
+      className="docs-nav-trigger"
+      type="button"
+      aria-expanded={isSidebarOpen}
+      aria-controls="component-navigation"
+      aria-label="Open component navigation"
+      onClick={openSidebar}
+    >
+      <PanelLeftOpen />
+      <span role="tooltip">Components</span>
+    </button>
+  );
+
   return (
     <ScrollArea className="components-page-scroll">
-      <main className="components-page reference-layout">
-        <header className="site-header components-header">
-          <Link className="brand" href="/" aria-label="Nacre UI home">
-            <Image
-              src="/nacre-mark.png"
-              alt=""
-              width={22}
-              height={22}
-              priority
-            />
-            Nacre UI
-          </Link>
-          <nav aria-label="Primary navigation">
-            <Link className="current" href="/components" aria-current="page">
-              Components
-            </Link>
-          </nav>
-          <div className="header-tools">
-            <button
-              className="header-search"
-              type="button"
-              onClick={openSearch}
-              aria-haspopup="dialog"
-              aria-keyshortcuts="Control+K Meta+K"
-              aria-label="Search documentation"
-            >
-              <Search />
-              <span>Search documentation…</span>
-              <kbd aria-label="Control K or Command K">Ctrl/⌘ K</kbd>
-            </button>
-            <button
-              className="theme-button"
-              type="button"
-              onClick={toggleTheme}
-              aria-label="Toggle appearance"
-            >
-              <Sun className="theme-icon theme-icon-light" />
-              <Moon className="theme-icon theme-icon-dark" />
-            </button>
-          </div>
-        </header>
+      <main
+        className="components-page reference-layout"
+        data-component-view={isComponentPage(activeDoc) || undefined}
+      >
+        {!isComponentPage(activeDoc) ? (
+          <header className="site-header components-header">
+            <div className="header-brand-cluster">
+              {navigationTrigger}
+              <Link className="brand" href="/" aria-label="Nacre UI home">
+                <Image
+                  src="/nacre-mark.png"
+                  alt=""
+                  width={22}
+                  height={22}
+                  priority
+                />
+                Nacre UI
+              </Link>
+            </div>
+            <nav aria-label="Primary navigation">
+              <Link className="current" href="/components" aria-current="page">
+                Components
+              </Link>
+            </nav>
+            <div className="header-tools">
+              <button
+                className="header-search"
+                type="button"
+                onClick={openSearch}
+                aria-haspopup="dialog"
+                aria-keyshortcuts="Control+K Meta+K"
+                aria-label="Search documentation"
+              >
+                <Search />
+                <span>Search documentation…</span>
+                <kbd aria-label="Control K or Command K">Ctrl/⌘ K</kbd>
+              </button>
+              <button
+                className="theme-button"
+                type="button"
+                onClick={toggleTheme}
+                aria-label="Toggle appearance"
+              >
+                <Sun className="theme-icon theme-icon-light" />
+                <Moon className="theme-icon theme-icon-dark" />
+              </button>
+            </div>
+          </header>
+        ) : null}
 
         <DocumentationSearch
           open={isSearchOpen}
@@ -7612,120 +7974,130 @@ export default function ComponentsPage() {
           }}
           onQueryChange={setQuery}
           onHome={() => window.location.assign('/')}
-          onCatalog={() => {
-            setActiveDoc('catalog');
-            window.history.replaceState(
-              null,
-              '',
-              `${window.location.pathname}${window.location.search}`,
-            );
-          }}
+          onCatalog={openCatalog}
           onGettingStarted={openGettingStarted}
           onComponent={openComponent}
         />
 
         <div className="docs-shell">
+          <button
+            className="docs-sidebar-scrim"
+            type="button"
+            tabIndex={isSidebarOpen ? 0 : -1}
+            aria-label="Close component navigation"
+            aria-hidden={!isSidebarOpen}
+            onClick={() => setIsSidebarOpen(false)}
+          />
           <aside
             className="docs-sidebar"
+            id="component-navigation"
+            data-open={isSidebarOpen}
             aria-label="Component documentation navigation"
+            onPointerEnter={(event) => {
+              if (event.pointerType === 'mouse') keepSidebarOpen();
+            }}
+            onPointerLeave={(event) => {
+              if (event.pointerType === 'mouse') scheduleSidebarClose();
+            }}
           >
+            <div className="docs-sidebar-heading">
+              <button
+                type="button"
+                onClick={() => setIsSidebarOpen(false)}
+                aria-label="Close component navigation"
+              >
+                <PanelLeftOpen />
+              </button>
+            </div>
             <ScrollArea className="docs-sidebar-scroll">
-              <div className="docs-sidebar-content" ref={sidebarContentRef}>
-                <div
-                  className="sidebar-hover-indicator"
-                  aria-hidden="true"
-                  style={{
-                    width: sidebarIndicator.width,
-                    height: sidebarIndicator.height,
-                    opacity: sidebarIndicator.visible ? 1 : 0,
-                    transform: `translate3d(${sidebarIndicator.x}px, ${sidebarIndicator.y}px, 0)`,
-                  }}
-                />
-                <div
-                  className={`sidebar-section sidebar-menu getting-started-menu ${isGettingStartedPage(activeDoc) ? 'active-group' : ''}`}
-                >
-                  <div className="sidebar-parent" data-sidebar-item>
-                    <span>
-                      <BookOpen />
-                      Getting started
-                    </span>
-                  </div>
-                  <div className="sidebar-children">
-                    <button
-                      className={activeDoc === 'installation' ? 'active' : ''}
-                      data-sidebar-item
-                      type="button"
-                      onClick={() => openGettingStarted('installation')}
-                    >
-                      Installation
-                    </button>
-                    <button
-                      className={activeDoc === 'react-next' ? 'active' : ''}
-                      data-sidebar-item
-                      type="button"
-                      onClick={() => openGettingStarted('react-next')}
-                    >
-                      React and Next.js
-                    </button>
-                    <button
-                      className={activeDoc === 'theming' ? 'active' : ''}
-                      data-sidebar-item
-                      type="button"
-                      onClick={() => openGettingStarted('theming')}
-                    >
-                      Theming
-                    </button>
-                    <button
-                      className={activeDoc === 'cli' ? 'active' : ''}
-                      data-sidebar-item
-                      type="button"
-                      onClick={() => openGettingStarted('cli')}
-                    >
-                      CLI
-                    </button>
-                  </div>
-                </div>
-
-                {groups.map((group) => {
-                  const GroupIcon = groupIcons[group.name];
-                  const isActive =
-                    isComponentPage(activeDoc) &&
-                    catalog.find((component) => component.name === activeDoc)
-                      ?.category === group.name;
-
-                  return (
-                    <div
-                      className={`sidebar-section sidebar-menu ${isActive ? 'active-group' : ''}`}
-                      key={group.name}
-                    >
-                      <div className="sidebar-parent" data-sidebar-item>
-                        <span>
-                          <GroupIcon />
-                          {group.name}
-                        </span>
-                      </div>
-                      <div className="sidebar-children">
-                        {catalog
-                          .filter(
-                            (component) => component.category === group.name,
-                          )
-                          .map((component) => (
-                            <button
-                              className={
-                                activeDoc === component.name ? 'active' : ''
-                              }
-                              data-sidebar-item
-                              key={component.name}
-                              type="button"
-                              onClick={() => openComponent(component.name)}
-                            >
-                              {component.name}
-                            </button>
-                          ))}
-                      </div>
+              <div className="docs-sidebar-content">
+                <div className="sidebar-navigation-rail">
+                  <div
+                    className={`sidebar-section sidebar-menu getting-started-menu ${isGettingStartedPage(activeDoc) ? 'active-group' : ''}`}
+                  >
+                    <div className="sidebar-parent" data-sidebar-item>
+                      <span>
+                        <BookOpen />
+                        Getting started
+                      </span>
                     </div>
-                  );
-                })}
+                    <div className="sidebar-children">
+                      <button
+                        className={activeDoc === 'installation' ? 'active' : ''}
+                        data-sidebar-item
+                        type="button"
+                        onClick={() => openGettingStarted('installation')}
+                      >
+                        <span>Installation</span>
+                      </button>
+                      <button
+                        className={activeDoc === 'react-next' ? 'active' : ''}
+                        data-sidebar-item
+                        type="button"
+                        onClick={() => openGettingStarted('react-next')}
+                      >
+                        <span>React and Next.js</span>
+                      </button>
+                      <button
+                        className={activeDoc === 'theming' ? 'active' : ''}
+                        data-sidebar-item
+                        type="button"
+                        onClick={() => openGettingStarted('theming')}
+                      >
+                        <span>Theming</span>
+                      </button>
+                      <button
+                        className={activeDoc === 'cli' ? 'active' : ''}
+                        data-sidebar-item
+                        type="button"
+                        onClick={() => openGettingStarted('cli')}
+                      >
+                        <span>CLI</span>
+                      </button>
+                    </div>
+                  </div>
+
+                  {groups.map((group) => {
+                    const GroupIcon = groupIcons[group.name];
+                    const isActive =
+                      isComponentPage(activeDoc) &&
+                      catalog.find((component) => component.name === activeDoc)
+                        ?.category === group.name;
+
+                    return (
+                      <div
+                        className={`sidebar-section sidebar-menu ${isActive ? 'active-group' : ''}`}
+                        key={group.name}
+                      >
+                        <div className="sidebar-parent" data-sidebar-item>
+                          <span>
+                            <GroupIcon />
+                            {group.name}
+                          </span>
+                        </div>
+                        <div className="sidebar-children">
+                          {catalog
+                            .filter(
+                              (component) => component.category === group.name,
+                            )
+                            .map((component) => (
+                              <button
+                                className={
+                                  activeDoc === component.name ? 'active' : ''
+                                }
+                                data-sidebar-item
+                                key={component.name}
+                                type="button"
+                                onClick={() => openComponent(component.name)}
+                              >
+                                <span>{component.name}</span>
+                              </button>
+                            ))}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
 
                 <div className="sidebar-follow">
                   <span>Release {cliPackage.version}</span>
@@ -7861,26 +8233,15 @@ export default function ComponentsPage() {
             ) : isGettingStartedPage(activeDoc) ? (
               <GettingStartedContent page={activeDoc} />
             ) : isComponentPage(activeDoc) ? (
-              <ComponentContent key={activeDoc} name={activeDoc} />
+              <ComponentContent
+                key={activeDoc}
+                name={activeDoc}
+                openCatalog={openCatalog}
+                openNavigation={openSidebar}
+                openSearch={openSearch}
+                toggleTheme={toggleTheme}
+              />
             ) : null}
-
-            <footer>
-              <div className="brand">
-                <Image src="/nacre-mark.png" alt="" width={22} height={22} />
-                Nacre UI
-              </div>
-              <p>Source-based React components for product interfaces.</p>
-              <nav aria-label="Footer navigation">
-                <Link href="/components">Components</Link>
-                <Link href="https://github.com/johnmamanao/nacre-ui">
-                  GitHub
-                </Link>
-                <Link href="https://github.com/johnmamanao/nacre-ui/issues/new?template=component-request.yml">
-                  Request a component
-                </Link>
-              </nav>
-              <small>© 2026</small>
-            </footer>
           </div>
         </div>
       </main>
