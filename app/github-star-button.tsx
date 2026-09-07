@@ -5,6 +5,9 @@ import { useEffect, useState } from 'react';
 
 const REPOSITORY_URL = 'https://github.com/johnmamanao/nacre-ui';
 const REPOSITORY_API_URL = 'https://api.github.com/repos/johnmamanao/nacre-ui';
+const REPOSITORY_BADGE_API_URL =
+  'https://img.shields.io/github/stars/johnmamanao/nacre-ui.json';
+const STAR_CACHE_KEY = 'nacre-ui-github-stars';
 
 function formatStarCount(count: number) {
   if (count < 1000) return count.toLocaleString('en-US');
@@ -24,25 +27,69 @@ function GithubMark() {
 }
 
 export function GithubStarButton() {
-  const [stars, setStars] = useState<number | null>(null);
+  const [stars, setStars] = useState<number | null>(() => {
+    if (typeof window === 'undefined') return null;
+
+    const cachedStars = Number.parseInt(
+      window.localStorage.getItem(STAR_CACHE_KEY) ?? '',
+      10,
+    );
+    return Number.isFinite(cachedStars) ? cachedStars : null;
+  });
 
   useEffect(() => {
     const controller = new AbortController();
 
-    void fetch(REPOSITORY_API_URL, {
-      headers: { Accept: 'application/vnd.github+json' },
-      signal: controller.signal,
-    })
-      .then((response) => {
-        if (!response.ok) throw new Error('Unable to load repository stars');
-        return response.json() as Promise<{ stargazers_count?: unknown }>;
-      })
-      .then((repository) => {
-        if (typeof repository.stargazers_count === 'number') {
-          setStars(repository.stargazers_count);
+    async function loadStars() {
+      try {
+        const badgeResponse = await fetch(REPOSITORY_BADGE_API_URL, {
+          signal: controller.signal,
+        });
+        if (!badgeResponse.ok) throw new Error('Unable to load badge data');
+
+        const badge = (await badgeResponse.json()) as { value?: unknown };
+        const badgeStars =
+          typeof badge.value === 'number'
+            ? badge.value
+            : typeof badge.value === 'string'
+              ? Number.parseInt(badge.value, 10)
+              : Number.NaN;
+
+        if (!Number.isFinite(badgeStars)) {
+          throw new Error('Invalid badge star count');
         }
-      })
-      .catch(() => undefined);
+
+        setStars(badgeStars);
+        window.localStorage.setItem(STAR_CACHE_KEY, String(badgeStars));
+      } catch {
+        if (controller.signal.aborted) return;
+
+        try {
+          const repositoryResponse = await fetch(REPOSITORY_API_URL, {
+            headers: { Accept: 'application/vnd.github+json' },
+            signal: controller.signal,
+          });
+          if (!repositoryResponse.ok) {
+            throw new Error('Unable to load repository stars');
+          }
+
+          const repository = (await repositoryResponse.json()) as {
+            stargazers_count?: unknown;
+          };
+          if (typeof repository.stargazers_count === 'number') {
+            setStars(repository.stargazers_count);
+            window.localStorage.setItem(
+              STAR_CACHE_KEY,
+              String(repository.stargazers_count),
+            );
+          }
+        } catch {
+          // Keep the last known count when both live sources are unavailable.
+        }
+      }
+    }
+
+    void loadStars();
 
     return () => controller.abort();
   }, []);

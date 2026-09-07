@@ -2,7 +2,8 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowRight, Layers3, Moon, Sun } from 'lucide-react';
+import { useState } from 'react';
+import { ArrowRight, Check, Copy, Layers3, Moon, Sun } from 'lucide-react';
 
 import { FacetBloomLoader } from '@/components/ui/facet-bloom-loader';
 import { FolioArcCarousel } from '@/components/ui/folio-arc-carousel';
@@ -16,6 +17,13 @@ import { ChangelogUpdate } from './changelog-update';
 
 export default function Home() {
   const { isDark, setTheme, toggleTheme } = useTheme();
+  const [installCopied, setInstallCopied] = useState(false);
+
+  async function copyInstallCommand() {
+    await navigator.clipboard.writeText('npm install @nacre-ui/cli');
+    setInstallCopied(true);
+    window.setTimeout(() => setInstallCopied(false), 1600);
+  }
 
   return (
     <ScrollArea className="landing-page-scroll">
@@ -53,10 +61,22 @@ export default function Home() {
 
           <section className="home-hero" aria-labelledby="home-title">
             <div className="home-hero-copy">
-              <h1 id="home-title">
-                React components
-                <br />
-                you can try first.
+              <div className="hero-wordmark-meta" aria-hidden="true">
+                <span>Source collection</span>
+                <span>React / TypeScript</span>
+              </div>
+              <h1 id="home-title" aria-label="Nacre UI">
+                <span
+                  className="hero-wordmark-name"
+                  data-word="NACRE"
+                  aria-hidden="true"
+                >
+                  NACRE
+                </span>
+                <span className="hero-wordmark-index" aria-hidden="true">
+                  <strong>UI</strong>
+                  <small>02—25</small>
+                </span>
               </h1>
               <p>
                 Nacre UI is a source-based React component collection. Try each
@@ -67,9 +87,20 @@ export default function Home() {
                 <Link href="/components">
                   <Layers3 /> Browse components
                 </Link>
-                <Link className="home-hero-secondary" href="#featured">
-                  Preview the collection <ArrowRight />
-                </Link>
+                <button
+                  className="hero-install-command"
+                  type="button"
+                  onClick={copyInstallCommand}
+                  aria-label={
+                    installCopied
+                      ? 'Installation command copied'
+                      : 'Copy npm installation command'
+                  }
+                >
+                  <span aria-hidden="true">~</span>
+                  <code>npm install @nacre-ui/cli</code>
+                  {installCopied ? <Check /> : <Copy />}
+                </button>
               </div>
             </div>
 
@@ -212,19 +243,11 @@ export default function Home() {
                 <Link href="/components#mesh-background">Backgrounds</Link>
               </div>
               <div>
-                <span>Selected</span>
-                <Link href="/components#liquid-metal-button">
-                  Liquid Metal Button
-                </Link>
-                <Link href="/components#gem-smoke-button">
-                  Gem Smoke Button
-                </Link>
-                <Link href="/components#folio-arc-carousel">
-                  Folio Arc Carousel
-                </Link>
-                <Link href="/components#facet-bloom-loader">
-                  Facet Bloom Loader
-                </Link>
+                <span>Docs</span>
+                <Link href="/components#installation">Installation</Link>
+                <Link href="/components#react-next">React and Next.js</Link>
+                <Link href="/components#theming">Theming</Link>
+                <Link href="/components#cli">CLI</Link>
               </div>
             </nav>
           </div>
