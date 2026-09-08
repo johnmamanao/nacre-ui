@@ -76,11 +76,7 @@ export default function Home() {
                 <span>React / TypeScript</span>
               </div>
               <h1 id="home-title" aria-label="Nacre UI">
-                <span
-                  className="hero-wordmark-name"
-                  data-word="NACRE"
-                  aria-hidden="true"
-                >
+                <span className="hero-wordmark-name" aria-hidden="true">
                   NACRE
                 </span>
                 <span className="hero-wordmark-index" aria-hidden="true">
