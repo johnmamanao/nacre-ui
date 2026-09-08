@@ -85,7 +85,7 @@ const structuredData = [
     description: siteDescription,
     applicationCategory: 'DeveloperApplication',
     operatingSystem: 'Cross-platform',
-    softwareVersion: '0.2.5',
+    softwareVersion: '0.3.0',
     downloadUrl: 'https://www.npmjs.com/package/@nacre-ui/cli',
     license: 'https://opensource.org/license/mit',
     offers: {
