@@ -8,6 +8,13 @@ published.
 
 ## [Unreleased]
 
+### Fixed
+
+- Replaced the reference-specific portfolio footer location with a neutral
+  availability placeholder.
+- Unified the Templates index background and card surfaces with the shared light
+  and dark theme tokens.
+
 ## [0.3.0] - 2026-09-09
 
 ### Added

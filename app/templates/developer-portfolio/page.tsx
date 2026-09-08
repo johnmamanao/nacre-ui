@@ -617,7 +617,7 @@ export default function DeveloperPortfolioTemplate() {
           <div className={styles.footerRail}>
             <p>
               <strong>Avery Chen</strong>
-              <span>Product engineer · San Juan City, PH</span>
+              <span>Product engineer · Available worldwide</span>
             </p>
             <nav aria-label="Footer links">
               <a href="https://github.com" target="_blank" rel="noreferrer">
