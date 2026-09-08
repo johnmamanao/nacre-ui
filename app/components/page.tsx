@@ -39,6 +39,9 @@ import {
 } from 'lucide-react';
 
 import cliPackage from '@/packages/cli/package.json';
+import { Button } from '@/components/ui/button';
+// oxlint-disable-next-line import/default -- Vite's raw loader supplies this default export.
+import buttonSource from '@/components/ui/button.tsx?raw';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useTheme } from '@/lib/use-theme';
 import { MagneticButton } from '@/components/ui/magnetic-button';
@@ -212,7 +215,7 @@ const catalog = [
     name: 'Button',
     category: 'Actions',
     description:
-      'Clear action hierarchy across primary, secondary, quiet, and destructive contexts.',
+      'A tactile base action with a raised resting surface and immediate press travel.',
     status: 'Stable',
   },
   {
@@ -2135,18 +2138,18 @@ const componentDocs: Record<
   }
 > = {
   Button: {
-    usage: `import { Button } from '@nacre-ui/react';\n\n<Button variant="primary" size="medium">\n  Continue\n</Button>`,
+    usage: `import { Button } from '@/components/ui/button';\n\n<Button variant="tactile" size="lg">\n  Press me\n</Button>`,
     props: [
       {
         name: 'variant',
-        type: "'primary' | 'secondary' | 'quiet' | 'destructive'",
-        defaultValue: "'primary'",
+        type: "'default' | 'outline' | 'secondary' | 'tactile' | 'ghost' | 'destructive' | 'link'",
+        defaultValue: "'default'",
         description: 'Sets the action hierarchy.',
       },
       {
         name: 'size',
-        type: "'small' | 'medium' | 'large'",
-        defaultValue: "'medium'",
+        type: "'xs' | 'sm' | 'default' | 'lg' | 'icon' | 'icon-xs' | 'icon-sm' | 'icon-lg'",
+        defaultValue: "'default'",
         description: 'Sets control height and horizontal padding.',
       },
       {
@@ -6140,6 +6143,31 @@ function OrbitLedgerPreview({ values }: { values?: PlaygroundValues }) {
   );
 }
 
+function TactileButtonPreview() {
+  const [presses, setPresses] = useState(0);
+
+  return (
+    <div className="catalog-button-preview">
+      <span className="catalog-button-readout" aria-live="polite">
+        <small>Press test</small>
+        <strong>
+          {presses === 0
+            ? 'Ready'
+            : `${presses} ${presses === 1 ? 'click' : 'clicks'}`}
+        </strong>
+      </span>
+      <Button
+        variant="tactile"
+        size="lg"
+        onClick={() => setPresses((current) => current + 1)}
+      >
+        <MousePointerClick aria-hidden="true" />
+        Press me
+      </Button>
+    </div>
+  );
+}
+
 function ComponentPreview({
   name,
   values,
@@ -6232,15 +6260,7 @@ function ComponentPreview({
     return <MagneticWarpBackgroundPreview values={values} />;
   if (name === 'Grain Current Background')
     return <GrainCurrentBackgroundPreview values={values} />;
-  if (name === 'Button')
-    return (
-      <div className="catalog-button-preview">
-        <button>
-          Continue <ArrowRight />
-        </button>
-        <button>Cancel</button>
-      </div>
-    );
+  if (name === 'Button') return <TactileButtonPreview />;
   return null;
 }
 
@@ -7104,108 +7124,110 @@ function ComponentContent({
   const usesFramerMotion =
     name === 'Toolchain Marquee' || name === 'Orbit Ledger';
   const sourceCode =
-    name === 'Magnetic Button'
-      ? magneticButtonSource
-      : name === 'Liquid Metal Button'
-        ? liquidMetalButtonSource
-        : name === 'Gem Smoke Button'
-          ? gemSmokeButtonSource
-          : name === 'Lustre Button'
-            ? lustreButtonSource
-            : name === 'Copy Button' ||
-                name === 'Mute Button' ||
-                name === 'Download Button' ||
-                name === 'Like Button' ||
-                name === 'Theme Button' ||
-                name === 'Refresh Button' ||
-                name === 'Bookmark Button' ||
-                name === 'Lock Button' ||
-                name === 'Play Button' ||
-                name === 'Filter Button' ||
-                name === 'Send Button' ||
-                name === 'Save Button'
-              ? microButtonsSource
-              : name === 'Social Profile Button'
-                ? socialProfileButtonSource
-                : name === 'Pearl Aperture Loader'
-                  ? pearlApertureLoaderSource
-                  : name === 'Horizon Page Loader'
-                    ? horizonPageLoaderSource
-                    : name === 'Mercury Rail Loader'
-                      ? mercuryRailLoaderSource
-                      : name === 'Facet Bloom Loader'
-                        ? facetBloomLoaderSource
-                        : name === 'Ribbon Fold Loader'
-                          ? ribbonFoldLoaderSource
-                          : name === 'Pearl Matrix Loader'
-                            ? pearlMatrixLoaderSource
-                            : name === 'Fluid Cell Loader' ||
-                                name === 'Prism Stack Loader' ||
-                                name === 'Card Shuffle Loader'
-                              ? sculpturalLoadersSource
-                              : name === 'Signal Reveal Text'
-                                ? signalRevealTextSource
-                                : name === 'Tally Shift Number'
-                                  ? tallyShiftNumberSource
-                                  : name === 'Tidal Type Text'
-                                    ? tidalTypeTextSource
-                                    : name === 'Swell Text'
-                                      ? swellTextSource
-                                      : name === 'Aurora Text' ||
-                                          name === 'Liquid Text' ||
-                                          name === 'Gravity Text' ||
-                                          name === 'Slot Text' ||
-                                          name === 'Bloom Text' ||
-                                          name === 'Tilt Text'
-                                        ? textMotionEffectsSource
-                                        : name === 'Phase Weave Text'
-                                          ? phaseWeaveTextSource
-                                          : name === 'ASCII Image'
-                                            ? asciiImageSource
-                                            : name === 'Ripple Transition'
-                                              ? rippleTransitionSource
-                                              : name === 'Editorial Mosaic'
-                                                ? editorialMosaicSource
-                                                : name === 'Halo Dock'
-                                                  ? haloDockSource
-                                                  : name === 'Shutter Trail'
-                                                    ? shutterTrailSource
-                                                    : name ===
-                                                        'Folio Arc Carousel'
-                                                      ? folioArcCarouselSource
-                                                      : name === 'Helix Reel'
-                                                        ? helixReelSource
-                                                        : name ===
-                                                            'Toolchain Marquee'
-                                                          ? toolchainMarqueeSource
+    name === 'Button'
+      ? buttonSource
+      : name === 'Magnetic Button'
+        ? magneticButtonSource
+        : name === 'Liquid Metal Button'
+          ? liquidMetalButtonSource
+          : name === 'Gem Smoke Button'
+            ? gemSmokeButtonSource
+            : name === 'Lustre Button'
+              ? lustreButtonSource
+              : name === 'Copy Button' ||
+                  name === 'Mute Button' ||
+                  name === 'Download Button' ||
+                  name === 'Like Button' ||
+                  name === 'Theme Button' ||
+                  name === 'Refresh Button' ||
+                  name === 'Bookmark Button' ||
+                  name === 'Lock Button' ||
+                  name === 'Play Button' ||
+                  name === 'Filter Button' ||
+                  name === 'Send Button' ||
+                  name === 'Save Button'
+                ? microButtonsSource
+                : name === 'Social Profile Button'
+                  ? socialProfileButtonSource
+                  : name === 'Pearl Aperture Loader'
+                    ? pearlApertureLoaderSource
+                    : name === 'Horizon Page Loader'
+                      ? horizonPageLoaderSource
+                      : name === 'Mercury Rail Loader'
+                        ? mercuryRailLoaderSource
+                        : name === 'Facet Bloom Loader'
+                          ? facetBloomLoaderSource
+                          : name === 'Ribbon Fold Loader'
+                            ? ribbonFoldLoaderSource
+                            : name === 'Pearl Matrix Loader'
+                              ? pearlMatrixLoaderSource
+                              : name === 'Fluid Cell Loader' ||
+                                  name === 'Prism Stack Loader' ||
+                                  name === 'Card Shuffle Loader'
+                                ? sculpturalLoadersSource
+                                : name === 'Signal Reveal Text'
+                                  ? signalRevealTextSource
+                                  : name === 'Tally Shift Number'
+                                    ? tallyShiftNumberSource
+                                    : name === 'Tidal Type Text'
+                                      ? tidalTypeTextSource
+                                      : name === 'Swell Text'
+                                        ? swellTextSource
+                                        : name === 'Aurora Text' ||
+                                            name === 'Liquid Text' ||
+                                            name === 'Gravity Text' ||
+                                            name === 'Slot Text' ||
+                                            name === 'Bloom Text' ||
+                                            name === 'Tilt Text'
+                                          ? textMotionEffectsSource
+                                          : name === 'Phase Weave Text'
+                                            ? phaseWeaveTextSource
+                                            : name === 'ASCII Image'
+                                              ? asciiImageSource
+                                              : name === 'Ripple Transition'
+                                                ? rippleTransitionSource
+                                                : name === 'Editorial Mosaic'
+                                                  ? editorialMosaicSource
+                                                  : name === 'Halo Dock'
+                                                    ? haloDockSource
+                                                    : name === 'Shutter Trail'
+                                                      ? shutterTrailSource
+                                                      : name ===
+                                                          'Folio Arc Carousel'
+                                                        ? folioArcCarouselSource
+                                                        : name === 'Helix Reel'
+                                                          ? helixReelSource
                                                           : name ===
-                                                              'Orbit Ledger'
-                                                            ? orbitLedgerSource
+                                                              'Toolchain Marquee'
+                                                            ? toolchainMarqueeSource
                                                             : name ===
-                                                                'Nacre Field Shader'
-                                                              ? nacreFieldShaderSource
+                                                                'Orbit Ledger'
+                                                              ? orbitLedgerSource
                                                               : name ===
-                                                                  'Iridescent Weave Shader'
-                                                                ? iridescentWeaveShaderSource
+                                                                  'Nacre Field Shader'
+                                                                ? nacreFieldShaderSource
                                                                 : name ===
-                                                                    'Matrix Rain'
-                                                                  ? matrixRainSource
+                                                                    'Iridescent Weave Shader'
+                                                                  ? iridescentWeaveShaderSource
                                                                   : name ===
-                                                                      'Liquid Metal Shader'
-                                                                    ? liquidMetalShaderSource
+                                                                      'Matrix Rain'
+                                                                    ? matrixRainSource
                                                                     : name ===
-                                                                        'Mesh Background'
-                                                                      ? meshBackgroundSource
+                                                                        'Liquid Metal Shader'
+                                                                      ? liquidMetalShaderSource
                                                                       : name ===
-                                                                          'Flux Background'
-                                                                        ? fluxBackgroundSource
+                                                                          'Mesh Background'
+                                                                        ? meshBackgroundSource
                                                                         : name ===
-                                                                            'Magnetic Warp Background'
-                                                                          ? magneticWarpBackgroundSource
+                                                                            'Flux Background'
+                                                                          ? fluxBackgroundSource
                                                                           : name ===
-                                                                              'Grain Current Background'
-                                                                            ? grainCurrentBackgroundSource
-                                                                            : `'use client';
+                                                                              'Magnetic Warp Background'
+                                                                            ? magneticWarpBackgroundSource
+                                                                            : name ===
+                                                                                'Grain Current Background'
+                                                                              ? grainCurrentBackgroundSource
+                                                                              : `'use client';
 
 import * as React from 'react';
 
@@ -8119,8 +8141,9 @@ export default function ComponentsPage() {
                     component library.
                   </h1>
                   <p>
-                    Pick a category, open a component, try the preview, then
-                    copy the install command or continue into its API reference.
+                    Browse {catalog.length} accessible React and Next.js
+                    components, try each live preview, then copy the editable
+                    TypeScript source or continue into its API reference.
                   </p>
                   <div className="components-hero-actions">
                     <button
