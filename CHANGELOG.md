@@ -8,6 +8,29 @@ published.
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-09-09
+
+### Added
+
+- A complete responsive developer portfolio template with dedicated project,
+  experience, technology, event, and credential pages.
+- Original dithered portrait and editorial lifestyle imagery for the portfolio.
+- Vivid technology icons, GitHub activity visualization, social links, and an
+  interactive image-card stack.
+
+### Changed
+
+- Added a Templates destination to the landing page and component catalogue.
+- Made light and dark theme preferences persist across portfolio navigation.
+- Refined theme transitions, responsive footer composition, profile details,
+  and motion throughout the developer portfolio.
+- Improved landing-page light-theme contrast and logo transparency.
+
+### Fixed
+
+- Corrected mobile header spacing, footer alignment, profile-image clipping,
+  email icon sizing, and several light-mode visibility issues.
+
 ## [0.2.5] - 2026-09-07
 
 ### Added
@@ -98,7 +121,8 @@ published.
 - AI-ready prompts on every component page, including the active preview configuration.
 - Clean-project compilation and overwrite-protection tests for the CLI.
 
-[Unreleased]: https://github.com/johnmamanao/nacre-ui/compare/v0.2.5...HEAD
+[Unreleased]: https://github.com/johnmamanao/nacre-ui/compare/v0.3.0...HEAD
+[0.3.0]: https://github.com/johnmamanao/nacre-ui/compare/v0.2.5...v0.3.0
 [0.2.5]: https://github.com/johnmamanao/nacre-ui/compare/v0.2.4...v0.2.5
 [0.2.4]: https://github.com/johnmamanao/nacre-ui/compare/v0.2.3...v0.2.4
 [0.2.3]: https://github.com/johnmamanao/nacre-ui/compare/v0.2.2...v0.2.3

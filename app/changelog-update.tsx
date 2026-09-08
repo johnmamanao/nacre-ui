@@ -1,7 +1,12 @@
 'use client';
 
 import { useState, useSyncExternalStore } from 'react';
-import { ArrowRight, Layers3, Scan, SlidersHorizontal } from 'lucide-react';
+import {
+  ArrowRight,
+  LayoutTemplate,
+  MonitorSmartphone,
+  SunMoon,
+} from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -12,7 +17,7 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 
-const release = '0.2.5';
+const release = '0.3.0';
 const dismissedReleaseKey = 'nacre-changelog-dismissed-release';
 const seenReleaseKey = 'nacre-changelog-seen-release';
 
@@ -91,70 +96,76 @@ export function ChangelogUpdate() {
               <strong>{release}</strong>
               <time dateTime="2026-09">September 2026</time>
             </div>
-            <p>A more focused, flexible workspace.</p>
+            <p>A complete portfolio, ready to make your own.</p>
             <div className="changelog-rail-note" aria-hidden="true">
               <i />
-              <span>Components</span>
-              <span>Tools</span>
-              <span>A sharper you</span>
+              <span>Templates</span>
+              <span>Responsive</span>
+              <span>Built to adapt</span>
             </div>
             <div className="changelog-rail-signature" aria-hidden="true">
               <Image src="/nacre-mark.png" alt="" width={46} height={46} />
               <span>
                 Edition
-                <strong>04 / 2026</strong>
+                <strong>05 / 2026</strong>
               </span>
             </div>
           </aside>
 
           <div className="changelog-body">
             <header className="changelog-heading">
-              <DialogTitle>The workspace, sharpened.</DialogTitle>
+              <DialogTitle>Your portfolio, thoughtfully composed.</DialogTitle>
               <DialogDescription>
-                Release {release} puts the component itself first and keeps its
-                working tools within reach.
+                Release {release} introduces Nacre UI templates with a complete
+                developer portfolio you can shape into your own.
               </DialogDescription>
             </header>
 
             <dl className="changelog-list">
               <div>
                 <span className="changelog-list-icon" aria-hidden="true">
-                  <Scan />
+                  <LayoutTemplate />
                 </span>
                 <div>
-                  <dt>Canvas</dt>
+                  <dt>Developer portfolio</dt>
                   <dd>
-                    Full-height previews that respond to their available space.
+                    A polished home page plus dedicated work, experience,
+                    technology, event, and credential views.
                   </dd>
                 </div>
               </div>
               <div>
                 <span className="changelog-list-icon" aria-hidden="true">
-                  <SlidersHorizontal />
+                  <MonitorSmartphone />
                 </span>
                 <div>
-                  <dt>Inspect</dt>
+                  <dt>Responsive by design</dt>
                   <dd>
-                    Usage, source, and controls now live beside the preview.
+                    Editorial layouts, navigation, galleries, and footer details
+                    adapt cleanly from desktop to mobile.
                   </dd>
                 </div>
               </div>
               <div>
                 <span className="changelog-list-icon" aria-hidden="true">
-                  <Layers3 />
+                  <SunMoon />
                 </span>
                 <div>
-                  <dt>New work</dt>
+                  <dt>Theme continuity</dt>
                   <dd>
-                    ASCII Image, Ripple Transition, Matrix Rain, and more.
+                    Light and dark preferences now persist while navigating the
+                    template, with refined contrast across the main site.
                   </dd>
                 </div>
               </div>
             </dl>
 
             <div className="changelog-actions">
-              <Link href="/components" onClick={closeForSession}>
-                Open components <ArrowRight aria-hidden="true" />
+              <Link
+                href="/templates/developer-portfolio"
+                onClick={closeForSession}
+              >
+                View the template <ArrowRight aria-hidden="true" />
               </Link>
             </div>
           </div>
