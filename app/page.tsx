@@ -277,6 +277,7 @@ export default function Home() {
               <div>
                 <span>Collection</span>
                 <Link href="/components">All components</Link>
+                <Link href="/templates">Templates</Link>
                 <Link href="/components#liquid-metal-button">Actions</Link>
                 <Link href="/components#horizon-page-loader">Loaders</Link>
                 <Link href="/components#tidal-type-text">
