@@ -75,7 +75,6 @@ export default function Home() {
                 </span>
                 <span className="hero-wordmark-index" aria-hidden="true">
                   <strong>UI</strong>
-                  <small>02—25</small>
                 </span>
               </h1>
               <p>
