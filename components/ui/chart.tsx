@@ -272,17 +272,23 @@ function ChartTooltipContent({
 
 const ChartLegend = RechartsPrimitive.Legend;
 
+type ChartLegendContentProps = React.ComponentProps<'div'> & {
+  hideIcon?: boolean;
+  nameKey?: string;
+  position?: React.ComponentProps<typeof RechartsPrimitive.Legend>['position'];
+  verticalAlign?: 'top' | 'bottom' | 'middle';
+} & Omit<RechartsPrimitive.DefaultLegendContentProps, 'verticalAlign'>;
+
 function ChartLegendContent({
   className,
   hideIcon = false,
   payload,
-  verticalAlign = 'bottom',
+  position,
+  verticalAlign,
   nameKey,
-}: React.ComponentProps<'div'> & {
-  hideIcon?: boolean;
-  nameKey?: string;
-} & RechartsPrimitive.DefaultLegendContentProps) {
+}: ChartLegendContentProps) {
   const { config } = useChart();
+  const legendPosition = position ?? verticalAlign ?? 'bottom';
 
   if (!payload?.length) {
     return null;
@@ -292,7 +298,9 @@ function ChartLegendContent({
     <div
       className={cn(
         'flex items-center justify-center gap-4',
-        verticalAlign === 'top' ? 'pb-3' : 'pt-3',
+        legendPosition === 'top' || legendPosition === 'insideTop'
+          ? 'pb-3'
+          : 'pt-3',
         className,
       )}
     >
