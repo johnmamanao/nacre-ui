@@ -78,9 +78,8 @@ export default function Home() {
                 </span>
               </h1>
               <p>
-                Nacre UI is a source-based React component collection. Try each
-                component in a live preview, edit its parameters, and copy the
-                implementation into your project.
+                Nacre UI is a collection of polished React components you can
+                preview, copy into your project, and customize freely.
               </p>
               <div className="home-hero-actions">
                 <Link href="/components">
