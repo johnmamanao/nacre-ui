@@ -1,0 +1,217 @@
+.page {
+  min-height: 100vh;
+  padding: 0 24px 80px;
+  background: #0d0d0c;
+  color: #f2f1ed;
+}
+
+.header,
+.intro,
+.card {
+  width: min(100%, 1120px);
+  margin-inline: auto;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+  border-bottom: 1px solid #252523;
+  font-size: 13px;
+}
+
+.header a {
+  color: #9c9b96;
+  text-decoration: none;
+}
+
+.header .brand {
+  color: #f2f1ed;
+  font-weight: 650;
+}
+
+.intro {
+  padding: 112px 0 64px;
+}
+
+.intro span,
+.cardCopy span {
+  color: #777670;
+  font:
+    600 11px/1.2 ui-monospace,
+    SFMono-Regular,
+    Menlo,
+    monospace;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.intro h1 {
+  max-width: 720px;
+  margin: 16px 0;
+  font-size: clamp(48px, 8vw, 100px);
+  font-weight: 430;
+  letter-spacing: -0.065em;
+  line-height: 0.94;
+}
+
+.intro p {
+  max-width: 560px;
+  margin: 0;
+  color: #989791;
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+.card {
+  display: block;
+  overflow: hidden;
+  border: 1px solid #2a2a27;
+  border-radius: 18px;
+  color: inherit;
+  text-decoration: none;
+  transition:
+    border-color 180ms ease,
+    transform 180ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.card:active {
+  transform: scale(0.99);
+}
+
+.preview {
+  min-height: 440px;
+  padding: 32px clamp(24px, 6vw, 72px);
+  background: #141413;
+}
+
+.previewNav {
+  height: 18px;
+  border-bottom: 1px solid #2c2c29;
+}
+
+.previewHero {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  width: min(72%, 560px);
+  margin: 76px auto 64px;
+}
+
+.previewHero i {
+  width: 96px;
+  aspect-ratio: 1;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background: #292927;
+}
+
+.previewHero div {
+  width: 100%;
+}
+
+.previewHero b,
+.previewGrid i {
+  display: block;
+  height: 12px;
+  margin: 12px 0;
+  border-radius: 20px;
+  background: #292927;
+}
+
+.previewHero b:nth-child(1) {
+  width: 54%;
+  height: 22px;
+}
+
+.previewHero b:nth-child(2) {
+  width: 90%;
+}
+
+.previewHero b:nth-child(3) {
+  width: 72%;
+}
+
+.previewGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  width: min(72%, 560px);
+  margin: auto;
+}
+
+.previewGrid i {
+  height: 112px;
+  margin: 0;
+  border-radius: 10px;
+}
+
+.cardCopy {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  padding: 28px 32px 32px;
+}
+
+.cardCopy h2 {
+  margin: 8px 0 6px;
+  font-size: 25px;
+  font-weight: 520;
+  letter-spacing: -0.035em;
+}
+
+.cardCopy p {
+  max-width: 570px;
+  margin: 0;
+  color: #92918b;
+  line-height: 1.55;
+}
+
+.cardCopy svg {
+  flex: 0 0 auto;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .card:hover {
+    border-color: #4b4a45;
+    transform: translateY(-3px);
+  }
+
+  .header a:hover {
+    color: #f2f1ed;
+  }
+}
+
+@media (max-width: 640px) {
+  .page {
+    padding-inline: 16px;
+  }
+
+  .intro {
+    padding: 80px 0 44px;
+  }
+
+  .preview {
+    min-height: 330px;
+    padding: 24px 20px;
+  }
+
+  .previewHero,
+  .previewGrid {
+    width: 100%;
+  }
+
+  .previewHero {
+    margin-block: 56px 48px;
+  }
+
+  .previewHero i {
+    width: 72px;
+  }
+
+  .cardCopy {
+    padding: 24px;
+  }
+}

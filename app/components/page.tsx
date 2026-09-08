@@ -7958,6 +7958,7 @@ export default function ComponentsPage() {
               <Link className="current" href="/components" aria-current="page">
                 Components
               </Link>
+              <Link href="/templates">Templates</Link>
             </nav>
             <div className="header-tools">
               <button
