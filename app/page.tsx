@@ -3,13 +3,24 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
-import { ArrowRight, Check, Copy, Layers3, Moon, Sun } from 'lucide-react';
+import {
+  ArrowRight,
+  Check,
+  Copy,
+  Layers3,
+  Moon,
+  Sun,
+  Terminal,
+} from 'lucide-react';
 
 import { FacetBloomLoader } from '@/components/ui/facet-bloom-loader';
 import { FolioArcCarousel } from '@/components/ui/folio-arc-carousel';
 import { GemSmokeButton } from '@/components/ui/gem-smoke-button';
+import { HaloDock } from '@/components/ui/halo-dock';
 import { LiquidMetalButton } from '@/components/ui/liquid-metal-button';
+import { PhaseWeaveText } from '@/components/ui/phase-weave-text';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { ToolchainMarquee } from '@/components/ui/toolchain-marquee';
 import { useTheme } from '@/lib/use-theme';
 import { GithubStarButton } from './github-star-button';
 import { SiteEntryLoader } from './site-entry-loader';
@@ -28,7 +39,6 @@ export default function Home() {
   return (
     <ScrollArea className="landing-page-scroll">
       <SiteEntryLoader />
-      <ChangelogUpdate />
       <main id="top" className="home-page">
         <div className="home-hero-shell">
           <header className="site-header home-header">
@@ -42,9 +52,9 @@ export default function Home() {
               />
               Nacre UI
             </a>
-            <nav aria-label="Primary navigation">
-              <Link href="/components">Components</Link>
-            </nav>
+            <div className="home-header-release">
+              <ChangelogUpdate />
+            </div>
             <div className="header-tools">
               <GithubStarButton />
               <button
@@ -78,9 +88,9 @@ export default function Home() {
                 </span>
               </h1>
               <p>
-                Components you install as editable source code. Try each one in
-                a live preview, edit its parameters, and copy the implementation
-                into your project.
+                Editable React and Next.js components you install as TypeScript
+                source. Try each one in a live preview, tune its parameters, and
+                copy the implementation into your project.
               </p>
               <div className="home-hero-actions">
                 <Link href="/components">
@@ -150,8 +160,8 @@ export default function Home() {
             </div>
             <div>
               <p>
-                This preview includes Folio Arc Carousel, Liquid Metal Button,
-                Gem Smoke Button, and Facet Bloom Loader.
+                A wider look at the collection—from spatial layouts to animated
+                type and compact interface patterns.
               </p>
               <Link href="/components">
                 View all components <ArrowRight />
@@ -183,35 +193,73 @@ export default function Home() {
           </div>
 
           <div className="collection-shelf">
-            <div className="collection-shelf-copy">
-              <span>Buttons</span>
-              <h3>Liquid Metal and Gem Smoke</h3>
-              <p>Hover or focus each button to see its material effect.</p>
-            </div>
-
-            <div className="collection-shelf-actions">
-              <div>
-                <Link href="/components#liquid-metal-button">Liquid Metal</Link>
-                <LiquidMetalButton>Enter studio</LiquidMetalButton>
-              </div>
-              <div>
-                <Link href="/components#gem-smoke-button">Gem Smoke</Link>
-                <GemSmokeButton>Reveal collection</GemSmokeButton>
-              </div>
-            </div>
-
-            <div className="collection-shelf-loader">
-              <FacetBloomLoader
-                accent="currentColor"
-                label="Composing interface"
-                showLabel={false}
-                size={64}
-                speed={1900}
+            <article className="collection-shelf-piece collection-shelf-type">
+              <header>
+                <span>Text &amp; motion</span>
+                <Link href="/components#phase-weave-text">Phase Weave</Link>
+              </header>
+              <PhaseWeaveText
+                interval={2400}
+                words={['Clarity', 'Rhythm', 'Focus']}
               />
-              <div>
-                <Link href="/components#facet-bloom-loader">Facet Bloom</Link>
-                <p>An animated loader for indeterminate progress.</p>
-              </div>
+            </article>
+
+            <article className="collection-shelf-piece collection-shelf-dock">
+              <header>
+                <span>Interaction</span>
+                <Link href="/components#halo-dock">Halo Dock</Link>
+              </header>
+              <HaloDock magnification={68} size={44} />
+            </article>
+
+            <article className="collection-shelf-piece collection-shelf-tools">
+              <header>
+                <span>Motion system</span>
+                <Link href="/components#toolchain-marquee">
+                  Toolchain Marquee
+                </Link>
+              </header>
+              <ToolchainMarquee duration={26} rows={3} />
+            </article>
+          </div>
+        </section>
+
+        <section className="home-cta" aria-labelledby="home-cta-title">
+          <div className="home-cta-mark" aria-hidden="true">
+            <Image src="/nacre-mark.png" alt="" width={112} height={112} />
+          </div>
+
+          <div className="home-cta-copy">
+            <span className="home-cta-kicker">Open collection · 55 pieces</span>
+            <h2 id="home-cta-title">Start with source. End with yours.</h2>
+            <p>
+              Choose a component, copy the TypeScript, then tune every detail
+              until it belongs completely to your product.
+            </p>
+          </div>
+
+          <div className="home-cta-utility">
+            <button
+              className="home-cta-command"
+              type="button"
+              onClick={copyInstallCommand}
+              aria-label={
+                installCopied
+                  ? 'Installation command copied'
+                  : 'Copy npm installation command'
+              }
+            >
+              <Terminal aria-hidden="true" />
+              <code>npm install @nacre-ui/cli</code>
+              <span>{installCopied ? 'Copied' : 'Copy'}</span>
+              {installCopied ? <Check /> : <Copy />}
+            </button>
+
+            <div className="home-cta-actions">
+              <Link href="/components">
+                Explore all components <ArrowRight aria-hidden="true" />
+              </Link>
+              <Link href="/components#installation">Read installation</Link>
             </div>
           </div>
         </section>

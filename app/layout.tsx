@@ -1,11 +1,43 @@
 import type { Metadata } from 'next';
 import './globals.css';
 
+const siteUrl = 'https://nacre-ui.johnmamanao.com';
+const siteDescription =
+  'Nacre UI is an open-source React and Next.js component library with editable TypeScript source, live previews, accessible motion, and polished animations.';
+
 export const metadata: Metadata = {
-  metadataBase: new URL('https://nacre-ui.johnmamanao.com'),
-  title: 'Nacre UI — React components for expressive interfaces',
-  description:
-    'A source-based React component collection with live previews, configurable interactions, and accessible motion.',
+  metadataBase: new URL(siteUrl),
+  applicationName: 'Nacre UI',
+  title: {
+    default: 'Nacre UI — Animated React Components for Next.js',
+    template: '%s | Nacre UI',
+  },
+  description: siteDescription,
+  keywords: [
+    'React components',
+    'Next.js components',
+    'animated React components',
+    'TypeScript UI components',
+    'copy paste React components',
+    'accessible UI components',
+    'React animation library',
+    'open source component library',
+  ],
+  category: 'technology',
+  creator: 'Nacre UI',
+  publisher: 'Nacre UI',
+  referrer: 'origin-when-cross-origin',
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+      'max-video-preview': -1,
+    },
+  },
   icons: {
     icon: [{ url: '/nacre-mark.png', type: 'image/png' }],
   },
@@ -13,11 +45,12 @@ export const metadata: Metadata = {
     canonical: '/',
   },
   openGraph: {
-    title: 'Nacre UI — React components for expressive interfaces',
-    description:
-      'Source-based React components with live previews, configurable interactions, and accessible motion.',
+    title: 'Nacre UI — Animated React Components for Next.js',
+    description: siteDescription,
     type: 'website',
     url: '/',
+    siteName: 'Nacre UI',
+    locale: 'en_US',
     images: [
       {
         url: '/og.png',
@@ -29,12 +62,43 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Nacre UI — React components for expressive interfaces',
-    description:
-      'Source-based React components with live previews, configurable interactions, and accessible motion.',
+    title: 'Nacre UI — Animated React Components for Next.js',
+    description: siteDescription,
     images: ['/og.png'],
   },
 };
+
+const structuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'Nacre UI',
+    url: siteUrl,
+    description: siteDescription,
+    inLanguage: 'en',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    name: 'Nacre UI',
+    url: siteUrl,
+    description: siteDescription,
+    applicationCategory: 'DeveloperApplication',
+    operatingSystem: 'Cross-platform',
+    softwareVersion: '0.2.5',
+    downloadUrl: 'https://www.npmjs.com/package/@nacre-ui/cli',
+    license: 'https://opensource.org/license/mit',
+    offers: {
+      '@type': 'Offer',
+      price: '0',
+      priceCurrency: 'USD',
+    },
+    sameAs: [
+      'https://github.com/johnmamanao/nacre-ui',
+      'https://www.npmjs.com/package/@nacre-ui/cli',
+    ],
+  },
+];
 
 export default function RootLayout({
   children,
@@ -42,6 +106,13 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark" suppressHydrationWarning>
       <head>
+        <script
+          id="nacre-structured-data"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(structuredData).replace(/</g, '\\u003c'),
+          }}
+        />
         <script
           id="nacre-theme-initializer"
           dangerouslySetInnerHTML={{

@@ -27,18 +27,18 @@ function GithubMark() {
 }
 
 export function GithubStarButton() {
-  const [stars, setStars] = useState<number | null>(() => {
-    if (typeof window === 'undefined') return null;
+  const [stars, setStars] = useState<number | null>(null);
 
+  useEffect(() => {
+    const controller = new AbortController();
     const cachedStars = Number.parseInt(
       window.localStorage.getItem(STAR_CACHE_KEY) ?? '',
       10,
     );
-    return Number.isFinite(cachedStars) ? cachedStars : null;
-  });
 
-  useEffect(() => {
-    const controller = new AbortController();
+    if (Number.isFinite(cachedStars)) {
+      queueMicrotask(() => setStars(cachedStars));
+    }
 
     async function loadStars() {
       try {
