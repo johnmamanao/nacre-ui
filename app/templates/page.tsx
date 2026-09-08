@@ -53,7 +53,9 @@ export default function TemplatesPage() {
               and technical creatives.
             </p>
           </div>
-          <ArrowUpRight />
+          <span className={styles.cardAction}>
+            View template <ArrowUpRight aria-hidden="true" />
+          </span>
         </div>
       </Link>
     </main>
