@@ -2,8 +2,9 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
+  ArrowDown,
   ArrowRight,
   Check,
   Copy,
@@ -14,7 +15,6 @@ import {
 } from 'lucide-react';
 
 import { FacetBloomLoader } from '@/components/ui/facet-bloom-loader';
-import { FolioArcCarousel } from '@/components/ui/folio-arc-carousel';
 import { GemSmokeButton } from '@/components/ui/gem-smoke-button';
 import { HaloDock } from '@/components/ui/halo-dock';
 import { LiquidMetalButton } from '@/components/ui/liquid-metal-button';
@@ -22,310 +22,419 @@ import { PhaseWeaveText } from '@/components/ui/phase-weave-text';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { ToolchainMarquee } from '@/components/ui/toolchain-marquee';
 import { useTheme } from '@/lib/use-theme';
-import { GithubStarButton } from './github-star-button';
-import { SiteEntryLoader } from './site-entry-loader';
 import { ChangelogUpdate } from './changelog-update';
+import { GithubStarButton } from './github-star-button';
+import styles from './landing-story.module.css';
+
+const installCommand = 'npm install @nacre-ui/cli';
 
 export default function Home() {
   const { isDark, setTheme, toggleTheme } = useTheme();
-  const [installCopied, setInstallCopied] = useState(false);
+  const [copied, setCopied] = useState(false);
+
+  useEffect(() => {
+    const elements = document.querySelectorAll<HTMLElement>('[data-reveal]');
+    const revealGroups = new Map<Element, HTMLElement[]>();
+
+    elements.forEach((element) => {
+      const trigger = element.parentElement ?? element;
+      revealGroups.set(trigger, [
+        ...(revealGroups.get(trigger) ?? []),
+        element,
+      ]);
+    });
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          revealGroups.get(entry.target)?.forEach((element) => {
+            element.dataset.visible = 'true';
+          });
+          observer.unobserve(entry.target);
+        });
+      },
+      { rootMargin: '0px 0px -12% 0px', threshold: 0.12 },
+    );
+
+    revealGroups.forEach((_, trigger) => observer.observe(trigger));
+    return () => observer.disconnect();
+  }, []);
 
   async function copyInstallCommand() {
-    await navigator.clipboard.writeText('npm install @nacre-ui/cli');
-    setInstallCopied(true);
-    window.setTimeout(() => setInstallCopied(false), 1600);
+    await navigator.clipboard.writeText(installCommand);
+    setCopied(true);
+    window.setTimeout(() => setCopied(false), 1600);
   }
 
   return (
     <ScrollArea className="landing-page-scroll">
-      <SiteEntryLoader />
-      <main id="top" className="home-page">
-        <div className="home-hero-shell">
-          <header className="site-header home-header">
-            <a className="brand" href="#top" aria-label="Nacre UI home">
-              <Image
-                src="/nacre-mark.png"
-                alt=""
-                width={22}
-                height={22}
-                priority
-              />
-              Nacre UI
-            </a>
-            <div className="home-header-release">
+      <main id="top" className={styles.page}>
+        <header className={styles.header}>
+          <div className={styles.headerInner}>
+            <div className={styles.brandCluster}>
+              <a
+                className={styles.brand}
+                href="#top"
+                aria-label="Nacre UI home"
+              >
+                <Image
+                  src="/nacre-mark.png"
+                  alt=""
+                  width={22}
+                  height={22}
+                  priority
+                />
+                <span>Nacre UI</span>
+              </a>
               <ChangelogUpdate />
             </div>
-            <div className="header-tools">
+            <nav className={styles.nav} aria-label="Primary navigation">
+              <a href="#story">The process</a>
+              <Link href="/components">Components</Link>
+              <Link href="/templates">Templates</Link>
+            </nav>
+            <div className={styles.headerTools}>
               <GithubStarButton />
               <button
-                className="theme-button"
+                className={styles.iconButton}
                 type="button"
                 onClick={toggleTheme}
                 aria-label="Toggle appearance"
               >
-                <Sun className="theme-icon theme-icon-light" />
-                <Moon className="theme-icon theme-icon-dark" />
+                {isDark ? <Sun /> : <Moon />}
               </button>
             </div>
-          </header>
-
-          <section className="home-hero" aria-labelledby="home-title">
-            <div className="home-hero-copy">
-              <div className="hero-wordmark-meta" aria-hidden="true">
-                <span>Source collection</span>
-                <span>React / TypeScript</span>
-              </div>
-              <h1 id="home-title" aria-label="Nacre UI">
-                <span className="hero-wordmark-name" aria-hidden="true">
-                  NACRE
-                </span>
-                <span className="hero-wordmark-index" aria-hidden="true">
-                  <strong>UI</strong>
-                </span>
-              </h1>
-              <p>
-                Editable React and Next.js components you install as TypeScript
-                source. Try each one in a live preview, tune its parameters, and
-                copy the implementation into your project.
-              </p>
-              <div className="home-hero-actions">
-                <Link href="/components">
-                  <Layers3 /> Browse components
-                </Link>
-                <button
-                  className="hero-install-command"
-                  type="button"
-                  onClick={copyInstallCommand}
-                  aria-label={
-                    installCopied
-                      ? 'Installation command copied'
-                      : 'Copy npm installation command'
-                  }
-                >
-                  <span aria-hidden="true">~</span>
-                  <code>npm install @nacre-ui/cli</code>
-                  {installCopied ? <Check /> : <Copy />}
-                </button>
-              </div>
-            </div>
-
-            <section
-              className="hero-live-stage"
-              aria-labelledby="hero-live-title"
-            >
-              <div className="hero-stage-heading">
-                <span>From the collection</span>
-                <strong id="hero-live-title">
-                  Three components, running live
-                </strong>
-              </div>
-
-              <div className="hero-float hero-float-metal">
-                <small>Liquid Metal Button</small>
-                <LiquidMetalButton>Enter studio</LiquidMetalButton>
-              </div>
-
-              <div className="hero-float hero-float-smoke">
-                <small>Gem Smoke Button</small>
-                <GemSmokeButton>Reveal collection</GemSmokeButton>
-              </div>
-
-              <div className="hero-float hero-float-loader">
-                <small>Facet Bloom Loader</small>
-                <FacetBloomLoader
-                  accent="currentColor"
-                  aria-label="Preparing preview"
-                  label="Preparing preview"
-                  size={54}
-                  speed={1900}
-                />
-              </div>
-            </section>
-          </section>
-        </div>
-
-        <section
-          id="featured"
-          className="collection-showcase"
-          aria-labelledby="collection-showcase-title"
-        >
-          <header className="collection-intro">
-            <div>
-              <span>Featured components</span>
-              <h2 id="collection-showcase-title">Try the components here.</h2>
-            </div>
-            <div>
-              <p>
-                A wider look at the collection—from spatial layouts to animated
-                type and compact interface patterns.
-              </p>
-              <Link href="/components">
-                View all components <ArrowRight />
-              </Link>
-            </div>
-          </header>
-
-          <div className="collection-folio">
-            <div className="collection-folio-bar">
-              <div>
-                <span>Carousel</span>
-                <strong>Folio Arc Carousel</strong>
-              </div>
-              <Link href="/components#folio-arc-carousel">
-                View component <ArrowRight />
-              </Link>
-            </div>
-            <div className="collection-folio-stage">
-              <FolioArcCarousel
-                arc={15}
-                autoPlay
-                autoPlayInterval={4800}
-                cardWidth={224}
-                defaultActiveIndex={2}
-                depth={96}
-                spacing={168}
-              />
-            </div>
           </div>
+        </header>
 
-          <div className="collection-shelf">
-            <article className="collection-shelf-piece collection-shelf-type">
-              <header>
-                <span>Text &amp; motion</span>
-                <Link href="/components#phase-weave-text">Phase Weave</Link>
-              </header>
-              <PhaseWeaveText
-                interval={2400}
-                words={['Clarity', 'Rhythm', 'Focus']}
-              />
-            </article>
-
-            <article className="collection-shelf-piece collection-shelf-dock">
-              <header>
-                <span>Interaction</span>
-                <Link href="/components#halo-dock">Halo Dock</Link>
-              </header>
-              <HaloDock magnification={68} size={44} />
-            </article>
-
-            <article className="collection-shelf-piece collection-shelf-tools">
-              <header>
-                <span>Motion system</span>
-                <Link href="/components#toolchain-marquee">
-                  Toolchain Marquee
-                </Link>
-              </header>
-              <ToolchainMarquee duration={26} rows={3} />
-            </article>
+        <section className={styles.hero} aria-labelledby="hero-title">
+          <div className={styles.heroMeta} aria-hidden="true">
+            <span>Source collection</span>
+            <span>React / TypeScript</span>
           </div>
-        </section>
-
-        <section className="home-cta" aria-labelledby="home-cta-title">
-          <div className="home-cta-mark" aria-hidden="true">
-            <Image src="/nacre-mark.png" alt="" width={112} height={112} />
-          </div>
-
-          <div className="home-cta-copy">
-            <span className="home-cta-kicker">Open collection · 55 pieces</span>
-            <h2 id="home-cta-title">Start with source. End with yours.</h2>
-            <p>
-              Choose a component, copy the TypeScript, then tune every detail
-              until it belongs completely to your product.
-            </p>
-          </div>
-
-          <div className="home-cta-utility">
+          <h1 id="hero-title" aria-label="Nacre UI">
+            <span className={styles.heroWord} aria-hidden="true">
+              NACRE
+            </span>
+            <span className={styles.heroIndex} aria-hidden="true">
+              UI
+            </span>
+          </h1>
+          <p className={styles.heroCopy}>
+            Editable React and Next.js components you install as TypeScript
+            source. Try each one live, tune its parameters, and make the
+            implementation yours.
+          </p>
+          <div className={styles.heroActions}>
+            <Link className={styles.primaryAction} href="/components">
+              <Layers3 /> Browse components
+            </Link>
             <button
-              className="home-cta-command"
+              className={styles.command}
               type="button"
               onClick={copyInstallCommand}
               aria-label={
-                installCopied
+                copied
                   ? 'Installation command copied'
-                  : 'Copy npm installation command'
+                  : 'Copy installation command'
               }
             >
-              <Terminal aria-hidden="true" />
-              <code>npm install @nacre-ui/cli</code>
-              <span>{installCopied ? 'Copied' : 'Copy'}</span>
-              {installCopied ? <Check /> : <Copy />}
+              <span aria-hidden="true">~</span>
+              <code>{installCommand}</code>
+              {copied ? <Check /> : <Copy />}
             </button>
+          </div>
+          <a className={styles.scrollCue} href="#story">
+            See how it works <ArrowDown />
+          </a>
+        </section>
 
-            <div className="home-cta-actions">
+        <section
+          id="story"
+          className={styles.prologue}
+          aria-labelledby="story-title"
+        >
+          <div className={styles.prologueInner} data-reveal data-motion="clip">
+            <p className={styles.kicker}>
+              A component library should show its work
+            </p>
+            <h2 id="story-title">
+              See the idea.
+              <br />
+              Touch the details.
+              <br />
+              Keep the source.
+            </h2>
+          </div>
+        </section>
+
+        <article className={`${styles.chapter} ${styles.discoverChapter}`}>
+          <div className={styles.chapterInner}>
+            <div
+              className={styles.chapterCopy}
+              data-reveal
+              data-motion="discover-copy"
+            >
+              <p className={styles.kicker}>Meet it in motion</p>
+              <h2>First, find the feeling.</h2>
+              <p>
+                Components are easier to understand when they are running.
+                Explore the motion, texture, and interaction before reading a
+                line of code.
+              </p>
               <Link href="/components">
-                Explore all components <ArrowRight aria-hidden="true" />
+                Explore all components <ArrowRight />
               </Link>
-              <Link href="/components#installation">Read installation</Link>
+            </div>
+            <div
+              className={styles.typeStage}
+              data-reveal
+              data-motion="discover-stage"
+            >
+              <div className={styles.stageLabel}>
+                <span>Phase Weave</span>
+                <span>Live type</span>
+              </div>
+              <PhaseWeaveText
+                interval={2400}
+                words={['Clarity', 'Rhythm', 'Character']}
+              />
+              <p className={styles.stageCaption}>
+                Every preview is the real component.
+              </p>
+            </div>
+          </div>
+        </article>
+
+        <article className={`${styles.chapter} ${styles.tuneChapter}`}>
+          <div className={styles.chapterInner}>
+            <div
+              className={styles.dockStage}
+              data-reveal
+              data-motion="tune-stage"
+            >
+              <div className={styles.stageLabel}>
+                <span>Halo Dock</span>
+                <span>Interactive</span>
+              </div>
+              <HaloDock magnification={68} size={44} />
+              <div className={styles.parameterLine}>
+                <span>size</span>
+                <code>44</code>
+                <span>magnification</span>
+                <code>68</code>
+              </div>
+            </div>
+            <div
+              className={styles.chapterCopy}
+              data-reveal
+              data-motion="tune-copy"
+            >
+              <p className={styles.kicker}>Tune it in context</p>
+              <h2>The demo is the documentation.</h2>
+              <p>
+                Change the useful parameters, test the response, and arrive at a
+                starting point that already belongs in your product.
+              </p>
+              <Link href="/components#halo-dock">
+                Open the interactive demo <ArrowRight />
+              </Link>
+            </div>
+          </div>
+        </article>
+
+        <article className={`${styles.chapter} ${styles.ownChapter}`}>
+          <div className={styles.chapterInner}>
+            <div
+              className={styles.chapterCopy}
+              data-reveal
+              data-motion="own-copy"
+            >
+              <p className={styles.kicker}>Take it home</p>
+              <h2>No package-shaped black box.</h2>
+              <p>
+                The CLI writes clean TypeScript into your repository. Read it,
+                reshape it, and ship it without a runtime dependency on Nacre.
+              </p>
+              <Link href="/components#installation">
+                Read installation <ArrowRight />
+              </Link>
+            </div>
+            <div
+              className={styles.sourceStage}
+              data-reveal
+              data-motion="own-stage"
+            >
+              <div className={styles.sourceTopbar}>
+                <span>terminal</span>
+                <span>nacre / add</span>
+              </div>
+              <div className={styles.codeLine}>
+                <span>$</span>
+                <code>npx @nacre-ui/cli add liquid-metal-button</code>
+              </div>
+              <div className={styles.fileTree}>
+                <span>components</span>
+                <span>└─ ui</span>
+                <strong>└─ liquid-metal-button.tsx</strong>
+              </div>
+              <div className={styles.added}>
+                <Check />
+                <span>Source added. It is yours now.</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <section
+          className={styles.collection}
+          aria-labelledby="collection-title"
+        >
+          <header
+            className={styles.collectionHeader}
+            data-reveal
+            data-motion="clip"
+          >
+            <div>
+              <p className={styles.kicker}>Selected from the collection</p>
+              <h2 id="collection-title">Pieces with presence.</h2>
+            </div>
+            <Link href="/components">
+              View all 55 <ArrowRight />
+            </Link>
+          </header>
+          <div className={styles.mosaic} data-reveal data-motion="stagger">
+            <Link
+              className={`${styles.mosaicItem} ${styles.metalPiece}`}
+              href="/components#liquid-metal-button"
+            >
+              <span>01 / Actions</span>
+              <div>
+                <LiquidMetalButton>Enter studio</LiquidMetalButton>
+              </div>
+              <strong>
+                Liquid Metal Button <ArrowRight />
+              </strong>
+            </Link>
+            <Link
+              className={`${styles.mosaicItem} ${styles.smokePiece}`}
+              href="/components#gem-smoke-button"
+            >
+              <span>02 / Actions</span>
+              <div>
+                <GemSmokeButton>Reveal collection</GemSmokeButton>
+              </div>
+              <strong>
+                Gem Smoke Button <ArrowRight />
+              </strong>
+            </Link>
+            <Link
+              className={`${styles.mosaicItem} ${styles.loaderPiece}`}
+              href="/components#facet-bloom-loader"
+            >
+              <span>03 / Loaders</span>
+              <div>
+                <FacetBloomLoader
+                  accent="currentColor"
+                  label="Composing"
+                  size={64}
+                  speed={2100}
+                />
+              </div>
+              <strong>
+                Facet Bloom Loader <ArrowRight />
+              </strong>
+            </Link>
+            <Link
+              className={`${styles.mosaicItem} ${styles.toolsPiece}`}
+              href="/components#toolchain-marquee"
+            >
+              <span>04 / Motion systems</span>
+              <div>
+                <ToolchainMarquee duration={28} rows={3} />
+              </div>
+              <strong>
+                Toolchain Marquee <ArrowRight />
+              </strong>
+            </Link>
+          </div>
+        </section>
+
+        <section className={styles.finalCta} aria-labelledby="final-title">
+          <div data-reveal data-motion="clip">
+            <p className={styles.kicker}>Open collection · 55 pieces</p>
+            <h2 id="final-title">
+              Start with source.
+              <br />
+              End with yours.
+            </h2>
+            <div className={styles.finalActions}>
+              <Link className={styles.primaryAction} href="/components">
+                Explore the collection <ArrowRight />
+              </Link>
+              <button
+                className={styles.command}
+                type="button"
+                onClick={copyInstallCommand}
+              >
+                <Terminal />
+                <code>{copied ? 'Copied to clipboard' : installCommand}</code>
+                {copied ? <Check /> : <Copy />}
+              </button>
             </div>
           </div>
         </section>
 
-        <footer className="home-footer">
-          <div className="home-footer-inner">
-            <div className="footer-intro">
-              <div className="brand">
+        <footer className={styles.footer}>
+          <div className={styles.footerMain}>
+            <div className={styles.footerIntro}>
+              <div className={styles.brand}>
                 <Image src="/nacre-mark.png" alt="" width={22} height={22} />
-                Nacre UI
+                <span>Nacre UI</span>
               </div>
               <p>
-                React components with interactive previews, copyable source, and
-                editable preview controls.
+                Unusually crafted React components, delivered as editable
+                source.
               </p>
             </div>
-
-            <nav className="footer-columns" aria-label="Footer navigation">
+            <nav className={styles.footerLinks} aria-label="Footer navigation">
               <div>
-                <span>Collection</span>
-                <Link href="/components">All components</Link>
+                <span>Explore</span>
+                <Link href="/components">Components</Link>
                 <Link href="/templates">Templates</Link>
-                <Link href="/components#liquid-metal-button">Actions</Link>
-                <Link href="/components#horizon-page-loader">Loaders</Link>
-                <Link href="/components#tidal-type-text">
-                  Text &amp; Motion
-                </Link>
-                <Link href="/components#editorial-mosaic">Interactions</Link>
-                <Link href="/components#mesh-background">Backgrounds</Link>
+                <Link href="/components#installation">Installation</Link>
               </div>
               <div>
-                <span>Docs</span>
-                <Link href="/components#installation">Installation</Link>
-                <Link href="/components#react-next">React and Next.js</Link>
-                <Link href="/components#theming">Theming</Link>
-                <Link href="/components#cli">CLI</Link>
+                <span>Connect</span>
+                <Link href="https://github.com/johnmamanao/nacre-ui">
+                  GitHub
+                </Link>
+                <Link href="https://github.com/johnmamanao/nacre-ui/issues/new?template=component-request.yml">
+                  Request a component
+                </Link>
               </div>
             </nav>
           </div>
-
-          <div className="footer-bottom">
-            <small>© 2026 Nacre UI. All rights reserved.</small>
-            <div className="footer-utility">
-              <Link href="https://github.com/johnmamanao/nacre-ui">GitHub</Link>
-              <Link href="https://github.com/johnmamanao/nacre-ui/issues/new?template=component-request.yml">
-                Request a component
-              </Link>
-              <span>React · Next.js · TypeScript</span>
-              <fieldset className="footer-appearance">
-                <legend className="sr-only">Appearance</legend>
-                <button
-                  className="light-appearance"
-                  type="button"
-                  onClick={() => setTheme(false)}
-                  aria-label="Use light appearance"
-                  aria-pressed={!isDark}
-                >
-                  <Sun />
-                </button>
-                <button
-                  className="dark-appearance"
-                  type="button"
-                  onClick={() => setTheme(true)}
-                  aria-label="Use dark appearance"
-                  aria-pressed={isDark}
-                >
-                  <Moon />
-                </button>
-              </fieldset>
-            </div>
+          <div className={styles.footerBottom}>
+            <small>© 2026 Nacre UI. Open source, made with care.</small>
+            <fieldset className={styles.appearance}>
+              <legend className="sr-only">Appearance</legend>
+              <button
+                type="button"
+                onClick={() => setTheme(false)}
+                aria-pressed={!isDark}
+              >
+                <Sun /> Light
+              </button>
+              <button
+                type="button"
+                onClick={() => setTheme(true)}
+                aria-pressed={isDark}
+              >
+                <Moon /> Dark
+              </button>
+            </fieldset>
           </div>
         </footer>
       </main>

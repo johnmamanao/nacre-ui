@@ -44,6 +44,7 @@ import { Button } from '@/components/ui/button';
 import buttonSource from '@/components/ui/button.tsx?raw';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useTheme } from '@/lib/use-theme';
+import { ChangelogUpdate } from '../changelog-update';
 import { MagneticButton } from '@/components/ui/magnetic-button';
 // oxlint-disable-next-line import/default -- Vite's raw loader supplies this default export.
 import magneticButtonSource from '@/components/ui/magnetic-button.tsx?raw';
@@ -7942,7 +7943,6 @@ export default function ComponentsPage() {
         {!isComponentPage(activeDoc) ? (
           <header className="site-header components-header">
             <div className="header-brand-cluster">
-              {navigationTrigger}
               <Link className="brand" href="/" aria-label="Nacre UI home">
                 <Image
                   src="/nacre-mark.png"
@@ -7953,8 +7953,11 @@ export default function ComponentsPage() {
                 />
                 Nacre UI
               </Link>
+              <ChangelogUpdate />
+              {navigationTrigger}
             </div>
             <nav aria-label="Primary navigation">
+              <Link href="/#story">The process</Link>
               <Link className="current" href="/components" aria-current="page">
                 Components
               </Link>
