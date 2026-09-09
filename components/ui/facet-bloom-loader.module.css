@@ -6,11 +6,7 @@
   display: inline-flex;
   align-items: center;
   gap: 13px;
-  color: #2c2b27;
-}
-
-:global(.dark) .root {
-  color: #e9e8e3;
+  color: inherit;
 }
 
 .bloom {

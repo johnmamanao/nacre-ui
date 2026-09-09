@@ -50,7 +50,7 @@ function PhaseWeaveText({
   const characterVariants: Variants | undefined = prefersReducedMotion
     ? undefined
     : {
-        initial: { opacity: 0, y: '0.3em', scaleY: 0.84 },
+        initial: { opacity: 1, y: '0.3em', scaleY: 0.84 },
         animate: {
           opacity: 1,
           scaleY: 1,
@@ -61,7 +61,7 @@ function PhaseWeaveText({
           },
         },
         exit: {
-          opacity: 0,
+          opacity: 1,
           scaleY: 0.9,
           y: '-0.16em',
           transition: {

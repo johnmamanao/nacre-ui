@@ -1,7 +1,11 @@
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowUpRight } from 'lucide-react';
 
+import { GithubStarButton } from '../github-star-button';
+import { HeaderThemeButton } from '../header-theme-button';
+import { ChangelogUpdate } from '../changelog-update';
 import styles from './templates.module.css';
 
 export const metadata: Metadata = {
@@ -13,10 +17,34 @@ export default function TemplatesPage() {
   return (
     <main className={styles.page}>
       <header className={styles.header}>
-        <Link href="/" className={styles.brand}>
-          Nacre UI
-        </Link>
-        <Link href="/components">Components</Link>
+        <div className={styles.brandCluster}>
+          <Link href="/" className={styles.brand} aria-label="Nacre UI home">
+            <Image
+              src="/nacre-mark.png"
+              alt=""
+              width={22}
+              height={22}
+              priority
+            />
+            <span>Nacre UI</span>
+          </Link>
+          <ChangelogUpdate />
+        </div>
+        <nav className={styles.nav} aria-label="Primary navigation">
+          <Link href="/#story">The process</Link>
+          <Link href="/components">Components</Link>
+          <Link
+            className={styles.current}
+            href="/templates"
+            aria-current="page"
+          >
+            Templates
+          </Link>
+        </nav>
+        <div className={styles.headerTools}>
+          <GithubStarButton />
+          <HeaderThemeButton />
+        </div>
       </header>
 
       <section className={styles.intro}>

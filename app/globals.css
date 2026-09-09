@@ -205,7 +205,7 @@ main {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 650;
 }
 .brand img {
@@ -236,7 +236,7 @@ main {
   padding: 6px 10px;
   border-radius: 8px;
   color: var(--muted);
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 560;
   letter-spacing: -0.01em;
   transition:
@@ -1302,19 +1302,12 @@ footer nav a:hover {
 
 /* Component documentation workspace */
 .reference-layout .components-header {
-  height: 58px;
-  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  height: 76px;
+  background: var(--bg);
   box-shadow: none;
-  backdrop-filter: blur(18px) saturate(1.15);
 }
 .reference-layout .components-header::after {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  height: 1px;
-  background: color-mix(in srgb, var(--line) 70%, transparent);
-  content: '';
+  content: none;
 }
 .header-brand-cluster {
   display: flex;
@@ -2058,7 +2051,7 @@ footer nav a:hover {
 
 @media (max-width: 760px) {
   .reference-layout .components-header {
-    height: 56px;
+    height: 66px;
   }
   .docs-sidebar {
     position: fixed;
@@ -7010,6 +7003,20 @@ body:has(.docs-search-dialog[open]) {
 .home-header nav a {
   font-size: var(--type-ui);
 }
+
+/* Keep the public header wordmark and navigation optically stable by route. */
+.site-header .brand {
+  gap: 9px;
+  font-size: 14px;
+  font-weight: 660;
+  line-height: 21px;
+}
+.site-header nav a {
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 19.5px;
+  letter-spacing: normal;
+}
 .search-button,
 .header-search > span {
   font-size: var(--type-caption);
@@ -7441,10 +7448,9 @@ body .reference-layout[data-component-view='true'] {
   padding-inline: 0;
 }
 body .reference-layout .components-header {
-  height: 58px;
-  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  height: 76px;
+  background: var(--bg);
   box-shadow: none;
-  backdrop-filter: blur(18px) saturate(1.15);
 }
 body .docs-shell {
   display: block;
@@ -7613,7 +7619,7 @@ body .component-doc-header p {
 
 @media (max-width: 760px) {
   body .reference-layout .components-header {
-    height: 56px;
+    height: 66px;
   }
   body .docs-sidebar {
     top: 10px;
