@@ -39,7 +39,7 @@ export const metadata: Metadata = {
     },
   },
   icons: {
-    icon: [{ url: '/nacre-mark.png', type: 'image/png' }],
+    icon: [{ url: '/favicon.svg', type: 'image/svg+xml' }],
   },
   alternates: {
     canonical: '/',
